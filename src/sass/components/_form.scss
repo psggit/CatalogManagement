@@ -1,0 +1,33 @@
+@import "_input.scss";
+
+.form-group {
+  margin-top: 20px;
+  hr:first-child {
+    border-bottom-color: #9b9b9b !important;
+  }
+  .inline-input div{
+    width: 100% !important;
+  }
+}
+
+.form-group.form-inline {
+  display: flex;
+  justify-content: space-between;
+  label {
+    width: 40%;
+    margin-top: 20px;
+  }
+}
+
+.label {
+  color: #9b9b9b;
+}
+
+.error {
+  color: #ff3b34;
+  font-style: italic;
+}
+
+.mui-checkbox-sm label {
+  font-size: 14px;
+}
