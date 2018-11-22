@@ -14,11 +14,7 @@ class Login extends React.Component {
   render() {
     return (
       <MuiThemeProvider>
-        <div style={{ padding: '0 10%' }}>
-          <h1 style={{ color: '#333'}}>@hipbar</h1>
-          <hr />
-          <Form />
-        </div>
+        <Form />
       </MuiThemeProvider>
     )
   }
