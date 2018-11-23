@@ -5,6 +5,7 @@ import {  Api } from '@utils/config'
 import '@sass/components/_input.scss'
 import '@sass/components/_form.scss'
 import '@sass/components/_button.scss'
+import {getIcon} from '@utils/icon-utils'
 
 class Form extends React.Component {
   constructor() {
@@ -83,7 +84,8 @@ class Form extends React.Component {
     return (
       <div className="form">
         <div className="login-header">
-          <span> Login </span>
+          <div className="logo" style={{background: '#000', width: '50px', height: '50px'}}> <span style={{ width:'30px', height: '30px'}}> {getIcon('logo')} </span> </div>
+          <span style={{width:'60px', height: '60px'}}> Login </span>
         </div>
         <div className="form-wrapper">
           <div className="form-group">
