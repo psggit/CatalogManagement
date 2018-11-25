@@ -195,7 +195,7 @@ class ViewSKUMapDetails extends React.Component {
   render() {
     
     return (
-      <div style={{ width: '100%', maxWidth: 900 }}>
+      <div style={{ width: '100%'}}>
         <Card
           style={{
             padding: '0px 20px',
