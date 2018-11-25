@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as Actions from './../actions'
 import ViewSKU from './../components/sku-management/view-sku-list'
-import Pagination from '@components/Pagination'
+import Pagination from '@components/pagination'
 
 class SKUMapManager extends React.Component {
 

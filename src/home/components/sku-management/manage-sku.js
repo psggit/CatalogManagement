@@ -9,7 +9,7 @@ import { NavLink } from 'react-router-dom'
 import FilterModal from '@components/filter-modal'
 import {getIcon} from '@utils/icon-utils'
 import ViewSKU from './view-sku-list'
-import Pagination from '@components/Pagination'
+import Pagination from '@components/pagination'
 import { getQueryObj, getQueryUri } from '@utils/url-utils'
 
 

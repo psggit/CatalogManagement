@@ -136,7 +136,7 @@ class BrandForm extends React.Component {
   render() {
     return (
       <Fragment>
-
+        
         <div className="form-group">
           <label className="label">Brand name</label><br />
           <TextField
@@ -354,7 +354,7 @@ class BrandForm extends React.Component {
             <p style={{ color: '#ff3b34'}}> Low res image url is not valid </p>
           }
         </div>
-
+       
       </Fragment>
     )
   }

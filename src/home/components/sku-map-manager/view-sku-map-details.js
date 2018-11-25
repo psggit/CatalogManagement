@@ -233,7 +233,7 @@ class ViewSKUMapDetails extends React.Component {
           />
         </div>
         <br/><br/>
-        <div>
+        {/* <div>
           <h3 style={{ margin: 0 }}>Listing mapped retailers</h3>
           <RaisedButton
             primary
@@ -247,7 +247,7 @@ class ViewSKUMapDetails extends React.Component {
             handleUpdateRetailerDetails = {this.handleUpdateRetailerDetails}
             disableSave = {this.state.disableSaveInRetailerList}
           />
-        </div>
+        </div> */}
         {/* {
           this.state.shouldMountConfirmDeleteRetailer &&
           <ConfirmDeleteRetailer

@@ -31,7 +31,7 @@ function* fetchBrands(action) {
 
 function* fetchLiveOrders(action) {
   try {
-    const data = yield call(Api.fetchLiveOrders, action)
+    //const data = yield call(Api.fetchLiveOrders, action)
     yield put({type: ActionTypes.SUCCESS_FETCH_LIVE_ORDERS, data})
   } catch (err) {
     console.log(err)
@@ -87,7 +87,7 @@ function* fetchSkuMappedStates(action) {
 
 function* updateSkuStateMap(action) {
   try {
-    const data = yield call(Api.updateSkuStateMap, action)
+    //const data = yield call(Api.updateSkuStateMap, action)
     yield put({ type: ActionTypes.SUCCESS_UPDATE_SKU_STATE_MAP, data })
     Notify('Successfully updated sku', 'success')
     action.CB()
