@@ -21,10 +21,10 @@ class CreateBrand extends React.Component {
   }
 
   componentDidMount() {
-    this.props.actions.fetchOriginList({
-      limit: 1000,
-      offset: 0
-    })
+    // this.props.actions.fetchOriginList({
+    //   limit: 1000,
+    //   offset: 0
+    // })
     this.props.actions.fetchBrandTypes({})
   }
 

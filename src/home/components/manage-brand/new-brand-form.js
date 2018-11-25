@@ -28,8 +28,8 @@ class BrandForm extends React.Component {
       low_res_image: props.brandInfo ? props.brandInfo.low_res_image : '',
       typeIdx: props.brandInfo ? props.brandTypeList.map(item => item.name).indexOf(props.brandInfo.Type) + 1 : 1,
       brandType: props.brandInfo ? props.brandTypeList.map(item => item.name)[props.brandTypeList.map(item => item.id).indexOf(this.props.brandInfo.Type)] : props.brandTypeList.map(item => item.name)[0],
-      originIdx: props.brandInfo ? props.originList.map(item => item.short_name).indexOf(props.brandInfo.origin_name) + 1 : 1,
-      origin: props.brandInfo ? props.originList.map(item => item.short_name)[props.originList.map(item => item.short_name).indexOf(this.props.brandInfo.origin_name)] : props.originList.map(item => item.short_name)[0],
+      //originIdx: props.brandInfo ? props.originList.map(item => item.short_name).indexOf(props.brandInfo.origin_name) + 1 : 1,
+      //origin: props.brandInfo ? props.originList.map(item => item.short_name)[props.originList.map(item => item.short_name).indexOf(this.props.brandInfo.origin_name)] : props.originList.map(item => item.short_name)[0],
       description: props.brandInfo ? props.brandInfo.description : '',
       high_res_image_err: false,
       low_res_image_err: false
@@ -38,7 +38,7 @@ class BrandForm extends React.Component {
     this.handleTextFields = this.handleTextFields.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleTypeChange = this.handleTypeChange.bind(this)
-    this.handleOriginChange = this.handleOriginChange.bind(this)
+    //this.handleOriginChange = this.handleOriginChange.bind(this)
     this.handleUploadChange = this.handleUploadChange.bind(this)
     this.resetUploadImage = this.resetUploadImage.bind(this)
     this.submitUploadedImage = this.submitUploadedImage.bind(this)
@@ -47,9 +47,9 @@ class BrandForm extends React.Component {
   componentDidUpdate (prevProps) {
     if((this.props.originList !== prevProps.originList || this.props.brandTypeList !== prevProps.brandTypeList)) {
       this.setState({
-        originIdx: this.props.brandInfo ? this.props.originList.map(item => item.short_name).indexOf(this.props.brandInfo.origin_name) + 1 : 1,
+        //originIdx: this.props.brandInfo ? this.props.originList.map(item => item.short_name).indexOf(this.props.brandInfo.origin_name) + 1 : 1,
         typeIdx: this.props.brandInfo ? this.props.brandTypeList.map(item => item.id).indexOf(this.props.brandInfo.Type) + 1 : 1,
-        origin: this.props.brandInfo ? this.props.originList.map(item => item.short_name)[this.props.originList.map(item => item.short_name).indexOf(this.props.brandInfo.origin_name)] : this.props.originList.map(item => item.short_name)[0],
+        //origin: this.props.brandInfo ? this.props.originList.map(item => item.short_name)[this.props.originList.map(item => item.short_name).indexOf(this.props.brandInfo.origin_name)] : this.props.originList.map(item => item.short_name)[0],
         brandType: this.props.brandInfo ? this.props.brandTypeList.map(item => item.name)[this.props.brandTypeList.map(item => item.id).indexOf(this.props.brandInfo.Type)] : this.props.brandTypeList.map(item => item.name)[0]
       })
     }
@@ -63,13 +63,13 @@ class BrandForm extends React.Component {
     })
   }
 
-  handleOriginChange(e, k) {
-    const originIdx = k + 1
-    this.setState({
-      originIdx,
-      origin: this.props.originList[k].short_name
-    })
-  }
+  // handleOriginChange(e, k) {
+  //   const originIdx = k + 1
+  //   this.setState({
+  //     originIdx,
+  //     origin: this.props.originList[k].short_name
+  //   })
+  // }
 
   handleTextFields(e) {
     let value = e.target.value
@@ -148,7 +148,7 @@ class BrandForm extends React.Component {
           />
         </div>
 
-        <div className="form-group">
+        {/* <div className="form-group">
           <label className="label">Origin</label><br />
           <SelectField
             value={this.state.originIdx}
@@ -165,7 +165,7 @@ class BrandForm extends React.Component {
               ))
             }
           </SelectField>
-        </div>
+        </div> */}
 
         <div className="form-group">
           <label className="label">Alcohol percentage</label><br />

@@ -24,9 +24,9 @@ const initialState = {
 //   loadingTransactionCode: true,
 //   updatingListingOrder: true,
 //   //updatingSkuStateMap: true,
-//   loadingStatesMappedToSku: true,
-//   loadingSkuUnmappedStates: true,
-//   loadingSkuMappedRetailers: true,
+loadingStatesMappedToSku: true,
+loadingSkuUnmappedStates: true,
+loadingSkuMappedRetailers: true,
 //   loadingCategoriesList: true,
 //   //loadingAllBrands: true,
 //   loadingBrandsMappedToCategories: true,
@@ -75,9 +75,9 @@ skuList: [],
 brands: [],
 liveOrdersData: [],
 //   brandDetails: [],
-//   mappedStatesToSkuData: [],
-//   mappedRetailersData: [],
-//   skuUnmappedStates: [],
+mappedStatesToSkuData: [],
+mappedRetailersData: [],
+skuUnmappedStates: [],
 //   skuUnmappedRetailers: [],
 //   //totalBrandsCount: [],
 //   categoriesList: [],
@@ -366,12 +366,26 @@ const actionsMap = {
   //   })
   // },
 
-  // [ActionTypes.SUCCESS_FETCH_STATES_MAPPED_TO_SKU]: (state, action) => {
-  //   return Object.assign({}, state, {
-  //     loadingStatesMappedToSku: false,
-  //     mappedStatesToSkuData: action.data
-  //   })
-  // },
+  [ActionTypes.SUCCESS_FETCH_STATES_MAPPED_TO_SKU]: (state, action) => {
+    return Object.assign({}, state, {
+      loadingStatesMappedToSku: false,
+      mappedStatesToSkuData: action.data
+    })
+  },
+
+  [ActionTypes.SUCCESS_FETCH_UNMAPPED_STATES]: (state, action) => {
+    return Object.assign({}, state, {
+      loadingSkuUnmappedStates: false,
+      skuUnmappedStates: action.data
+    })
+  },
+
+  [ActionTypes.SUCCESS_FETCH_SKU_UNMAPPED_RETAILERS]: (state, action) => {
+    return Object.assign({}, state, {
+      //loadingSkuUnmappedStates: false,
+      skuUnmappedRetailers: action.data
+    })
+  },
 
   // [ActionTypes.SUCCESS_FETCH_UNMAPPED_STATES]: (state, action) => {
   //   return Object.assign({}, state, {
@@ -380,26 +394,12 @@ const actionsMap = {
   //   })
   // },
 
-  // [ActionTypes.SUCCESS_FETCH_SKU_UNMAPPED_RETAILERS]: (state, action) => {
-  //   return Object.assign({}, state, {
-  //     //loadingSkuUnmappedStates: false,
-  //     skuUnmappedRetailers: action.data
-  //   })
-  // },
-
-  // // [ActionTypes.SUCCESS_FETCH_UNMAPPED_STATES]: (state, action) => {
-  // //   return Object.assign({}, state, {
-  // //     loadingSkuUnmappedStates: false,
-  // //     skuUnmappedStates: action.data
-  // //   })
-  // // },
-
-  // [ActionTypes.SUCCESS_FETCH_RETAILERS_MAPPED_TO_SKU]: (state, action) => {
-  //   return Object.assign({}, state, {
-  //     loadingSkuMappedRetailers: false,
-  //     mappedRetailersData: action.data
-  //   })
-  // },
+  [ActionTypes.SUCCESS_FETCH_RETAILERS_MAPPED_TO_SKU]: (state, action) => {
+    return Object.assign({}, state, {
+      loadingSkuMappedRetailers: false,
+      mappedRetailersData: action.data
+    })
+  },
 
   // [ActionTypes.SUCCESS_FETCH_CATEGORIES]: (state, action) => {
   //   return Object.assign({}, state, {

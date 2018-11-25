@@ -37,51 +37,51 @@ export const fetchLiveOrders = (data) => ({
 //   data
 // })
 
-// export const fetchStatesMappedToSku = (data) => ({
-//   type: ActionTypes.REQUEST_FETCH_STATES_MAPPED_TO_SKU,
-//   data
-// })
+export const fetchStatesMappedToSku = (data) => ({
+  type: ActionTypes.REQUEST_FETCH_STATES_MAPPED_TO_SKU,
+  data
+})
 
-// export const updateSkuStateMap = (data, CB) => ({
-//   type: ActionTypes.REQUEST_UPDATE_SKU_STATE_MAP,
-//   data,
-//   CB
-// })
+export const updateSkuStateMap = (data, CB) => ({
+  type: ActionTypes.REQUEST_UPDATE_SKU_STATE_MAP,
+  data,
+  CB
+})
 
-// export const fetchSkuUnmappedStates = (data, CB) => ({
-//   type: ActionTypes.REQUEST_FETCH_UNMAPPED_STATES,
-//   data,
-//   CB
-// })
+export const fetchSkuUnmappedStates = (data, CB) => ({
+  type: ActionTypes.REQUEST_FETCH_UNMAPPED_STATES,
+  data,
+  CB
+})
 
-// export const mapStateToSku = (data, CB) => ({
-//   type: ActionTypes.REQUEST_MAP_STATE_TO_SKU,
-//   data,
-//   CB
-// })
+export const mapStateToSku = (data, CB) => ({
+  type: ActionTypes.REQUEST_MAP_STATE_TO_SKU,
+  data,
+  CB
+})
 
-// export const fetchRetailersMappedToSku = (data) => ({
-//   type: ActionTypes.REQUEST_FETCH_RETAILERS_MAPPED_TO_SKU,
-//   data
-// })
+export const fetchRetailersMappedToSku = (data) => ({
+  type: ActionTypes.REQUEST_FETCH_RETAILERS_MAPPED_TO_SKU,
+  data
+})
 
-// export const updateSkuRetailerMap = (data, CB) => ({
-//   type: ActionTypes.REQUEST_UPDATE_SKU_RETAILER_MAP,
-//   data,
-//   CB
-// })
+export const updateSkuRetailerMap = (data, CB) => ({
+  type: ActionTypes.REQUEST_UPDATE_SKU_RETAILER_MAP,
+  data,
+  CB
+})
 
-// export const fetchSkuUnmappedRetailers = (data, CB) => ({
-//   type: ActionTypes.REQUEST_FETCH_SKU_UNMAPPED_RETAILERS,
-//   data,
-//   CB
-// })
+export const fetchSkuUnmappedRetailers = (data, CB) => ({
+  type: ActionTypes.REQUEST_FETCH_SKU_UNMAPPED_RETAILERS,
+  data,
+  CB
+})
 
-// export const mapRetailerToSku = (data, CB) => ({
-//   type: ActionTypes.REQUEST_MAP_RETAILER_TO_SKU,
-//   data,
-//   CB
-// })
+export const mapRetailerToSku = (data, CB) => ({
+  type: ActionTypes.REQUEST_MAP_RETAILER_TO_SKU,
+  data,
+  CB
+})
 
 // export const fetchCategoriesList = (data) => ({
 //   type: ActionTypes.REQUEST_FETCH_CATEGORIES,

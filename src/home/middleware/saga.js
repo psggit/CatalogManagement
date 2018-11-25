@@ -75,107 +75,107 @@ function* fetchLiveOrders(action) {
 //   }
 // }
 
-// function* fetchSkuMappedStates(action) {
-//   try {
-//     const data = yield call(Api.fetchSkuMappedStates, action)
-//     //const data = mappedState
-//     yield put({ type: ActionTypes.SUCCESS_FETCH_STATES_MAPPED_TO_SKU, data })
-//   } catch(err) {
-//     console.log(err)
-//   }
-// }
+function* fetchSkuMappedStates(action) {
+  try {
+    //const data = yield call(Api.fetchSkuMappedStates, action)
+    const data = mappedState
+    yield put({ type: ActionTypes.SUCCESS_FETCH_STATES_MAPPED_TO_SKU, data })
+  } catch(err) {
+    console.log(err)
+  }
+}
 
-// function* updateSkuStateMap(action) {
-//   try {
-//     const data = yield call(Api.updateSkuStateMap, action)
-//     yield put({ type: ActionTypes.SUCCESS_UPDATE_SKU_STATE_MAP, data })
-//     Notify('Successfully updated sku', 'success')
-//     action.CB()
-//   } catch(err) {
-//     console.log(err)
-//     Notify('Error in updating sku', 'warning')
-//     action.CB()
-//   }
-// }
+function* updateSkuStateMap(action) {
+  try {
+    const data = yield call(Api.updateSkuStateMap, action)
+    yield put({ type: ActionTypes.SUCCESS_UPDATE_SKU_STATE_MAP, data })
+    Notify('Successfully updated sku', 'success')
+    action.CB()
+  } catch(err) {
+    console.log(err)
+    Notify('Error in updating sku', 'warning')
+    action.CB()
+  }
+}
 
-// function* fetchSkuUnmappedStates(action) {
-//   try {
-//     const data = yield call(Api.fetchSkuUnmappedStates, action)
-//     //const data = unmappedStates
-//     yield put({ type: ActionTypes.SUCCESS_FETCH_UNMAPPED_STATES, data })
-//     //Notify('Successfully mapped the state', 'success')
-//     action.CB(data)
-//   } catch(err) {
-//     console.log(err)
-//   }
-// }
+function* fetchSkuUnmappedStates(action) {
+  try {
+    //const data = yield call(Api.fetchSkuUnmappedStates, action)
+    const data = unmappedStates
+    yield put({ type: ActionTypes.SUCCESS_FETCH_UNMAPPED_STATES, data })
+    //Notify('Successfully mapped the state', 'success')
+    action.CB(data)
+  } catch(err) {
+    console.log(err)
+  }
+}
 
-// function* mapStateToSku(action) {
-//   try {
-//     const data = yield call(Api.mapStateToSku, action)
-//     //const data = createdSku
-//     //yield put({ type: ActionTypes.SUCCESS_MAP_STATE_TO_SKU, data })
-//     Notify('Successfully mapped the state', 'success')
-//     action.CB(data)
-//   } catch(err) {
-//     console.log(err)
-//     Notify('Error in mapping the state', 'warning')
-//   }
-// }
+function* mapStateToSku(action) {
+  try {
+    //const data = yield call(Api.mapStateToSku, action)
+    const data = createdSku
+    //yield put({ type: ActionTypes.SUCCESS_MAP_STATE_TO_SKU, data })
+    Notify('Successfully mapped the state', 'success')
+    action.CB(data)
+  } catch(err) {
+    console.log(err)
+    Notify('Error in mapping the state', 'warning')
+  }
+}
 
-// function* fetchRetailersmappedToSku(action) {
-//   try {
-//     //const data = yield call(Api.fetchSKUs, action)
-//     const data = retailersMappedToSku
-//     yield put({ type: ActionTypes.SUCCESS_FETCH_RETAILERS_MAPPED_TO_SKU, data })
-//     //Notify('Successfully mapped the state', 'success')
-//     //action.CB(data)
-//   } catch(err) {
-//     console.log(err)
-//   }
-// }
+function* fetchRetailersmappedToSku(action) {
+  try {
+    //const data = yield call(Api.fetchSKUs, action)
+    const data = retailersMappedToSku
+    yield put({ type: ActionTypes.SUCCESS_FETCH_RETAILERS_MAPPED_TO_SKU, data })
+    //Notify('Successfully mapped the state', 'success')
+    //action.CB(data)
+  } catch(err) {
+    console.log(err)
+  }
+}
 
-// function* updateSkuRetailerMap(action) {
-//   try {
-//     //const data = yield call(Api.fetchSKUs, action)
-//     const data = createdSku
-//     yield put({ type: ActionTypes.SUCCESS_UPDATE_SKU_RETAILER_MAP, data })
-//     Notify('Successfully updated retailer mapped to sku', 'success')
-//     action.CB(data)
-//     //Notify('Successfully mapped the state', 'success')
-//     //action.CB(data)
-//   } catch(err) {
-//     console.log(err)
-//   }
-// }
+function* updateSkuRetailerMap(action) {
+  try {
+    //const data = yield call(Api.fetchSKUs, action)
+    const data = createdSku
+    yield put({ type: ActionTypes.SUCCESS_UPDATE_SKU_RETAILER_MAP, data })
+    Notify('Successfully updated retailer mapped to sku', 'success')
+    action.CB(data)
+    //Notify('Successfully mapped the state', 'success')
+    //action.CB(data)
+  } catch(err) {
+    console.log(err)
+  }
+}
 
-// function* fetchSkuUnmappedRetailers(action) {
-//   try {
-//     //const data = yield call(Api.fetchSKUs, action)
-//     const data = unmappedRetailers
-//     yield put({ type: ActionTypes.SUCCESS_FETCH_SKU_UNMAPPED_RETAILERS, data })
-//     //Notify('Successfully mapped retailer to sku', 'success')
-//     action.CB(data)
-//     //Notify('Successfully mapped the state', 'success')
-//     //action.CB(data)
-//   } catch(err) {
-//     console.log(err)
-//   }
-// }
+function* fetchSkuUnmappedRetailers(action) {
+  try {
+    //const data = yield call(Api.fetchSKUs, action)
+    const data = unmappedRetailers
+    yield put({ type: ActionTypes.SUCCESS_FETCH_SKU_UNMAPPED_RETAILERS, data })
+    //Notify('Successfully mapped retailer to sku', 'success')
+    action.CB(data)
+    //Notify('Successfully mapped the state', 'success')
+    //action.CB(data)
+  } catch(err) {
+    console.log(err)
+  }
+}
 
-// function* mapRetailerToSku(action) {
-//   try {
-//     //const data = yield call(Api.fetchSKUs, action)
-//     const data = createdSku
-//     //yield put({ type: ActionTypes.SUCCESS_MAP_RETAILER_TO_SKU, data })
-//     Notify('Successfully mapped retailer to sku', 'success')
-//     action.CB(data)
-//     //Notify('Successfully mapped the state', 'success')
-//     //action.CB(data)
-//   } catch(err) {
-//     console.log(err)
-//   }
-// }
+function* mapRetailerToSku(action) {
+  try {
+    //const data = yield call(Api.fetchSKUs, action)
+    const data = createdSku
+    //yield put({ type: ActionTypes.SUCCESS_MAP_RETAILER_TO_SKU, data })
+    Notify('Successfully mapped retailer to sku', 'success')
+    action.CB(data)
+    //Notify('Successfully mapped the state', 'success')
+    //action.CB(data)
+  } catch(err) {
+    console.log(err)
+  }
+}
 
 // function* fetchCategories(action) {
 //   try {
@@ -421,53 +421,53 @@ function* watchFetchLiveOrders() {
 //   }
 // }
 
-// function* watchRequestFetchStatesMappedToSku() {
-//   while (true) {
-//     yield* takeLatest(ActionTypes.REQUEST_FETCH_STATES_MAPPED_TO_SKU, fetchSkuMappedStates)
-//   }
-// }
+function* watchRequestFetchStatesMappedToSku() {
+  while (true) {
+    yield* takeLatest(ActionTypes.REQUEST_FETCH_STATES_MAPPED_TO_SKU, fetchSkuMappedStates)
+  }
+}
 
-// function* watchRequestUpdateSkuStateMap() {
-//   while (true) {
-//     yield* takeLatest(ActionTypes.REQUEST_UPDATE_SKU_STATE_MAP, updateSkuStateMap)
-//   }
-// }
+function* watchRequestUpdateSkuStateMap() {
+  while (true) {
+    yield* takeLatest(ActionTypes.REQUEST_UPDATE_SKU_STATE_MAP, updateSkuStateMap)
+  }
+}
 
-// function* watchRequestFetchSkuUnmappedStates() {
-//   while (true) {
-//     yield* takeLatest(ActionTypes.REQUEST_FETCH_UNMAPPED_STATES, fetchSkuUnmappedStates)
-//   }
-// }
+function* watchRequestFetchSkuUnmappedStates() {
+  while (true) {
+    yield* takeLatest(ActionTypes.REQUEST_FETCH_UNMAPPED_STATES, fetchSkuUnmappedStates)
+  }
+}
 
-// function* watchRequestMapStateToSku() {
-//   while (true) {
-//     yield* takeLatest(ActionTypes.REQUEST_MAP_STATE_TO_SKU, mapStateToSku)
-//   }
-// }
+function* watchRequestMapStateToSku() {
+  while (true) {
+    yield* takeLatest(ActionTypes.REQUEST_MAP_STATE_TO_SKU, mapStateToSku)
+  }
+}
 
-// function* watchRequestFetchRetailersMappedToSku() {
-//   while (true) {
-//     yield* takeLatest(ActionTypes.REQUEST_FETCH_RETAILERS_MAPPED_TO_SKU, fetchRetailersmappedToSku)
-//   }
-// }
+function* watchRequestFetchRetailersMappedToSku() {
+  while (true) {
+    yield* takeLatest(ActionTypes.REQUEST_FETCH_RETAILERS_MAPPED_TO_SKU, fetchRetailersmappedToSku)
+  }
+}
 
-// function* watchRequestUpdateSkuRetailerMap() {
-//   while (true) {
-//     yield* takeLatest(ActionTypes.REQUEST_UPDATE_SKU_RETAILER_MAP, updateSkuRetailerMap)
-//   }
-// }
+function* watchRequestUpdateSkuRetailerMap() {
+  while (true) {
+    yield* takeLatest(ActionTypes.REQUEST_UPDATE_SKU_RETAILER_MAP, updateSkuRetailerMap)
+  }
+}
 
-// function* watchRequestFetchSkuUnmappedRetailers() {
-//   while (true) {
-//     yield* takeLatest(ActionTypes.REQUEST_FETCH_SKU_UNMAPPED_RETAILERS, fetchSkuUnmappedRetailers)
-//   }
-// }
+function* watchRequestFetchSkuUnmappedRetailers() {
+  while (true) {
+    yield* takeLatest(ActionTypes.REQUEST_FETCH_SKU_UNMAPPED_RETAILERS, fetchSkuUnmappedRetailers)
+  }
+}
 
-// function* watchRequestMapRetailerToSku() {
-//   while (true) {
-//     yield* takeLatest(ActionTypes.REQUEST_MAP_RETAILER_TO_SKU, mapRetailerToSku)
-//   }
-// }
+function* watchRequestMapRetailerToSku() {
+  while (true) {
+    yield* takeLatest(ActionTypes.REQUEST_MAP_RETAILER_TO_SKU, mapRetailerToSku)
+  }
+}
 
 // function* watchRequestFetchCategories() {
 //   while (true) {
@@ -567,14 +567,14 @@ export default function* rootSaga() {
     // fork(watchRequestCreateSku),
     // fork(watchRequestFetchVolumeList),
     // fork(watchRequestUpdateSku),
-    // fork(watchRequestFetchStatesMappedToSku),
-    // fork(watchRequestUpdateSkuStateMap),
-    // fork(watchRequestFetchSkuUnmappedStates),
-    // fork(watchRequestMapStateToSku),
-    // fork(watchRequestFetchRetailersMappedToSku),
-    // fork(watchRequestUpdateSkuRetailerMap),
-    // fork(watchRequestFetchSkuUnmappedRetailers),
-    // fork(watchRequestMapRetailerToSku),
+    fork(watchRequestFetchStatesMappedToSku),
+    fork(watchRequestUpdateSkuStateMap),
+    fork(watchRequestFetchSkuUnmappedStates),
+    fork(watchRequestMapStateToSku),
+    fork(watchRequestFetchRetailersMappedToSku),
+    fork(watchRequestUpdateSkuRetailerMap),
+    fork(watchRequestFetchSkuUnmappedRetailers),
+    fork(watchRequestMapRetailerToSku),
     // fork(watchRequestFetchCategories),
     // fork(watchRequestCreateCategory),
     fork(watchRequestFetchOriginList),
