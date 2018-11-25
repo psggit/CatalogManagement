@@ -42,7 +42,7 @@ module.exports = {
     new AbsolutePathProviderPlugin(/^@sass/, path.resolve('./src/sass')),
     new AbsolutePathProviderPlugin(/^@utils/, path.resolve('./src/utils')),
     new AbsolutePathProviderPlugin(/^@components/, path.resolve('./src/components')),
-    new CompressionPlugin({  
+    new CompressionPlugin({
       test: /\.js$|\.css$|\.html$/,
       filename: "[path].gz[query]",
       exclude: /node_modules/,
@@ -53,7 +53,8 @@ module.exports = {
   ],
   output: {
     filename: '[name].[chunkhash].js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: '/'
   },
   optimization: {
     splitChunks: {
