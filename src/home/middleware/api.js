@@ -63,24 +63,25 @@ import { GET, POST } from '@utils/fetch'
 //   })
 // ) 
 
-// export const fetchBrands = action => (
-//   POST({
-//     api: '/SkuManagement/brand/brandList',
-//     apiBase: 'catalogsystem',
-//     data: action.data,
-//     handleError: true
-//   })
-// )
-
-export const fetchLiveOrders = action => (
+export const fetchBrands = action => (
   POST({
-    api: '/deliveryStatus/liveOrders',
-    apiBase: 'gremlinUrl',
+    api: '/SkuManagement/brand/brandList',
+    apiBase: 'catalogsystem',
     data: action.data,
     handleError: true
   })
   .then(json => json)
 )
+
+// export const fetchLiveOrders = action => (
+//   POST({
+//     api: '/deliveryStatus/liveOrders',
+//     apiBase: 'gremlinUrl',
+//     data: action.data,
+//     handleError: true
+//   })
+//   .then(json => json)
+// )
 
 // export function fetchLiveOrders(action) {
 //   //console.log("fetch live orders")
@@ -95,23 +96,25 @@ export const fetchLiveOrders = action => (
 //   }))
 // }
 
-// export const createBrand = action => (
-//   POST({
-//     api: '/SkuManagement/brand/createBrand',
-//     apiBase: 'catalogsystem',
-//     data: action.data,
-//     handleError: true
-//   })
-// ) 
+export const createBrand = action => (
+  POST({
+    api: '/SkuManagement/brand/createBrand',
+    apiBase: 'catalogsystem',
+    data: action.data,
+    handleError: true
+  })
+  .then(json => json)
+) 
 
-// export const updateBrand = action => (
-//   POST({
-//     api: '/SkuManagement/brand/updateBrand',
-//     apiBase: 'catalogsystem',
-//     data: action.data,
-//     handleError: true
-//   })
-// )
+export const updateBrand = action => (
+  POST({
+    api: '/SkuManagement/brand/updateBrand',
+    apiBase: 'catalogsystem',
+    data: action.data,
+    handleError: true
+  })
+  .then(json => json)
+)
 
 // export const fetchBrandTypes = action => (
 //   GET({
@@ -122,14 +125,15 @@ export const fetchLiveOrders = action => (
 //   })
 // ) 
 
-// export const fetchOriginList = action => (
-//   POST({
-//     api: '/SkuManagement/brand/originList',
-//     apiBase: 'catalogsystem',
-//     data: action.data,
-//     handleError: true
-//   })
-// )
+export const fetchOriginList = action => (
+  POST({
+    api: '/SkuManagement/brand/originList',
+    apiBase: 'catalogsystem',
+    data: action.data,
+    handleError: true
+  })
+  .then(json => json)
+)
 
 // export function fetchUserDetails(action) {
 //   return fetch(`https://api.github.com/users/${action.data}`)

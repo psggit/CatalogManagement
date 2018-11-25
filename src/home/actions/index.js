@@ -1,14 +1,14 @@
 import * as ActionTypes from './../constants/actions'
 
-// export const fetchSKUs = (data) => ({
-//   type: ActionTypes.REQUEST_FETCH_SKUS,
-//   data
-// })
+export const fetchSKUs = (data) => ({
+  type: ActionTypes.REQUEST_FETCH_SKUS,
+  data
+})
 
-// export const fetchBrands = (data) => ({
-//   type: ActionTypes.REQUEST_FETCH_BRANDS,
-//   data
-// })
+export const fetchBrands = (data) => ({
+  type: ActionTypes.REQUEST_FETCH_BRANDS,
+  data
+})
 
 export const fetchLiveOrders = (data) => ({
   type: ActionTypes.REQUEST_FETCH_LIVE_ORDERS,
@@ -100,27 +100,27 @@ export const fetchLiveOrders = (data) => ({
 //   CB
 // })
 
-// export const fetchOriginList = (data) => ({
-//   type: ActionTypes.REQUEST_FETCH_ORIGIN_LIST,
-//   data
-// })
+export const fetchOriginList = (data) => ({
+  type: ActionTypes.REQUEST_FETCH_ORIGIN_LIST,
+  data
+})
 
-// export const fetchBrandTypes = (data) => ({
-//   type: ActionTypes.REQUEST_FETCH_BRAND_TYPE_LIST,
-//   data
-// })
+export const fetchBrandTypes = (data) => ({
+  type: ActionTypes.REQUEST_FETCH_BRAND_TYPE_LIST,
+  data
+})
 
-// export const createBrand = (data, CB) => ({
-//   type: ActionTypes.REQUEST_CREATE_BRAND,
-//   data,
-//   CB
-// })
+export const createBrand = (data, CB) => ({
+  type: ActionTypes.REQUEST_CREATE_BRAND,
+  data,
+  CB
+})
 
-// export const updateBrand = (data, CB) => ({
-//   type: ActionTypes.REQUEST_UPDATE_BRAND,
-//   data,
-//   CB
-// })
+export const updateBrand = (data, CB) => ({
+  type: ActionTypes.REQUEST_UPDATE_BRAND,
+  data,
+  CB
+})
 
 // export const fetchBrandsMappedToCategories = (data) => ({
 //   type: ActionTypes.REQUEST_FETCH_BRANDS_MAPPED_TO_CATEGORIES,

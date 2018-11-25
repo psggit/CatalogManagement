@@ -84,8 +84,8 @@ class Form extends React.Component {
     return (
       <div className="form">
         <div className="login-header">
-          <div className="logo" style={{background: '#000', width: '50px', height: '50px'}}> <span style={{ width:'30px', height: '30px'}}> {getIcon('logo')} </span> </div>
-          <span style={{width:'60px', height: '60px'}}> Login </span>
+          <div className="logo"> <span style={{ width:'40px', height: '40px'}}> {getIcon('logo')} </span> </div>
+          <span> HIPBAR CATALOG SYSTEM </span>
         </div>
         <div className="form-wrapper">
           <div className="form-group">
@@ -109,7 +109,7 @@ class Form extends React.Component {
           <button
             disabled={this.state.isSubmitting}
             onClick={this.handleSubmit}
-            style={{ marginTop: '20px', width: '100%', height: '40px', cursor: this.state.isSubmitting ? 'progress' : '' }}
+            style={{ marginTop: '20px', width: '100%', height: '40px', background: '#735AB8', cursor: this.state.isSubmitting ? 'progress' : '' }}
             className="btn btn--primary"
           >
             Login

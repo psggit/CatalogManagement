@@ -386,24 +386,26 @@ export const categoriesList = {
     "count": 10
 }
 
-export const originList = [
-    {
-        id: 1,
-        short_name: 'AU',
-        name: 'Australia'
-    },
-    {
-        id: 2,
-        short_name: 'BE',
-        name: 'Belgium'
-    },
-    {
-        id: 3,
-        short_name: 'CA',
-        name: 'Canada'
-    }
-]
-
+export const originList = {
+    "origin_list": [
+        {
+            id: 1,
+            short_name: 'AU',
+            name: 'Australia'
+        },
+        {
+            id: 2,
+            short_name: 'BE',
+            name: 'Belgium'
+        },
+        {
+            id: 3,
+            short_name: 'CA',
+            name: 'Canada'
+        }
+    ]
+}
+   
 export const brandTypes = [
     {
         id: 1,

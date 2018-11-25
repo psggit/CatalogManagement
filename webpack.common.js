@@ -76,6 +76,6 @@ module.exports = {
       //   }
       // }
     },
-    runtimeChunk: true
+    //runtimeChunk: true
   }
 };
