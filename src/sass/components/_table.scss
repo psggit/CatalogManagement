@@ -1,0 +1,29 @@
+@keyframes blink {
+  50% {
+    background: #fff;
+  }
+}
+
+th, td {
+  white-space: normal !important;
+  text-overflow: initial !important;
+}
+
+.bordered--table {
+  border: 1px solid rgb(224, 224, 224);
+  // border-bottom: none;
+  // table-layout: auto !important;
+}
+
+.white-space-wrap {
+  white-space: normal !important;
+}
+
+
+.table-loading-shell {
+  background: #f6f6f6;
+  animation-name: blink;
+  animation-timing-function: linear;
+  animation-duration: 0.5s;
+  animation-iteration-count: infinite;
+}

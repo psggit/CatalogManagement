@@ -1,0 +1,31 @@
+body {
+  overflow: hidden !important;
+}
+
+.app-bar {
+  position: fixed !important;
+  left: 256px !important;
+  top: 0;
+  background: #7E57C2 !important;
+  width: calc(100% - 256px) !important;
+  h1 {
+    font-size: 18px !important;
+    text-transform: capitalize;
+    //margin-left: 256px !important;
+  }
+}
+
+.app-bar > button {
+  display: none !important;
+}
+
+@media only screen and (min-width: 1441px) {
+  .app-bar {
+    //padding-left: calc((100% - 1440px) / 2) !important;
+    //padding-right: calc((100% - 1440px) / 2) !important;
+
+    h1 {
+      //padding-left: 38px;
+    }
+  }
+}
