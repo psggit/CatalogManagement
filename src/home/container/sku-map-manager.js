@@ -41,7 +41,7 @@ class SKUMapManager extends React.Component {
     //console.log("map", loadingSkuList, "list", skuList)
     const { activePage } = this.state
     return (
-      <div style={{ width: '100%', maxWidth: 900 }}>
+      <div style={{ width: '100%'}}>
         <h3>Showing all SKUs</h3>
 
         <ViewSKU
