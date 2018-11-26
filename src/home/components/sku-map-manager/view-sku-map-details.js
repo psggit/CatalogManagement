@@ -20,19 +20,19 @@ class ViewSKUMapDetails extends React.Component {
       skuId: 0,
       //skuPricingId: 0,
       volume: 0,
-      shouldMountAddRetailerDialog: false,
-      shouldMountAddStateToSkuDialog: false,
+      // shouldMountAddRetailerDialog: false,
+      // shouldMountAddStateToSkuDialog: false,
       disableSave: false,
-      disableSaveInRetailerList: false
+      //disableSaveInRetailerList: false
     }
     this.updateStateMappedToSku = this.updateStateMappedToSku.bind(this)
     this.mountAddStateToSkuDialog = this.mountAddStateToSkuDialog.bind(this)
     this.unmountAddStateToSkuDialog = this.unmountAddStateToSkuDialog.bind(this)
-    this.mountAddRetailerDialog = this.mountAddRetailerDialog.bind(this)
-    this.unmountAddRetailerDialog = this.unmountAddRetailerDialog.bind(this)
+    // this.mountAddRetailerDialog = this.mountAddRetailerDialog.bind(this)
+    // this.unmountAddRetailerDialog = this.unmountAddRetailerDialog.bind(this)
     this.mapStateToSku = this.mapStateToSku.bind(this)
-    this.mapRetailerToSku = this.mapRetailerToSku.bind(this)
-    this.handleUpdateRetailerDetails = this.handleUpdateRetailerDetails.bind(this)
+    //this.mapRetailerToSku = this.mapRetailerToSku.bind(this)
+    //this.handleUpdateRetailerDetails = this.handleUpdateRetailerDetails.bind(this)
     //this.handleUnmapState = this.handleUnmapState.bind(this)
   }
 
@@ -75,15 +75,15 @@ class ViewSKUMapDetails extends React.Component {
   //   this.props.actions.updateSkuStateMap(stateDetailObj,() => {})
   // }
 
-  handleUpdateRetailerDetails(retailerDetailObj) {
-    this.setState({disableSaveInRetailerList: true})
-    retailerDetailObj['sku_id'] = this.state.skuId
-    this.props.actions.updateSkuRetailerMap(retailerDetailObj,() => {
-      setTimeout(() => {
-        this.setState({disableSaveInRetailerList: false})
-      })
-    })
-  }
+  // handleUpdateRetailerDetails(retailerDetailObj) {
+  //   this.setState({disableSaveInRetailerList: true})
+  //   retailerDetailObj['sku_id'] = this.state.skuId
+  //   this.props.actions.updateSkuRetailerMap(retailerDetailObj,() => {
+  //     setTimeout(() => {
+  //       this.setState({disableSaveInRetailerList: false})
+  //     })
+  //   })
+  // }
 
   // handleDeleteRetailer(id) {
   //   const queryObj = getQueryObj(location.search.slice(1))
@@ -164,13 +164,13 @@ class ViewSKUMapDetails extends React.Component {
     this.setState({ shouldMountAddStateToSkuDialog: false })
   }
 
-  mountAddRetailerDialog() {
-    this.setState({ shouldMountAddRetailerDialog: true })
-  }
+  // mountAddRetailerDialog() {
+  //   this.setState({ shouldMountAddRetailerDialog: true })
+  // }
 
-  unmountAddRetailerDialog() {
-    this.setState({ shouldMountAddRetailerDialog: false })
-  }
+  // unmountAddRetailerDialog() {
+  //   this.setState({ shouldMountAddRetailerDialog: false })
+  // }
 
   mapStateToSku(mappedStateObj) {
     this.props.actions.mapStateToSku(mappedStateObj, 
@@ -182,15 +182,15 @@ class ViewSKUMapDetails extends React.Component {
     })
   }
 
-  mapRetailerToSku(mappedRetailerObj) {
-    //console.log("mapped retailer object", mappedRetailerObj)
-    this.props.actions.mapRetailerToSku(mappedRetailerObj, 
-    (response) => {
-      this.props.actions.updateSkuRetailerMap({
-        sku_id: this.props.match.params.skuId
-      })
-    })
-  }
+  // mapRetailerToSku(mappedRetailerObj) {
+  //   //console.log("mapped retailer object", mappedRetailerObj)
+  //   this.props.actions.mapRetailerToSku(mappedRetailerObj, 
+  //   (response) => {
+  //     this.props.actions.updateSkuRetailerMap({
+  //       sku_id: this.props.match.params.skuId
+  //     })
+  //   })
+  // }
 
   render() {
     
@@ -290,14 +290,14 @@ class ViewSKUMapDetails extends React.Component {
             handleAddStateToSku = {this.mapStateToSku}
           />
         } 
-        {
+        {/* {
           this.state.shouldMountAddRetailerDialog &&
           <AddRetailersToSku
             skuId = {this.props.match.params.skuId}
             handleClose = {this.unmountAddRetailerDialog}
             handleAddRetailerToSku = {this.mapRetailerToSku}
           />
-        } 
+        }  */}
       </div>
     )
   }

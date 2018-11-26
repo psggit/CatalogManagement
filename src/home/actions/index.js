@@ -20,11 +20,11 @@ export const fetchLiveOrders = (data) => ({
 //   data
 // })
 
-// export const createSku = (data, CB) => ({
-//   type: ActionTypes.REQUEST_CREATE_SKU,
-//   data,
-//   CB
-// })
+export const createSku = (data, CB) => ({
+  type: ActionTypes.REQUEST_CREATE_SKU,
+  data,
+  CB
+})
 
 // export const updateSku = (data, CB) => ({
 //   type: ActionTypes.REQUEST_UPDATE_SKU,

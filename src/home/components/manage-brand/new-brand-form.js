@@ -45,7 +45,8 @@ class BrandForm extends React.Component {
   }
  
   componentDidUpdate (prevProps) {
-    if((this.props.originList !== prevProps.originList || this.props.brandTypeList !== prevProps.brandTypeList)) {
+    //if((this.props.originList !== prevProps.originList || this.props.brandTypeList !== prevProps.brandTypeList)) {
+    if((this.props.brandTypeList !== prevProps.brandTypeList)) {
       this.setState({
         //originIdx: this.props.brandInfo ? this.props.originList.map(item => item.short_name).indexOf(this.props.brandInfo.origin_name) + 1 : 1,
         typeIdx: this.props.brandInfo ? this.props.brandTypeList.map(item => item.id).indexOf(this.props.brandInfo.Type) + 1 : 1,
@@ -256,11 +257,11 @@ class BrandForm extends React.Component {
               <button
                 disabled={!this.state.isImageSelected || this.state.isImageUploading}
                 onClick={this.submitUploadedImage}
-                style={{
+                style={{      
                   width: '100%',
                   padding: '10px',
                   borderRadius: '4px',
-                  cursor: this.state.isImageUploading ? 'progress' : 'pointer'
+                  cursor: this.state.isImageUploading ? 'progress' : 'pointer'        
                 }}
               >
                 Upload

@@ -119,7 +119,7 @@ class ManageSKU extends React.Component {
     const { activePage } = this.state
 
     return (
-      <div style={{ width: '100%', overflow: 'hidden'}}>
+      <div style={{ width: '100%'}}>
         <div
           style={{
             display: 'flex',

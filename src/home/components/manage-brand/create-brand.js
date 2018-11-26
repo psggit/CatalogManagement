@@ -40,7 +40,7 @@ class CreateBrand extends React.Component {
       this.props.actions.createBrand({
         brand_name: data.brandName,
         type: data.typeIdx,
-        origin_name: data.origin,
+        //origin_name: data.origin,
         alcohol_per: parseInt(data.alcoholPercentage),
         temperature: parseInt(data.temperature),
         cal_per: parseInt(data.caloriesPercentage),
@@ -75,9 +75,9 @@ class CreateBrand extends React.Component {
             <BrandForm
               ref={(node) => { this.brandForm = node }}
               disableNameField={false}
-              originList={this.props.originList}
+              //originList={this.props.originList}
               brandTypeList={this.props.brandTypeList}
-              loadingOriginList={this.props.loadingOriginList}
+              //loadingOriginList={this.props.loadingOriginList}
               loadingBrandTypeList={this.props.loadingBrandTypeList}
             />
           </Card>
