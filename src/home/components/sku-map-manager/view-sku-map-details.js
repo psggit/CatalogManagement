@@ -20,6 +20,7 @@ class ViewSKUMapDetails extends React.Component {
       skuId: 0,
       //skuPricingId: 0,
       volume: 0,
+      SKUStatus: false,
       // shouldMountAddRetailerDialog: false,
       // shouldMountAddStateToSkuDialog: false,
       disableSave: false,
@@ -45,6 +46,7 @@ class ViewSKUMapDetails extends React.Component {
       skuId: this.props.match.params.skuId,
       //skuPricingId: history.sku_pricing_id,
       volume: history.volume,
+      SKUStatus: history.is_active
       //status: history.is_active
     })
 
@@ -213,6 +215,7 @@ class ViewSKUMapDetails extends React.Component {
               <p><b>Brand name</b>: { this.state.brandName }</p>
               <p><b>Sku id</b>: { this.state.skuId }</p>
               <p><b>Volume</b>: { this.state.volume } ml</p>
+              <p><b>SKU Status</b>: { this.state.SKUStatus ? 'Active' : 'Inactive' }</p>
             </div>
           }
         </Card>

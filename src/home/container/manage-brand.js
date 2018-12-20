@@ -145,7 +145,7 @@ class ManageBrand extends React.Component {
           }}
         >
 
-          <NavLink to={`/home/manage-brand/create-brand`}>
+          <NavLink to={`/home/manage-brand/create`}>
             <RaisedButton
               label="CREATE BRAND"
               primary

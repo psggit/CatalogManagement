@@ -6,6 +6,7 @@ import {
   TableHeaderColumn,
   TableRow,
   TableRowColumn,
+  Switch
   //Scrollbars
 } from 'material-ui/Table'
 
@@ -22,7 +23,8 @@ const TableHeaderItems = [
   'BRAND NAME',
   'VOLUME',
   'STATUS',
-  'CREATED AT'
+  'CREATED AT',
+  ''
 ]
 
 const styles = [
@@ -31,15 +33,17 @@ const styles = [
   { width: '120px' },
   { width: '60px' },
   { width: '60px' },
-  { width: '200px' }
+  { width: '200px' },
+  { width: '60px' }
 ]
 
 function handleClick(e, item, props) {
   let queryObj = {}
   
-  if(props.navigateTo !== "editSKU" && !item.is_active) {
-    e.preventDefault()
-  } else if(props.navigateTo === "editSKU") {
+  // if(props.navigateTo !== "editSKU" && !item.is_active) {
+  //   e.preventDefault()
+  // } 
+  if(props.navigateTo === "editSKU") {
     queryObj = {
       brand_id: item.brand_id,
       sku_id: item.sku_id,
@@ -49,7 +53,7 @@ function handleClick(e, item, props) {
       high_res_image: item.high_res_image,
       low_res_image: item.low_res_image
     }
-    props.history.push(`/home/manage-sku/edit-sku/${item.brand_name}?sku_id=${item.id}&brand_id=${item.brand_id}`, queryObj) 
+    props.history.push(`/home/manage-sku/edit/${item.brand_name}?sku_id=${item.id}&brand_id=${item.brand_id}`, queryObj) 
   } else {
     queryObj = {
       brand_id: item.brand_id,
@@ -91,7 +95,7 @@ function ViewSKUList(data) {
                         {
                           <FlatButton primary label={`${data.navigateTo === "editSKU" ? "EDIT" : "VIEW"}`}
                             onClick={(e) => handleClick(e, item, data)} 
-                            style={ data.navigateTo !== 'editSKU' && !item.is_active ? {opacity: 0.55} : {}}  
+                            // style={ data.navigateTo !== 'editSKU' && !item.is_active ? {opacity: 0.55} : {}}  
                           /> 
                         }
                       </TableRowColumn>
@@ -100,6 +104,14 @@ function ViewSKUList(data) {
                       <TableRowColumn style={styles[3]}>{item.volume}</TableRowColumn>
                       <TableRowColumn style={styles[4]}>{item.is_active ? 'ACTIVE' : 'INACTIVE'}</TableRowColumn>
                       <TableRowColumn style={styles[5]}>{item.created_at}</TableRowColumn>
+                      <TableRowColumn style={styles[6]}>
+                        <Switch
+                          checked={item.is_active}
+                          //onChange={this.handleChange('checkedB')}
+                          //value="checkedB"
+                          color="primary"
+                        />
+                      </TableRowColumn>
                     </TableRow>
                   )
                 })

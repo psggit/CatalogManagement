@@ -1,6 +1,24 @@
 const express = require('express');
 const path = require('path')
 const app = express();
+// const chokidar = require('chokidar');
+// const exec = require('child_process').exec;
+
+// const cmd = "npm run build"
+ 
+// const watcher = chokidar.watch(path.join(__dirname, 'src'), {
+//   ignored: /(^|[\/\\])\../,
+//   persistent: true
+// })
+
+// watcher.on('change', (path) => {
+//   console.log(path)
+//   exec(cmd, function(err, stdout, stderr) {
+//     console.log(stdout)
+//   })
+// })
+
+
 
 const env = process.env.NODE_ENV
 if (env === 'production') {
@@ -27,6 +45,6 @@ app.get('/*', (req, res)=>{
 });
 
 // Serve the files on port 3000.
-app.listen(3000, function () {
+app.listen(8080, function () {
   console.log('Example app listening on port 3000!\n');
 });

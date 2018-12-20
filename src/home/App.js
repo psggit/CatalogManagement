@@ -32,7 +32,7 @@ class App extends React.Component {
   constructor(props){
     super()
     this.state = {
-      key: 0,
+      // key: 0,
       isDrawerOpen: false,
       headerTitle: getBreadCrumbPath().length ? getBreadCrumbPath() : 'Welcome'
     }
@@ -52,8 +52,8 @@ class App extends React.Component {
     //this.props.actions.fetchRepositories("react");
     const breadCrumbUri = getUriFromBreadCrumb(this.state.headerTitle)
     history.listen((location) => {
-      const { key } = this.state
-      this.setState({ key: key + 1 })
+      // const { key } = this.state
+      // this.setState({ key: key + 1 })
       if (location.pathname !== breadCrumbUri) {
         this.setState({ headerTitle: getBreadCrumbPath(breadCrumbUri) })
       }
@@ -114,7 +114,8 @@ class App extends React.Component {
                 toggleDrawer={this.toggleDrawer}
                 handleCloseDrawer={this.handleCloseDrawer}
               />
-              <DisplayScreen key={this.state.key} >
+              {/* <DisplayScreen key={this.state.key} > */}
+              <DisplayScreen>
                   <Switch>
                     <Route exact path="/" component={WelcomeScreen} />
                     <Route exact path="/home" component={WelcomeScreen} />
@@ -123,12 +124,12 @@ class App extends React.Component {
                     <Route exact path="/home/sku-mapping/:skuId" component={ViewSKUMapDetails} />
 
                     <Route exact path="/home/manage-brand/" component={ManageBrand} />
-                    <Route exact path="/home/manage-brand/create-brand" component={CreateBrand} />
-                    <Route exact path="/home/manage-brand/edit-brand/:brandName" component={EditBrand} />
+                    <Route exact path="/home/manage-brand/create" component={CreateBrand} />
+                    <Route exact path="/home/manage-brand/edit/:brandName" component={EditBrand} />
 
                     <Route exact path="/home/manage-sku" component={ViewSKU} />
-                    <Route exact path="/home/manage-sku/create-new-sku" component={CreateSKU} />
-                    <Route exact path="/home/manage-sku/edit-sku/:brandName" component={EditSKU} />
+                    <Route exact path="/home/manage-sku/create" component={CreateSKU} />
+                    <Route exact path="/home/manage-sku/edit/:brandName" component={EditSKU} />
                   </Switch>
               </DisplayScreen> 
             </div>

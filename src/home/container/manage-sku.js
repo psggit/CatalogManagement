@@ -10,7 +10,7 @@ import {getIcon} from '@utils/icon-utils'
 import FilterModal from '@components/filter-modal'
 import { getQueryObj, getQueryUri } from '@utils/url-utils'
 import * as Actions from './../actions'
-import ViewBrands from './../components/sku-management/view-brand-list'
+//import ViewBrands from './../components/sku-management/view-brand-list'
 import Pagination from '@components/pagination'
 
 import * as Roles from './../constants/roles'
@@ -135,15 +135,15 @@ class ManageSKU extends React.Component {
 
         <br />
 
-        <h3>Select brand</h3>
+        {/* <h3>Select brand</h3>
 
         <ViewBrands
           loadingBrandList={loadingBrandList}
           brandList={brands}
-        />
+        /> */}
 
         {
-          !loadingBrandList 
+          !loadingBrandList
           ? 
             <React.Fragment>
               <Pagination
