@@ -109,7 +109,7 @@ class Form extends React.Component {
           <button
             disabled={this.state.isSubmitting}
             onClick={this.handleSubmit}
-            style={{ marginTop: '20px', width: '100%', height: '40px', background: '#735AB8', cursor: this.state.isSubmitting ? 'progress' : '' }}
+            style={{ marginTop: '20px', width: '100%', height: '40px', background: '#673AB7', cursor: this.state.isSubmitting ? 'progress' : '' }}
             className="btn btn--primary"
           >
             Login
