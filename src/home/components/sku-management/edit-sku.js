@@ -58,18 +58,19 @@ class editSKU extends React.Component {
             <SkuDetailsForm
               ref={(node) => { this.skuDetailsForm = node }}
               skuInfo={this.props.history.location.state}
+              submit={this.submit}
               brandName={this.props.match.params.brandName}
               isDisabled={true}
               action="edit"
             />
           </Card>
-          <RaisedButton
+          {/* <RaisedButton
             primary
             disabled={this.state.isDisabled}
             label="Save"
             onClick={this.submit}
             style={{ marginTop: '40px' }}
-          />
+          /> */}
         </div>
 
       </div>

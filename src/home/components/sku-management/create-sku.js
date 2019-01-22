@@ -67,6 +67,7 @@ class createSKU extends React.Component {
             <SkuDetailsForm
               ref={(node) => { this.skuDetailsForm = node }}
               isDisabled={false}
+              submit={this.submit}
               //statusData={['active', 'inactive']}
               //status={true}
               //brandName={this.state.brandName}
@@ -75,13 +76,13 @@ class createSKU extends React.Component {
               action="create"
             />
           </Card>
-          <RaisedButton
+          {/* <RaisedButton
             primary
             disabled={this.state.isDisabled}
             label="Save"
             onClick={this.submit}
             style={{ marginTop: '40px' }}
-          />
+          /> */}
         </div>
 
       </div>

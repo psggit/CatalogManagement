@@ -77,19 +77,12 @@ class CreateBrand extends React.Component {
               disableNameField={false}
               //originList={this.props.originList}
               brandTypeList={this.props.brandTypeList}
+              submit={this.submit}
               //loadingOriginList={this.props.loadingOriginList}
               loadingBrandTypeList={this.props.loadingBrandTypeList}
             />
-          </Card>
-          <RaisedButton
-            primary
-            disabled={this.state.isDisabled}
-            label="Save"
-            onClick={this.submit}
-            style={{ marginTop: '40px' }}
-          />
+          </Card> 
         </div>
-
       </div>
     )
   }

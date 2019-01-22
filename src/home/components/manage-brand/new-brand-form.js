@@ -7,7 +7,9 @@ import '@sass/components/_form.scss'
 import { POST } from '@utils/fetch'
 import { Api } from '@utils/config'
 import {getIcon} from '@utils/icon-utils'
-import { validateNumType, checkCtrlA } from './../../../utils'
+import { validateNumType, checkCtrlA, checkCtrlV } from './../../../utils'
+import { validateTextField, validateEmail, validateNumberField } from './../../../utils/validators'
+import RaisedButton from 'material-ui/RaisedButton'
 
 class BrandForm extends React.Component {
   constructor(props) {
@@ -32,7 +34,15 @@ class BrandForm extends React.Component {
       //origin: props.brandInfo ? props.originList.map(item => item.short_name)[props.originList.map(item => item.short_name).indexOf(this.props.brandInfo.origin_name)] : props.originList.map(item => item.short_name)[0],
       description: props.brandInfo ? props.brandInfo.description : '',
       high_res_image_err: false,
-      low_res_image_err: false
+      low_res_image_err: false,
+
+      brandNameErr: {
+        value: '',
+        status: false
+      }
+    }
+    this.inputNameMap = {
+      'brandName': 'Brand name'
     }
     this.state = Object.assign({}, this.intitialState)
     this.handleTextFields = this.handleTextFields.bind(this)
@@ -42,6 +52,8 @@ class BrandForm extends React.Component {
     this.handleUploadChange = this.handleUploadChange.bind(this)
     this.resetUploadImage = this.resetUploadImage.bind(this)
     this.submitUploadedImage = this.submitUploadedImage.bind(this)
+    this.handleSave = this.handleSave.bind(this)
+    this.isFormValid = this.isFormValid.bind(this)
   }
  
   componentDidUpdate (prevProps) {
@@ -73,32 +85,48 @@ class BrandForm extends React.Component {
   // }
 
   handleTextFields(e) {
-    let value = e.target.value
-    if (this.state.shouldTrim) {
-      value = value.trim()
-    }
+    // let value = e.target.value
+    // if (this.state.shouldTrim) {
+    //   value = value.trim()
+    // }
 
-    if (value.trim().length) {
-      this.setState({ shouldTrim: false })
-    } else {
-      this.setState({ shouldTrim: true })
-    }
-    this.setState({ [e.target.name]: value })
-    if(!/^(https:\/\/)(.*)/.test(value)) {
-      this.setState({ [`${e.target.name}_err`]: true })
-    } else {
-      this.setState({ [`${e.target.name}_err`]: false })
-    }
+    // if (value.trim().length) {
+    //   this.setState({ shouldTrim: false })
+    // } else {
+    //   this.setState({ shouldTrim: true })
+    // }
+    // this.setState({ [e.target.name]: value })
+    // if(!/^(https:\/\/)(.*)/.test(value)) {
+    //   this.setState({ [`${e.target.name}_err`]: true })
+    // } else {
+    //   this.setState({ [`${e.target.name}_err`]: false })
+    // }
+
+    const errName = `${e.target.name}Err`
+    this.setState({
+        [e.target.name]: e.target.value,
+        [errName]: validateTextField(this.inputNameMap[e.target.name], e.target.value),
+    })
   }
 
   handleChange(e) {
-    if(validateNumType(e.keyCode) || checkCtrlA(e)) {
+    const errName = `${e.target.name}Err`
+    // if(validateNumType(e.keyCode) || checkCtrlA(e)) {
+    //   this.setState({ 
+    //     [e.target.name]: e.target.value
+    //   })
+    // } else {
+    //   e.preventDefault()
+    // }
+
+    if(validateNumType(e.keyCode) || checkCtrlA(e) || checkCtrlV(e)) {
       this.setState({ 
-        [e.target.name]: e.target.value
+          [e.target.name]: e.target.value,
+          [errName]: validateNumberField(this.inputNameMap[e.target.name], e.target.value)
       })
     } else {
-      e.preventDefault()
-    }
+        e.preventDefault()
+    }   
   }
 
   getData() {
@@ -115,6 +143,22 @@ class BrandForm extends React.Component {
 
   resetUploadImage() {
     this.setState({ isImageUploaded: false, isImageSelected: false, isImageUploading: false, image_url: '' })
+  }
+
+  isFormValid() {
+    const brandNameErr = validateTextField(this.inputNameMap['brandName'], this.state.brandName)
+    this.setState({ brandNameErr: validateTextField(this.inputNameMap['brandName'], this.state.brandName) })
+
+    if(!brandNameErr.status) {
+      return true;
+    }
+    return false
+  }
+
+  handleSave() {
+    if(this.isFormValid()) {
+      this.props.submit()
+    }
   }
 
   submitUploadedImage() {
@@ -135,6 +179,7 @@ class BrandForm extends React.Component {
   }
 
   render() {
+    const { brandNameErr } = this.state
     return (
       <Fragment>
         
@@ -147,6 +192,10 @@ class BrandForm extends React.Component {
             value={this.state.brandName}
             style={{ width: '100%' }}
           />
+          {
+            brandNameErr.status &&
+            <p className="error">* {brandNameErr.value}</p>
+          }
         </div>
 
         {/* <div className="form-group">
@@ -355,7 +404,13 @@ class BrandForm extends React.Component {
             <p style={{ color: '#ff3b34'}}> Low res image url is not valid </p>
           }
         </div>
-       
+        <RaisedButton
+          primary
+          disabled={brandNameErr.status}
+          label="Save"
+          onClick={this.handleSave}
+          style={{ marginTop: '40px' }}
+        />
       </Fragment>
     )
   }

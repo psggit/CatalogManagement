@@ -7,7 +7,10 @@ import '@sass/components/_form.scss'
 import { POST } from '@utils/fetch'
 import { Api } from '@utils/config'
 import {getIcon} from '@utils/icon-utils'
-import { validateNumType, checkCtrlA } from './../../../utils'
+// import { validateNumType, checkCtrlA } from './../../../utils'
+import RaisedButton from 'material-ui/RaisedButton'
+import { validateNumType, checkCtrlA, checkCtrlV } from './../../../utils'
+import { validateTextField, validateEmail, validateNumberField } from './../../../utils/validators'
 
 class SkuDetailsForm extends React.Component {
   constructor(props) {
@@ -30,8 +33,17 @@ class SkuDetailsForm extends React.Component {
       high_res_image: props.skuInfo ? props.skuInfo.high_res_image : '',
       low_res_image: props.skuInfo ? props.skuInfo.low_res_image : '',
       high_res_image_err: false,
-      low_res_image_err: false
+      low_res_image_err: false,
+      volumeErr: {
+        value: '',
+        status: false
+      }
     }
+
+    this.inputNameMap = {
+      'volume': 'Volume'
+    }
+    
     this.state = Object.assign({}, this.intitialState)
     this.handleTextFields = this.handleTextFields.bind(this)
     this.handleStatusChange = this.handleStatusChange.bind(this)
@@ -40,6 +52,8 @@ class SkuDetailsForm extends React.Component {
     this.handleUploadChange = this.handleUploadChange.bind(this)
     this.resetUploadImage = this.resetUploadImage.bind(this)
     this.submitUploadedImage = this.submitUploadedImage.bind(this)
+    this.handleSave = this.handleSave.bind(this)
+    this.isFormValid = this.isFormValid.bind(this)
   }
 
   handleStatusChange(e, k) {
@@ -61,34 +75,63 @@ class SkuDetailsForm extends React.Component {
   }
 
   handleChange(e) {
-    if(validateNumType(e.keyCode) || checkCtrlA(e)) {
+    // if(validateNumType(e.keyCode) || checkCtrlA(e)) {
+    //   this.setState({ 
+    //     [e.target.name]: e.target.value
+    //   })
+    // } else {
+    //   e.preventDefault()
+    // }
+    const errName = `${e.target.name}Err`
+    if(validateNumType(e.keyCode) || checkCtrlA(e) || checkCtrlV(e)) {
       this.setState({ 
-        [e.target.name]: e.target.value
+          [e.target.name]: e.target.value,
+          [errName]: validateNumberField(this.inputNameMap[e.target.name], e.target.value)
       })
     } else {
-      e.preventDefault()
-    }
+        e.preventDefault()
+    }   
   }
 
   handleTextFields(e) {
-    let value = e.target.value
-    if (this.state.shouldTrim) {
-      value = value.trim()
-    }
+    // let value = e.target.value
+    // if (this.state.shouldTrim) {
+    //   value = value.trim()
+    // }
 
-    if (value.trim().length) {
-      this.setState({ shouldTrim: false })
-    } else {
-      this.setState({ shouldTrim: true })
-    }
-    this.setState({ [e.target.name]: value })
-    if (!/^(https:\/\/)(.*)/.test(value)) {
-      this.setState({ [`${e.target.name}_err`]: true })
-    } else {
-      this.setState({ [`${e.target.name}_err`]: false })
-    }
+    // if (value.trim().length) {
+    //   this.setState({ shouldTrim: false })
+    // } else {
+    //   this.setState({ shouldTrim: true })
+    // }
+    // this.setState({ [e.target.name]: value })
+    // if (!/^(https:\/\/)(.*)/.test(value)) {
+    //   this.setState({ [`${e.target.name}_err`]: true })
+    // } else {
+    //   this.setState({ [`${e.target.name}_err`]: false })
+    // }
+    const errName = `${e.target.name}Err`
+    this.setState({
+        [e.target.name]: e.target.value,
+        [errName]: validateTextField(this.inputNameMap[e.target.name], e.target.value),
+    })
   }
 
+  isFormValid() {
+    const volumeErr = validateNumberField(this.inputNameMap['volume'], this.state.volume)
+    this.setState({ volumeErr: validateNumberField(this.inputNameMap['volume'], this.state.volume) })
+
+    if(!volumeErr.status) {
+      return true;
+    }
+    return false
+  }
+
+  handleSave() {
+    if(this.isFormValid()) {
+      this.props.submit()
+    }
+  }
   getData() {
     return this.state
   }
@@ -128,6 +171,7 @@ class SkuDetailsForm extends React.Component {
 
   render() {
     //console.log("props", this.props)
+    const {volumeErr} = this.state
     return (
       <Fragment>
 
@@ -166,16 +210,18 @@ class SkuDetailsForm extends React.Component {
 
         <div className="form-group">
           <label className="label">Volume in ml</label><br />
+          <TextField
+            disabled={this.props.isDisabled}
+            defaultValue={this.props.skuInfo ? this.props.skuInfo.volume : ''}
+            name="volume"
+            autoComplete='off'
+            style={{ width: '100%' }}
+            onKeyDown={(e) => { this.handleChange(e) }} 
+            onKeyUp={(e) => { this.handleChange(e) }} 
+          />
           {
-              <TextField
-                disabled={this.props.isDisabled}
-                defaultValue={this.props.skuInfo ? this.props.skuInfo.volume : ''}
-                name="volume"
-                autoComplete='off'
-                style={{ width: '100%' }}
-                onKeyDown={(e) => { this.handleChange(e) }} 
-                onKeyUp={(e) => { this.handleChange(e) }} 
-              />
+            volumeErr.status &&
+            <p className="error">* {volumeErr.value}</p>
           }
         </div>
 
@@ -291,6 +337,14 @@ class SkuDetailsForm extends React.Component {
             <p style={{ color: '#ff3b34' }}> Low res image url is not valid </p>
           }
         </div>
+
+        <RaisedButton
+          primary
+          disabled={volumeErr.status}
+          label="Save"
+          onClick={this.handleSave}
+          style={{ marginTop: '40px' }}
+        />
 
         {/* {
           this.props.action === "edit" && this.state.status === 2 &&

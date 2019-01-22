@@ -77,17 +77,18 @@ class EditBrand extends React.Component {
               disableNameField={true}
               //originList={this.props.originList}
               brandTypeList={this.props.brandTypeList}
+              submit={this.submit}
               //loadingOriginList={this.props.loadingOriginList}
               loadingBrandTypeList={this.props.loadingBrandTypeList}
             />
           </Card>
-          <RaisedButton
+          {/* <RaisedButton
             primary
             disabled={this.state.isDisabled}
             label="Update"
             onClick={this.submit}
             style={{ marginTop: '40px' }}
-          />
+          /> */}
         </div>
 
       </div>

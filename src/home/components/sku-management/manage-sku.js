@@ -139,7 +139,7 @@ class SkuList extends React.Component {
             justifyContent: 'space-between'
           }}
         >
-          <NavLink to={`/home/manage-sku/create-new-sku`}>
+          <NavLink to={`/home/manage-sku/create`}>
             <RaisedButton
               label="CREATE NEW SKU"
               primary
