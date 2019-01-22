@@ -11,7 +11,7 @@ import {
 
 import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
-import Toggle from 'material-ui/Toggle'
+import Switch from './../../../components/switch'
 import CircularProgress from 'material-ui/CircularProgress'
 import { NavLink } from 'react-router-dom'
 import TableLoadingShell from './../table-loading-shell'
@@ -41,6 +41,7 @@ class ViewSKUList extends React.Component {
 
   constructor() {
     super()
+    this.updateSKUStatus = this.updateSKUStatus.bind(this)
   }
 
   handleClick(e, item) {
@@ -72,8 +73,8 @@ class ViewSKUList extends React.Component {
     }
   }
 
-  updateSKUStatus(e, isInputClicked) {
-    console.log("Is input clicked", isInputClicked)
+  updateSKUStatus(item, isInputClicked) {
+    this.props.showDialog({newStatus: isInputClicked, brandName: item.brand_name, volume: item.volume})
   }
 
   render() {
@@ -115,10 +116,7 @@ class ViewSKUList extends React.Component {
                         {/* <TableRowColumn style={styles[4]}>{item.is_active ? 'ACTIVE' : 'INACTIVE'}</TableRowColumn> */}
                         <TableRowColumn style={styles[4]}>{item.created_at}</TableRowColumn>
                         <TableRowColumn style={styles[5]}>
-                          <Toggle 
-                            toggled={item.is_active}
-                            onToggle={this.updateSKUStatus}
-                          />
+                            <Switch toggled={item.is_active} onToggle={this.updateSKUStatus} value={item} />
                         </TableRowColumn>
                       </TableRow>
                     )

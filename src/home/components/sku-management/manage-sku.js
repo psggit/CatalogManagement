@@ -11,7 +11,11 @@ import {getIcon} from '@utils/icon-utils'
 import ViewSKU from './view-sku-list'
 import Pagination from '@components/pagination'
 import { getQueryObj, getQueryUri } from '@utils/url-utils'
-
+import {unMountModal} from './../../../components/ModalBox/utils'
+import ModalHeader from './../../../components/ModalBox/ModalHeader'
+import ModalBody from './../../../components/ModalBox/ModalBody'
+import ModalBox from './../../../components/ModalBox'
+import ModalFooter from './../../../components/ModalBox/ModalFooter';
 
 class SkuList extends React.Component {
   constructor(props) {
@@ -20,7 +24,11 @@ class SkuList extends React.Component {
       shouldMountCreateSKU: false,
       shouldMountFilterDialog: false,
       activePage: 1,
-      pageOffset: 0
+      pageOffset: 0,
+      mountDialog: false,
+      skuStatus: false,
+      volume: '',
+      brandName: ''
     }
     this.filter = {
       searchField: '',
@@ -33,6 +41,7 @@ class SkuList extends React.Component {
     this.mountFilterDialog = this.mountFilterDialog.bind(this)
     this.unmountFilterModal = this.unmountFilterModal.bind(this)
     this.applyFilter = this.applyFilter.bind(this)
+    this.showDialog = this.showDialog.bind(this)
   }
 
   componentDidMount() {
@@ -127,6 +136,27 @@ class SkuList extends React.Component {
     this.setState({ shouldMountFilterDialog: false })
   }
 
+  showDialog(skuDetailsObj) {
+    //if(skuDetailsObj.newStatus) {
+    this.setState({
+      skuStatus: !skuDetailsObj.newStatus, 
+      mountDialog: true, 
+      brandName: skuDetailsObj.brandName, 
+      volume: skuDetailsObj.volume
+    })
+    //}
+  }
+
+  updateSKUStatus() {
+    this.setState({mountDialog: false})
+    console.log("update")
+  }
+
+  setDialogState() {
+    this.setState({mountDialog: false})
+    unMountModal()
+  }
+
   render() {
     const { loadingSkuList, skuList, totalSkuCount } = this.props
     const { activePage } = this.state
@@ -163,7 +193,33 @@ class SkuList extends React.Component {
           skuList={skuList}
           history={this.props.history}
           navigateTo= "editSKU"
+          showDialog={this.showDialog}
         />
+
+        {
+          this.state.mountDialog &&
+          <ModalBox>
+              <ModalHeader>
+                  <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                      <div style={{fontSize: '18px'}}>{this.state.skuStatus === true ? 'Deactivate' : 'Activate'} SKU</div>
+                  </div>
+              </ModalHeader>
+              <ModalBody height='60px'>
+                  <table className='table--hovered'>
+                      <tbody>
+                          Are you sure you want to {this.state.skuStatus === true ? 'Deactivate' : 'Activate'} this sku - {this.state.volume}ml ({this.state.brandName})
+                      </tbody>
+                  </table>
+              </ModalBody>
+              <ModalFooter>
+                  <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', fontWeight: '600' }}>
+                      <button className='btn btn-primary' onClick={() => this.updateSKUStatus()}> OK </button>
+                      <button className='btn btn-secondary' onClick={() => this.setDialogState()}> Cancel </button>
+                  </div>
+              </ModalFooter>
+              
+          </ModalBox>
+      }
 
         {
           !loadingSkuList 
