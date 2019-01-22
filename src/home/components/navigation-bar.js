@@ -34,14 +34,14 @@ class NavigationBar extends  React.Component {
       {
         name: 'Map Manager',
         nestedItems: [
-          { name: 'SKU Mapping', path: '/home/sku-mapping', id: 1 },
+          { name: 'SKU Mapping', path: '/admin/sku-mapping', id: 1 },
         ]
       },
       {
         name: 'Catalog Management',
         nestedItems: [
-          { name: 'Manage Brand', path: '/home/manage-brand', id: 2 },
-          { name: 'Manage SKU', path: '/home/manage-sku', id: 3 }
+          { name: 'Manage Brand', path: '/admin/manage-brand', id: 2 },
+          { name: 'Manage SKU', path: '/admin/manage-sku', id: 3 }
         ]
       },
     ]
@@ -54,7 +54,7 @@ class NavigationBar extends  React.Component {
         onRequestChange={this.props.toggleDrawer}
       >
         <div>
-          <a href="/home"><MenuItem className="menu-item-heading">CATALOG SYSTEM</MenuItem></a>
+          <a href="/admin"><MenuItem className="menu-item-heading">CATALOG SYSTEM</MenuItem></a>
         </div>
         {
           <List className="list-wrapper">

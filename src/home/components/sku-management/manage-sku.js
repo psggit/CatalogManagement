@@ -64,7 +64,7 @@ class SkuList extends React.Component {
       activePage: 1,
     }
 
-    history.pushState(queryObj, "sku listing", `/home/manage-sku?${getQueryUri(queryObj)}`)
+    history.pushState(queryObj, "sku listing", `/admin/manage-sku?${getQueryUri(queryObj)}`)
 
     this.props.actions.fetchSKUs({
       limit: this.pagesLimit,
@@ -115,7 +115,7 @@ class SkuList extends React.Component {
         operator: queryObj.searchOperator,
         search_text: queryObj.searchText
       }
-      history.pushState(queryParamsObj, "sku listing", `/home/manage-sku?${getQueryUri(queryParamsObj)}`)
+      history.pushState(queryParamsObj, "sku listing", `/admin/manage-sku?${getQueryUri(queryParamsObj)}`)
     }
 
     this.props.actions.fetchSKUs({
@@ -169,7 +169,7 @@ class SkuList extends React.Component {
             justifyContent: 'space-between'
           }}
         >
-          <NavLink to={`/home/manage-sku/create`}>
+          <NavLink to={`/admin/manage-sku/create`}>
             <RaisedButton
               label="CREATE NEW SKU"
               primary

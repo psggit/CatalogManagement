@@ -60,7 +60,7 @@ class ViewSKUList extends React.Component {
         high_res_image: item.high_res_image,
         low_res_image: item.low_res_image
       }
-      this.props.history.push(`/home/manage-sku/edit/${item.brand_name}?sku_id=${item.id}&brand_id=${item.brand_id}`, queryObj) 
+      this.props.history.push(`/admin/manage-sku/edit/${item.brand_name}?sku_id=${item.id}&brand_id=${item.brand_id}`, queryObj) 
     } else {
       queryObj = {
         brand_id: item.brand_id,
@@ -69,7 +69,7 @@ class ViewSKUList extends React.Component {
         is_active: item.is_active,
         volume: item.volume
       }
-      this.props.history.push(`/home/sku-mapping/${item.id}`, queryObj)
+      this.props.history.push(`/admin/sku-mapping/${item.id}`, queryObj)
     }
   }
 

@@ -73,18 +73,18 @@ class App extends React.Component {
         if (response.status !== 200) {
           console.log(`Looks like there was a problem. Status Code: ${response.status}`)
           localStorage.clear()
-          location.href = '/login'
+          location.href = '/admin/login'
           return
         }
         response.json().then((data) => {
           localStorage.clear()
-          location.href = '/login'
+          location.href = '/admin/login'
         })
       })
       .catch((err) => {
         console.log('Fetch Error :-S', err)
         localStorage.clear()
-        location.href = '/login'
+        location.href = '/admin/login'
       })
   }
 
@@ -106,7 +106,7 @@ class App extends React.Component {
                 logout={this.handleLogout}
                 isDrawerOpen={isDrawerOpen}
                 toggleDrawer={this.toggleDrawer}
-                headerTitle={headerTitle}
+                //headerTitle={headerTitle}
               />
               <NavigationBar
                 setHeaderTitle={this.setHeaderTitle}
@@ -117,19 +117,19 @@ class App extends React.Component {
               {/* <DisplayScreen key={this.state.key} > */}
               <DisplayScreen>
                   <Switch>
-                    <Route exact path="/" component={WelcomeScreen} />
-                    <Route exact path="/home" component={WelcomeScreen} />
+                    {/* <Route exact path="/" component={WelcomeScreen} /> */}
+                    <Route exact path="/admin" component={WelcomeScreen} />
 
-                    <Route exact path="/home/sku-mapping/" component={SKUMapManager} />
-                    <Route exact path="/home/sku-mapping/:skuId" component={ViewSKUMapDetails} />
+                    <Route exact path="/admin/sku-mapping/" component={SKUMapManager} />
+                    <Route exact path="/admin/sku-mapping/:skuId" component={ViewSKUMapDetails} />
 
-                    <Route exact path="/home/manage-brand/" component={ManageBrand} />
-                    <Route exact path="/home/manage-brand/create" component={CreateBrand} />
-                    <Route exact path="/home/manage-brand/edit/:brandName" component={EditBrand} />
+                    <Route exact path="/admin/manage-brand/" component={ManageBrand} />
+                    <Route exact path="/admin/manage-brand/create" component={CreateBrand} />
+                    <Route exact path="/admin/manage-brand/edit/:brandName" component={EditBrand} />
 
-                    <Route exact path="/home/manage-sku" component={ViewSKU} />
-                    <Route exact path="/home/manage-sku/create" component={CreateSKU} />
-                    <Route exact path="/home/manage-sku/edit/:brandName" component={EditSKU} />
+                    <Route exact path="/admin/manage-sku" component={ViewSKU} />
+                    <Route exact path="/admin/manage-sku/create" component={CreateSKU} />
+                    <Route exact path="/admin/manage-sku/edit/:brandName" component={EditSKU} />
                   </Switch>
               </DisplayScreen> 
             </div>

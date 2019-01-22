@@ -34,7 +34,7 @@ const styles = [
 ]
 
 function editBrand(brandDetails, data) {
-  data.history.push(`/home/manage-brand/edit/${brandDetails.brand_name}`, brandDetails)
+  data.history.push(`/admin/manage-brand/edit/${brandDetails.brand_name}`, brandDetails)
 }
 
 function ViewBrandList(data) {

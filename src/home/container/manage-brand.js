@@ -87,7 +87,7 @@ class ManageBrand extends React.Component {
         activePage: pageObj.activePage,
       }
   
-      history.pushState(queryParamsObj, "brand listing", `/home/manage-brand?${getQueryUri(queryParamsObj)}`)
+      history.pushState(queryParamsObj, "brand listing", `/admin/manage-brand?${getQueryUri(queryParamsObj)}`)
 
       filterObj = {
         filter_by: queryObj.searchBy,
@@ -123,7 +123,7 @@ class ManageBrand extends React.Component {
       activePage: 1,
     }
 
-    history.pushState(queryObj, "brand listing", `/home/manage-brand?${getQueryUri(queryObj)}`)
+    history.pushState(queryObj, "brand listing", `/admin/manage-brand?${getQueryUri(queryObj)}`)
 
     this.props.actions.fetchBrands({
       limit: this.pagesLimit,
@@ -145,7 +145,7 @@ class ManageBrand extends React.Component {
           }}
         >
 
-          <NavLink to={`/home/manage-brand/create`}>
+          <NavLink to={`/admin/manage-brand/create`}>
             <RaisedButton
               label="CREATE BRAND"
               primary

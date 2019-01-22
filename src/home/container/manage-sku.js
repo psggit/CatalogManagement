@@ -105,7 +105,7 @@ class ManageSKU extends React.Component {
       activePage: 1,
     }
 
-    history.pushState(queryObj, "brand listing", `/home/manage-sku?${getQueryUri(queryObj)}`)
+    history.pushState(queryObj, "brand listing", `/admin/manage-sku?${getQueryUri(queryObj)}`)
 
     this.props.actions.fetchBrands({
       limit: this.pagesLimit,
