@@ -65,8 +65,8 @@ import { GET, POST } from '@utils/fetch'
 
 export const fetchBrands = action => (
   POST({
-    api: '/SkuManagement/brand/brandList',
-    apiBase: 'catalogsystem',
+    api: '/Api/listBrandDetails',
+    apiBase: 'catalog',
     data: action.data,
     handleError: true
   })
@@ -98,8 +98,8 @@ export const fetchBrands = action => (
 
 export const createBrand = action => (
   POST({
-    api: '/SkuManagement/brand/createBrand',
-    apiBase: 'catalogsystem',
+    api: '/Api/createBrand',
+    apiBase: 'catalog',
     data: action.data,
     handleError: true
   })
@@ -108,8 +108,8 @@ export const createBrand = action => (
 
 export const updateBrand = action => (
   POST({
-    api: '/SkuManagement/brand/updateBrand',
-    apiBase: 'catalogsystem',
+    api: '/Api/updateBrand',
+    apiBase: 'catalog',
     data: action.data,
     handleError: true
   })

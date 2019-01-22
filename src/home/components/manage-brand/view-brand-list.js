@@ -60,11 +60,11 @@ function ViewBrandList(data) {
             !data.loadingBrandList
               ? (
                 data.brandList.map(item => (
-                  <TableRow key={item.brand_id}>
+                  <TableRow key={item.id}>
                     <TableRowColumn style={styles[0]}>
                       <FlatButton primary label="Edit" onClick={() => editBrand(item, data)}/>
                     </TableRowColumn>
-                    <TableRowColumn style={styles[1]}>{item.brand_id}</TableRowColumn>
+                    <TableRowColumn style={styles[1]}>{item.id}</TableRowColumn>
                     <TableRowColumn style={styles[2]}>{item.brand_name}</TableRowColumn>
                     <TableRowColumn style={styles[3]}>{item.alcohol_per}</TableRowColumn>
                     <TableRowColumn style={styles[4]}>{item.temperature}</TableRowColumn>

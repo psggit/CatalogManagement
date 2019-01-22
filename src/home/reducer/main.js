@@ -108,7 +108,7 @@ const actionsMap = {
 
   [ActionTypes.SUCCESS_FETCH_BRANDS]: (state, action) => {
     return Object.assign({}, state, {
-      brands: action.data.brands,
+      brands: action.data.brand_details,
       loadingBrandList: false,
       totalBrandCount: action.data.count
     })

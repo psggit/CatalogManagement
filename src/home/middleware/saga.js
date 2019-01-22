@@ -21,8 +21,8 @@ function* fetchSKUs(action) {
 
 function* fetchBrands(action) {
   try {
-    //const data = yield call(Api.fetchBrands, action)
-    const data = brandList
+    const data = yield call(Api.fetchBrands, action)
+    //const data = brandList
     yield put({ type: ActionTypes.SUCCESS_FETCH_BRANDS, data })
   } catch(err) {
     console.log(err)
@@ -230,11 +230,11 @@ function* fetchBrandTypes(action) {
 
 function* createBrand(action) {
   try {
-    //const data = yield call(Api.createBrand, action)
+    const data = yield call(Api.createBrand, action)
     yield put({ type: ActionTypes.SUCCESS_CREATE_BRAND, data })
     Notify('Successfully created the brand', 'success')
     setTimeout(() => {
-      window.location.href = `/home/manage-brand`
+      window.location.href = `/admin/manage-brand`
     }, 1000)
     action.CB(data)
   } catch(err) {
@@ -249,7 +249,7 @@ function* updateBrand(action) {
     yield put({ type: ActionTypes.SUCCESS_UPDATE_BRAND, data })
     Notify('Successfully updated the brand', 'success')
     setTimeout(() => {
-      window.location.href = `/home/manage-brand`
+      window.location.href = `/admin/manage-brand`
     }, 1000)
     action.CB(data)
   } catch(err) {

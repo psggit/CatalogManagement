@@ -16,7 +16,7 @@ class FilterModal extends React.Component {
       isCityAvailable: false,
       stateIdx: null,
       cityIdx: null,
-      searchField: 'id',
+      searchField: 'ID',
       searchFieldIdx: 1,
       searchOperator: 'EQUAL',
       searchOperatorIdx: 1,
@@ -71,7 +71,7 @@ class FilterModal extends React.Component {
   }
 
   handleFieldChange(e, index) {
-    this.setState({searchField: index === 0 ? 'id' : 'brandName', searchFieldIdx: index + 1})
+    this.setState({searchField: index === 0 ? 'ID' : 'BrandName', searchFieldIdx: index + 1})
   }
 
   handleOperatorChange(e, index) {
@@ -100,19 +100,11 @@ class FilterModal extends React.Component {
 
   handleClick(e) {
     switch(this.props.filter) {
-      case 'stateAndCityWithIsAvailableCheck':
-        this.handleApplyFilter(this.state.stateIdx, this.state.isLocalityAvailable)
-      break;
-
-      case 'cityWithIsAvailableCheck':
-        this.handleApplyFilter(this.state.stateIdx, this.state.isCityAvailable)
-      break;
-
       case 'brandFilter':
         const filter = {
-          filter_by: this.state.searchField,
+          column: this.state.searchField,
           operator: this.state.searchOperator,
-          search_text: this.state.searchText
+          value: this.state.searchText
         }
         this.props.applyFilter(filter)
         this.unmountModal()
@@ -144,171 +136,6 @@ class FilterModal extends React.Component {
           actions={actions}
           onRequestClose={this.handleClose}
         >
-          {
-            this.props.filter === "stateAndCityWithIsAvailableCheck" &&
-            <div>
-              <div className="form-group">
-                <label>State</label><br />
-                <SelectField
-                  style={{ width: '100%' }}
-                  floatingLabelText={this.props.floatingLabelText}
-                  value={parseInt(this.state.stateIdx)}
-                  onChange={this.handleStateChange}
-                  iconStyle={{ fill: '#9b9b9b' }}
-                >
-                  {
-                    !this.props.loadingStates
-                      ? (
-                        this.props.statesData.map((state, i) => (
-                          <MenuItem
-                            value={i + 1}
-                            key={state.id}
-                            primaryText={state.state_name}
-                          />
-                        ))
-                      )
-                      : ''
-                  }
-                </SelectField>
-              </div>
-              <div className="form-group">
-                <label>City</label><br />
-                <SelectField
-                  style={{ width: '100%' }}
-                  floatingLabelText={this.props.floatingLabelText}
-                  disabled={this.props.loadingCities || !this.props.citiesData.length}
-                  value={parseInt(this.state.cityIdx)}
-                  onChange={this.handleCityChange}
-                >
-                  {
-                    !this.props.loadingCities && this.props.citiesData.length
-                      ? (
-                        this.props.citiesData.map((city, i) => (
-                          <MenuItem
-                            value={i + 1}
-                            key={city.id}
-                            primaryText={city.name}
-                          />
-                        ))
-                      )
-                      : ''
-                  }
-                </SelectField>
-              </div>
-              <div className="form-group">
-                <Checkbox
-                  style={{ marginTop: '10px' }}
-                  // disabled={this.props.isDisabled}
-                  checked={this.state.isLocalityAvailable}
-                  onCheck={this.handleChangeIsLocalityAvailable}
-                  name="isLocalityAvailable"
-                  label="is_available"
-                />
-              </div>
-            </div>
-          }
-          {
-            this.props.filter === "stateAndCityWithoutIsAvailableCheck" &&
-            <div>
-              <div className="form-group">
-                <label>State</label><br />
-                <SelectField
-                  style={{ width: '100%' }}
-                  floatingLabelText={this.props.floatingLabelText}
-                  value={parseInt(this.state.stateIdx)}
-                  onChange={this.handleStateChange}
-                  iconStyle={{ fill: '#9b9b9b' }}
-                >
-                  {
-                    !this.props.loadingStates
-                      ? (
-                        this.props.statesData.map((state, i) => (
-                          <MenuItem
-                            value={i + 1}
-                            key={state.id}
-                            primaryText={state.state_name}
-                          />
-                        ))
-                      )
-                      : ''
-                  }
-                </SelectField>
-              </div>
-              <div className="form-group">
-                <label>City</label><br />
-                <SelectField
-                  style={{ width: '100%' }}
-                  floatingLabelText={this.props.floatingLabelText}
-                  disabled={this.props.loadingCities || !this.props.citiesData.length}
-                  value={parseInt(this.state.cityIdx)}
-                  onChange={this.handleCityChange}
-                >
-                  {
-                    !this.props.loadingCities && this.props.citiesData.length
-                      ? (
-                        this.props.citiesData.map((city, i) => (
-                          <MenuItem
-                            value={i + 1}
-                            key={city.id}
-                            primaryText={city.name}
-                          />
-                        ))
-                      )
-                      : ''
-                  }
-                </SelectField>
-              </div>
-              {/* <div className="form-group">
-              <Checkbox
-                style={{ marginTop: '10px' }}
-                // disabled={this.props.isDisabled}
-                checked={this.state.isLocalityAvailable}
-                onCheck={this.handleChangeIsLocalityAvailable}
-                name="isLocalityAvailable"
-                label="is_available"
-              />
-            </div> */}
-            </div>
-          }
-          {
-            this.props.filter === "cityWithIsAvailableCheck" &&
-            <div>
-              <div className="form-group">
-                <label>State</label><br />
-                <SelectField
-                  style={{ width: '100%' }}
-                  floatingLabelText={this.props.floatingLabelText}
-                  value={parseInt(this.state.stateIdx)}
-                  onChange={this.handleStateChange}
-                  iconStyle={{ fill: '#9b9b9b' }}
-                >
-                  {
-                    !this.props.loadingStates
-                      ? (
-                        this.props.statesData.map((state, i) => (
-                          <MenuItem
-                            value={i + 1}
-                            key={state.id}
-                            primaryText={state.state_name}
-                          />
-                        ))
-                      )
-                      : ''
-                  }
-                </SelectField>
-              </div>
-              <div className="form-group">
-                <Checkbox
-                  style={{ marginTop: '10px' }}
-                  // disabled={this.props.isDisabled}
-                  checked={this.state.isCityAvailable}
-                  onCheck={this.handleChangeIsCityAvailable}
-                  name="isCityActive"
-                  label="is_available"
-                />
-              </div>
-            </div>
-          }
           {
             this.props.filter === "brandFilter" &&
             <div>
@@ -348,16 +175,6 @@ class FilterModal extends React.Component {
                   style={{ width: '100%' }}
                 />
               </div>
-              {/* <div className="form-group">
-                <Checkbox
-                  style={{ marginTop: '10px' }}
-                  // disabled={this.props.isDisabled}
-                  checked={this.state.isCityAvailable}
-                  onCheck={this.handleChangeIsCityAvailable}
-                  name="isCityActive"
-                  label="is_available"
-                />
-              </div> */}
             </div>
           }
         </Dialog>

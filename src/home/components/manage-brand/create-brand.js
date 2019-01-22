@@ -34,17 +34,17 @@ class CreateBrand extends React.Component {
 
   submit() {
     const data = this.brandForm.getData()
-    if(data.brandName.length > 0 && data.image_url.length > 0) {
+    if(data.brandName.length > 0) {
     //if(data.brandName.length > 0) {
       this.setState({ isDisabled: true })
       this.props.actions.createBrand({
         brand_name: data.brandName,
         type: data.typeIdx,
         //origin_name: data.origin,
-        alcohol_per: parseInt(data.alcoholPercentage),
-        temperature: parseInt(data.temperature),
-        cal_per: parseInt(data.caloriesPercentage),
-        cal_total: parseInt(data.caloriesTotal),
+        alcohol_per: (data.alcoholPercentage),
+        temperature: (data.temperature),
+        cal_per: (data.caloriesPercentage),
+        cal_total: (data.caloriesTotal),
         image: data.image_url,
         high_res_image: data.high_res_image,
         low_res_image: data.low_res_image,

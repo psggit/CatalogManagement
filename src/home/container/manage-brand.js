@@ -26,9 +26,9 @@ class ManageBrand extends React.Component {
       pageOffset: 0
     }
     this.filter = {
-      searchField: '',
-      searchOperator: '',
-      searchText: ''
+      column: '',
+      operator: '',
+      value: ''
     }
     this.pagesLimit = 5
     this.handlePageChange = this.handlePageChange.bind(this)
@@ -44,7 +44,13 @@ class ManageBrand extends React.Component {
     } else {
       this.props.actions.fetchBrands({
         limit: this.pagesLimit,
-        offset: 0
+        offset: 0,
+        filter: {
+          column : "BrandName",
+          operator: "CASEIGNORE",
+          value: "Jack daniEl's Old No.7"
+        }
+        //filter: {}
       })
     }
   }
@@ -62,9 +68,9 @@ class ManageBrand extends React.Component {
       offset: queryObj.offset ? parseInt(queryObj.offset) : 0,
       limit: this.pagesLimit,
       filter: {
-        filter_by: queryObj.searchBy,
-        operator: queryObj.searchOperator,
-        search_text: queryObj.searchText
+        column: queryObj.column,
+        operator: queryObj.operator,
+        value: queryObj.value
       }
     })
   }
@@ -80,9 +86,9 @@ class ManageBrand extends React.Component {
 
     if(location.search.length) {
       const queryParamsObj = {
-        searchBy: filterObj.filter_by,
-        searchOperator: filterObj.operator,
-        searchText: filterObj.search_text,
+        column: filterObj.column,
+        operator: filterObj.operator,
+        value: filterObj.value,
         offset: pageObj.offset,
         activePage: pageObj.activePage,
       }
@@ -90,9 +96,9 @@ class ManageBrand extends React.Component {
       history.pushState(queryParamsObj, "brand listing", `/admin/manage-brand?${getQueryUri(queryParamsObj)}`)
 
       filterObj = {
-        filter_by: queryObj.searchBy,
-        operator: queryObj.searchOperator,
-        search_text: queryObj.searchText
+        column: queryObj.column,
+        operator: queryObj.operator,
+        value: queryObj.value
       }
     }
 
@@ -116,9 +122,9 @@ class ManageBrand extends React.Component {
 
   applyFilter(filterObj) {
     const queryObj = {
-      searchBy: filterObj.filter_by,
-      searchOperator: filterObj.operator,
-      searchText: filterObj.search_text,
+      column: filterObj.column,
+      operator: filterObj.operator,
+      value: filterObj.value,
       offset: 0,
       activePage: 1,
     }
@@ -170,7 +176,7 @@ class ManageBrand extends React.Component {
         />
 
         {
-          !loadingBrandList 
+          !loadingBrandList && brands.length > 1 
           ? 
             <React.Fragment>
               <Pagination

@@ -36,15 +36,15 @@ class EditBrand extends React.Component {
     const data = this.brandForm.getData()
     this.setState({ isDisabled: true })
     this.props.actions.updateBrand({
-      brand_id: this.props.history.location.state.brand_id,
+      brand_id: parseInt(this.props.history.location.state.id),
       brand_name: data.brandName,
-      short_name: this.props.history.location.state.short_name,
-      type: data.typeIdx,
+      //short_name: this.props.history.location.state.short_name,
+      type: data.typeIdx,    
       //origin_name: data.origin,
-      alcohol_per: parseInt(data.alcoholPercentage),
-      temperature: parseInt(data.temperature),
-      cal_per: parseInt(data.caloriesPercentage),
-      cal_total: parseInt(data.caloriesTotal),
+      alcohol_per: (data.alcoholPercentage),
+      temperature: (data.temperature),
+      cal_per: (data.caloriesPercentage),
+      cal_total: (data.caloriesTotal),
       image: data.image_url,
       high_res_image: data.high_res_image,
       low_res_image: data.low_res_image,
@@ -54,6 +54,7 @@ class EditBrand extends React.Component {
   }
 
   render() {
+    console.log("params", this.props.history.location.state)
     return (
       <div style={{
         width: '40%',
