@@ -9,14 +9,14 @@ import { GET, POST } from '@utils/fetch'
 //   })
 // )
 
-// export const fetchSKUs = action => (
-//   POST({
-//     api: '/SkuManagement/skuList',
-//     apiBase: 'catalogsystem',
-//     data: action.data,
-//     handleError: true
-//   })
-// )
+export const fetchSKUs = action => (
+  POST({
+    api: '/Api/listSku',
+    apiBase: 'catalog',
+    data: action.data,
+    handleError: true
+  })
+)
 
 // export const updateSKU = action => (
 //   POST({

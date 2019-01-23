@@ -21,7 +21,10 @@ class EditBrand extends React.Component {
   }
 
   componentDidMount() {
-    this.props.actions.fetchBrandTypes({})
+    this.props.actions.fetchBrandTypes({
+      limit: 10,
+      offset: 0
+    })
   }
 
   callbackUpdate() {

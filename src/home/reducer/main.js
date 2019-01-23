@@ -419,7 +419,7 @@ const actionsMap = {
   [ActionTypes.SUCCESS_FETCH_BRAND_TYPE_LIST]: (state, action) => {
     return Object.assign({}, state, {
       loadingBrandTypeList: false,
-      brandTypeList: action.data
+      brandTypeList: action.data.brand_type
     })
   },
 

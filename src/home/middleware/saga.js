@@ -11,8 +11,8 @@ import {skuList, brandList, originList, brandTypes, createdSku, volumeList, skuD
 
 function* fetchSKUs(action) {
   try {
-    //const data = yield call(Api.fetchSKUs, action)
-    const data = skuList
+    const data = yield call(Api.fetchSKUs, action)
+    //const data = skuList
     yield put({ type: ActionTypes.SUCCESS_FETCH_SKUS, data })
   } catch(err) {
     console.log(err)
@@ -220,8 +220,9 @@ function* fetchOriginList(action) {
 
 function* fetchBrandTypes(action) {
   try {
-    //const data = yield call(Api.fetchBrandTypes, action)
-    const data = brandTypes
+    const data = yield call(Api.fetchBrandTypes, action)
+    //console.log("data", data)
+    //const data = brandTypes
     yield put({ type: ActionTypes.SUCCESS_FETCH_BRAND_TYPE_LIST, data })
   } catch(err) {
     console.log(err)
