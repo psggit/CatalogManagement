@@ -20,8 +20,8 @@ class createSKU extends React.Component {
   }
 
   componentDidMount() {
-    this.props.actions.fetchBrandList({
-      limit: 99999,
+    this.props.actions.fetchBrands({
+      limit: 10,
       offset: 0
     })
   }
@@ -32,11 +32,12 @@ class createSKU extends React.Component {
 
   submit() {
     const data = this.skuDetailsForm.getData()
+    console.log("sku form", data)
     if (data.volume) {
       this.setState({ isDisabled: true })
       this.props.actions.createSku({
         brand_id: parseInt(data.brandId),
-        volume: parseInt(data.volume),
+        sku_volume: parseInt(data.volume),
         image_url: data.image_url,
         high_res_image: data.high_res_image,
         low_res_image: data.low_res_image,
@@ -46,7 +47,7 @@ class createSKU extends React.Component {
   }
 
   render() {
-    const {loadingBrandList, brandList} = this.props
+    const {loadingBrandDetails, brands} = this.props
     return (
       <div style={{
         width: '40%',
@@ -72,8 +73,8 @@ class createSKU extends React.Component {
               //statusData={['active', 'inactive']}
               //status={true}
               //brandName={this.state.brandName}
-              loadingBrandList={loadingBrandList}
-              brandList={brandList}
+              loadingBrandList={loadingBrandDetails}
+              brandList={brands}
               action="create"
             />
           </Card>

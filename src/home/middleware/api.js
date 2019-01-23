@@ -27,6 +27,15 @@ export const updateSKU = action => (
   })
 ) 
 
+export const updateSKUStatus = action => (
+  POST({
+    api: '/Api/changeSkuStatus',
+    apiBase: 'catalog',
+    data: action.data,
+    handleError: true
+  })
+) 
+
 export const fetchSkuMappedStates = action => (
   POST({
     api: '/Api/listSkuPrice',

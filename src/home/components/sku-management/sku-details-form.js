@@ -72,10 +72,11 @@ class SkuDetailsForm extends React.Component {
 
   handleBrandChange(e, k) {
     const brandIdx = k + 1
+    console.log("id", brandIdx, "name", this.props.brandList[k].id, this.props.brandList[k])
     this.setState({
       brandIdx,
-      brandName: this.props.brandList[k].brand_name,
-      brandId: this.props.brandList[k].brand_id
+      //brandName: this.props.brandList[k].brand_name,
+      brandId: this.props.brandList[k].id
     })
   }
 
@@ -189,13 +190,18 @@ class SkuDetailsForm extends React.Component {
                 onChange={this.handleBrandChange}
                 iconStyle={{ fill: '#9b9b9b' }}
                 style={{ width: '100%' }}
+                //floatingLabelText="Select brand"
+                //hintText="Hint text"
               >
+                {/* <MenuItem disabled value="">
+                  <em>Select brand</em>
+                </MenuItem> */}
                 {
                   !this.props.loadingBrandList &&
-                  this.props.brandList.map((item, i) => {
+                  this.props.brandList && this.props.brandList.map((item, i) => {
                     return <MenuItem
-                      value={item.id}
-                      key={item.id}
+                      value={i+1}
+                      key={i}
                       primaryText={item.brand_name}
                     />
                   })
@@ -216,7 +222,7 @@ class SkuDetailsForm extends React.Component {
         <div className="form-group">
           <label className="label">Volume in ml</label><br />
           <TextField
-            disabled={this.props.isDisabled}
+            //disabled={this.props.isDisabled}
             defaultValue={this.props.skuInfo ? this.props.skuInfo.volume : ''}
             name="volume"
             autoComplete='off'

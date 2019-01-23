@@ -37,6 +37,12 @@ export const updateSku = (data, CB) => ({
   CB
 })
 
+export const updateSKUStatus = (data, CB) => ({
+  type: ActionTypes.REQUEST_UPDATE_SKU_STATUS,
+  data,
+  CB
+})
+
 // export const fetchVolumeList = (data) => ({
 //   type: ActionTypes.REQUEST_FETCH_VOLUME_LIST,
 //   data

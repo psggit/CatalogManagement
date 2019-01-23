@@ -28,7 +28,13 @@ class SkuList extends React.Component {
       mountDialog: false,
       skuStatus: false,
       volume: '',
-      brandName: ''
+      skuId: '',
+      filterObj: {
+        column: '',
+        operator: '',
+        value: ''
+      },
+      isFilterApplied: false
     }
     this.filter = {
       column: '',
@@ -42,17 +48,13 @@ class SkuList extends React.Component {
     this.unmountFilterModal = this.unmountFilterModal.bind(this)
     this.applyFilter = this.applyFilter.bind(this)
     this.showDialog = this.showDialog.bind(this)
+    this.fetchSKUs = this.fetchSKUs.bind(this)
+    this.resetFilter = this.resetFilter.bind(this)
+    this.callbackUpdate = this.callbackUpdate.bind(this)
   }
 
   componentDidMount() {
-    if (location.search.length) {
-      this.setQueryParamas()
-    } else {
-      this.props.actions.fetchSKUs({
-        limit: this.pagesLimit,
-        offset: 0
-      })
-    }
+    this.fetchSKUs()
   }
 
   applyFilter(filterObj) {
@@ -64,6 +66,14 @@ class SkuList extends React.Component {
       activePage: 1,
     }
 
+    this.filter = {
+      column: filterObj.column,
+      operator: filterObj.operator,
+      value: filterObj.value,
+    }
+
+    this.setState({filterObj: this.filter, isFilterApplied: true, activePage: 1})
+
     history.pushState(queryObj, "sku listing", `/admin/manage-sku?${getQueryUri(queryObj)}`)
 
     this.props.actions.fetchSKUs({
@@ -71,6 +81,29 @@ class SkuList extends React.Component {
       offset: 0,
       filter: filterObj
     })
+  }
+
+  fetchSKUs() {
+    if (location.search.length) {
+      this.setQueryParamas()
+    } else {
+      this.props.actions.fetchSKUs({
+        limit: this.pagesLimit,
+        offset: 0
+      })
+    }
+  }
+
+  resetFilter() {
+    this.setState({
+        // column: '',
+        // operator: 'EQUAL',
+        // value: '',
+        isFilterApplied: false,
+        filterObj: {}
+    })
+    this.props.history.push(`/admin/manage-sku`)
+    this.fetchSKUs()
   }
 
   setQueryParamas() {
@@ -83,6 +116,7 @@ class SkuList extends React.Component {
     })
 
     if(queryObj.column && queryObj.column.length > 0) {
+      this.setState({filterObj: this.filter, isFilterApplied: true})
       this.props.actions.fetchSKUs({
           offset: queryObj.offset ? parseInt(queryObj.offset) : 0,
           limit: this.pagesLimit,
@@ -161,15 +195,25 @@ class SkuList extends React.Component {
     this.setState({
       skuStatus: !skuDetailsObj.newStatus, 
       mountDialog: true, 
-      brandName: skuDetailsObj.brandName, 
-      volume: skuDetailsObj.volume
+      skuId: skuDetailsObj.skuId, 
+      volume: skuDetailsObj.volume,
+      brandName: skuDetailsObj.brandName
     })
     //}
   }
 
   updateSKUStatus() {
     this.setState({mountDialog: false})
-    console.log("update")
+    //this.setState({mountDialog: false})
+    this.props.actions.updateSKUStatus({
+      sku_id: parseInt(this.state.skuId),
+      //type: parseInt(this.state.brandType),
+      is_active: !this.state.skuStatus
+    }, this.callbackUpdate)
+  }
+
+  callbackUpdate() {
+    this.fetchSKUs()
   }
 
   setDialogState() {
@@ -197,11 +241,22 @@ class SkuList extends React.Component {
             />
           </NavLink>
 
-          <RaisedButton
-            onClick={this.mountFilterDialog}
-            label="Filter"
-            icon={getIcon('filter')}
-          />
+          <div>
+            <RaisedButton
+              onClick={this.mountFilterDialog}
+              label="Filter"
+              icon={getIcon('filter')}
+              style={{marginRight: '10px'}}
+            />
+
+            <RaisedButton
+              onClick={this.resetFilter}
+              label="Reset Filter"
+              disabled={!this.state.isFilterApplied}
+              //style={{marginRight: '10px'}}
+              //icon={getIcon('filter')}
+            />
+          </div>
         </div>
 
         <br />
@@ -227,7 +282,7 @@ class SkuList extends React.Component {
               <ModalBody height='60px'>
                   <table className='table--hovered'>
                       <tbody>
-                          Are you sure you want to {this.state.skuStatus === true ? 'Deactivate' : 'Activate'} this sku - {this.state.volume}ml ({this.state.brandName})
+                          Are you sure you want to {this.state.skuStatus === true ? 'deactivate' : 'activate'} this sku - {this.state.volume}ml ({this.state.brandName})
                       </tbody>
                   </table>
               </ModalBody>
@@ -242,7 +297,7 @@ class SkuList extends React.Component {
         }
 
         {
-          !loadingSkuList && skuList && skuList.length > 1 
+          !loadingSkuList && skuList && skuList.length >= this.pagesLimit
           ? 
             <React.Fragment>
               <Pagination
@@ -264,6 +319,7 @@ class SkuList extends React.Component {
               title="Filter Brands"
               unmountFilterModal={this.unmountFilterModal}
               filter="brandFilter"
+              filterObj= {this.state.filterObj}
             ></FilterModal>
           )
           : ''

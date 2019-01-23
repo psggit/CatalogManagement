@@ -75,6 +75,21 @@ function* updateSku(action) {
   }
 }
 
+function* updateSKUStatus(action) {
+  try {
+    const data = yield call(Api.updateSKUStatus, action)
+    yield put({ type: ActionTypes.SUCCESS_UPDATE_SKU_STATUS, data })
+    Notify('Successfully updated the sku status', 'success')
+    // setTimeout(() => {
+    //   window.location.href = `/admin/manage-brand`
+    // }, 1000)
+    action.CB()
+  } catch(err) {
+    console.log(err)
+    //action.CB()
+  }
+}
+
 // function* fetchVolumeList(action) {
 //   try {
 //     const data = yield call(Api.fetchVolumeList, action)
@@ -543,6 +558,12 @@ function* watchRequestUpdateBrandStatus() {
   }
 }
 
+function* watchRequestUpdateSKUStatus() {
+  while (true) {
+    yield* takeLatest(ActionTypes.REQUEST_UPDATE_SKU_STATUS, updateSKUStatus)
+  }
+}
+
 // function* watchRequestFetchBrandsMappedToCategories() {
 //   while (true) {
 //     yield* takeLatest(ActionTypes.REQUEST_FETCH_BRANDS_MAPPED_TO_CATEGORIES, fetchBrandsMappedToCategories)
@@ -606,6 +627,7 @@ export default function* rootSaga() {
     fork(watchRequestCreateSku),
     // fork(watchRequestFetchVolumeList),
     fork(watchRequestUpdateSku),
+    fork(watchRequestUpdateSKUStatus),
     fork(watchRequestFetchStatesMappedToSku),
     fork(watchRequestUpdateSkuStateMap),
     fork(watchRequestFetchSkuUnmappedStates),
