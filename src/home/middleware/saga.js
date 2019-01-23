@@ -269,6 +269,21 @@ function* updateBrand(action) {
   }
 }
 
+function* updateBrandStatus(action) {
+  try {
+    const data = yield call(Api.updateBrandStatus, action)
+    yield put({ type: ActionTypes.SUCCESS_UPDATE_BRAND_STATUS, data })
+    Notify('Successfully updated the brand status', 'success')
+    // setTimeout(() => {
+    //   window.location.href = `/admin/manage-brand`
+    // }, 1000)
+    action.CB()
+  } catch(err) {
+    console.log(err)
+    //action.CB()
+  }
+}
+
 // function* fetchBrandsMappedToCategories(action) {
 //   try {
 //     const data = brandMappedToCategories
@@ -522,6 +537,12 @@ function* watchRequestUpdateBrand() {
   }
 }
 
+function* watchRequestUpdateBrandStatus() {
+  while (true) {
+    yield* takeLatest(ActionTypes.REQUEST_UPDATE_BRAND_STATUS, updateBrandStatus)
+  }
+}
+
 // function* watchRequestFetchBrandsMappedToCategories() {
 //   while (true) {
 //     yield* takeLatest(ActionTypes.REQUEST_FETCH_BRANDS_MAPPED_TO_CATEGORIES, fetchBrandsMappedToCategories)
@@ -599,6 +620,7 @@ export default function* rootSaga() {
     fork(watchRequestFetchBrandTypes),
     fork(watchRequestCreateBrand),
     fork(watchRequestUpdateBrand),
+    fork(watchRequestUpdateBrandStatus),
     // fork(watchRequestFetchBrandsMappedToCategories),
     // fork(watchRequestFetchUnmappedBrands),
     // fork(watchRequestMapBrands),

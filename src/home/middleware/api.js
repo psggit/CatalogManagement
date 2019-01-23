@@ -126,6 +126,16 @@ export const updateBrand = action => (
   .then(json => json)
 )
 
+export const updateBrandStatus = action => (
+  POST({
+    api: '/Api/changeBrandStatus',
+    apiBase: 'catalog',
+    data: action.data,
+    handleError: true
+  })
+  .then(json => json)
+)
+
 export const fetchBrandTypes = action => (
   POST({
     api: '/Api/listBrandType',

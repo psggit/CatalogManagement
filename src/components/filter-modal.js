@@ -10,17 +10,18 @@ import TextField from 'material-ui/TextField'
 class FilterModal extends React.Component {
   constructor() {
     super()
+    console.log("props", this.props)
     this.state = {
       open: true,
       isLocalityAvailable: false,
       isCityAvailable: false,
       stateIdx: null,
       cityIdx: null,
-      searchField: 'ID',
-      searchFieldIdx: 1,
-      searchOperator: 'EQUAL',
-      searchOperatorIdx: 1,
-      searchText: ''
+      searchField: this.props && this.props.filterObj ? this.props.filterObj.column : 'ID',
+      searchFieldIdx: this.props && this.props.filterObj && this.props.filterObj.column === "BrandName" ? 2 : 1,
+      searchOperator: this.props && this.props.filterObj ? this.props.filterObj.operator : 'EQUAL',
+      searchOperatorIdx: this.props && this.props.filterObj && this.props.filterObj.operator ? this.getOperatorIdx() : 1,
+      searchText: this.props && this.props.filterObj ? this.props.filterObj.value : ''
     }
     this.handleClose = this.handleClose.bind(this)
     this.handleApplyFilter = this.handleApplyFilter.bind(this)
@@ -33,6 +34,36 @@ class FilterModal extends React.Component {
     this.handleOperatorChange = this.handleOperatorChange.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleClick = this.handleClick.bind(this)
+  }
+
+  componentDidMount() {
+    //console.log("update", this.props.filterObj)
+    this.setState({
+      searchField: this.props && this.props.filterObj.column && this.props.filterObj.column.length ? this.props.filterObj.column : 'ID',
+      searchFieldIdx: this.props && this.props.filterObj.column && this.props.filterObj.column === "BrandName" ? 2 : 1,
+      searchOperator: this.props && this.props.filterObj.operator && this.props.filterObj.operator.length ? this.props.filterObj.operator : 'EQUAL',
+      searchOperatorIdx: this.props && this.props.filterObj.operator && this.props.filterObj.operator ? this.getOperatorIdx() : 1,
+      searchText: this.props && this.props.filterObj ? this.props.filterObj.value : ''
+    })
+  }
+  
+  getOperatorIdx() {
+    let operatorIdx;
+    switch(this.props.filterObj.operator) {
+      case 'EQUAL':
+        operatorIdx = 1
+        break;
+      case 'LIKE':
+        operatorIdx = 2
+        break;
+      case 'CASEIGNORE':
+        operatorIdx = 3
+        break;
+      default: 
+        break;
+    }
+
+    return operatorIdx;
   }
 
   handleClose() {
@@ -99,6 +130,7 @@ class FilterModal extends React.Component {
   }
 
   handleClick(e) {
+    console.log("state", this.state)
     switch(this.props.filter) {
       case 'brandFilter':
         const filter = {
@@ -113,6 +145,7 @@ class FilterModal extends React.Component {
   }
 
   render() {
+    console.log("filter", this.props)
     const actions = [
       <FlatButton
         label="Cancel"

@@ -31,7 +31,13 @@ class ManageBrand extends React.Component {
       pageOffset: 0,
       brandStatus: '',
       brandName: '',
-      brandId: ''
+      brandId: '',
+      filterObj: {
+        column: '',
+        operator: '',
+        value: ''
+      },
+      isFilterApplied: false
     }
     this.filter = {
       column: '',
@@ -47,6 +53,8 @@ class ManageBrand extends React.Component {
     this.updateBrandStatus = this.updateBrandStatus.bind(this)
     this.setDialogState = this.setDialogState.bind(this)
     this.fetchBrands = this.fetchBrands.bind(this)
+    this.resetFilter = this.resetFilter.bind(this)
+    this.callbackUpdate = this.callbackUpdate.bind(this)
   }
 
   componentDidMount() {
@@ -55,7 +63,9 @@ class ManageBrand extends React.Component {
   }
 
   fetchBrands() {
+    //console.log("fetch brands")
     if (location.search.length) {
+      //console.log("if")
       this.setQueryParamas()
     } else {
       this.props.actions.fetchBrands({
@@ -76,6 +86,7 @@ class ManageBrand extends React.Component {
     })
 
     if(queryObj.column && queryObj.column.length > 0) {
+      this.setState({filterObj: this.filter, isFilterApplied: true})
       this.props.actions.fetchBrands({
           offset: queryObj.offset ? parseInt(queryObj.offset) : 0,
           limit: this.pagesLimit,
@@ -162,9 +173,9 @@ class ManageBrand extends React.Component {
 
   updateBrandStatus() {
     this.setState({mountDialog: false})
-    this.props.actions.updateBrand({
+    this.props.actions.updateBrandStatus({
       brand_id: parseInt(this.state.brandId),
-      type: parseInt(this.state.brandType),
+      //type: parseInt(this.state.brandType),
       is_active: !this.state.brandStatus
     }, this.callbackUpdate)
     //console.log("update")
@@ -188,6 +199,14 @@ class ManageBrand extends React.Component {
       activePage: 1,
     }
 
+    this.filter = {
+      column: filterObj.column,
+      operator: filterObj.operator,
+      value: filterObj.value,
+    }
+
+    this.setState({filterObj: this.filter, isFilterApplied: true, activePage: 1})
+
     history.pushState(queryObj, "brand listing", `/admin/manage-brand?${getQueryUri(queryObj)}`)
 
     this.props.actions.fetchBrands({
@@ -195,6 +214,18 @@ class ManageBrand extends React.Component {
       offset: 0,
       filter: filterObj
     })
+  }
+
+  resetFilter() {
+    this.setState({
+        // column: '',
+        // operator: 'EQUAL',
+        // value: '',
+        isFilterApplied: false,
+        filterObj: {}
+    })
+    this.props.history.push(`/admin/manage-brand`)
+    this.fetchBrands()
   }
 
   render() {
@@ -216,12 +247,21 @@ class ManageBrand extends React.Component {
               primary
             />
           </NavLink>
-
-          <RaisedButton
-            onClick={this.mountFilterDialog}
-            label="Filter"
-            icon={getIcon('filter')}
-          />
+          <div>
+            <RaisedButton
+              onClick={this.mountFilterDialog}
+              label="Filter"
+              icon={getIcon('filter')}
+              style={{marginRight: '10px'}}
+            />
+            <RaisedButton
+              onClick={this.resetFilter}
+              label="Reset Filter"
+              disabled={!this.state.isFilterApplied}
+              //style={{marginRight: '10px'}}
+              //icon={getIcon('filter')}
+            />
+          </div>
         </div>
 
         <br />
@@ -271,7 +311,6 @@ class ManageBrand extends React.Component {
             </React.Fragment>
           : ''
         }
-
         {
           this.state.shouldMountFilterDialog
             ? (
@@ -280,6 +319,7 @@ class ManageBrand extends React.Component {
                 title="Filter Brands"
                 unmountFilterModal={this.unmountFilterModal}
                 filter="brandFilter"
+                filterObj= {this.state.filterObj}
               ></FilterModal>
             )
             : ''

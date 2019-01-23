@@ -127,6 +127,12 @@ export const updateBrand = (data, CB) => ({
   CB
 })
 
+export const updateBrandStatus = (data, CB) => ({
+  type: ActionTypes.REQUEST_UPDATE_BRAND_STATUS,
+  data,
+  CB
+})
+
 // export const fetchBrandsMappedToCategories = (data) => ({
 //   type: ActionTypes.REQUEST_FETCH_BRANDS_MAPPED_TO_CATEGORIES,
 //   data
