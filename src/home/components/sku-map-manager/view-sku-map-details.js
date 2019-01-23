@@ -49,14 +49,14 @@ class ViewSKUMapDetails extends React.Component {
       SKUStatus: history.is_active
       //status: history.is_active
     })
-
+    //console.log("skuid", this.props.match.params.skuId)
     this.props.actions.fetchStatesMappedToSku({
       sku_id: parseInt(this.props.match.params.skuId)
     })
 
-    this.props.actions.fetchRetailersMappedToSku({
-      sku_id: this.props.match.params.skuId
-    })
+    // this.props.actions.fetchRetailersMappedToSku({
+    //   sku_id: this.props.match.params.skuId
+    // })
   }
 
   updateStateMappedToSku(stateDetailObj) {

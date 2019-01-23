@@ -48,6 +48,12 @@ export const updateSKUStatus = (data, CB) => ({
 //   data
 // })
 
+export const fetchStates = (data, CB) => ({
+  type: ActionTypes.REQUEST_FETCH_STATES,
+  data,
+  CB
+})
+
 export const fetchStatesMappedToSku = (data) => ({
   type: ActionTypes.REQUEST_FETCH_STATES_MAPPED_TO_SKU,
   data

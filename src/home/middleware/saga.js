@@ -100,6 +100,16 @@ function* updateSKUStatus(action) {
 //   }
 // }
 
+function* fetchStates(action) {
+  try {
+    const data = yield call(Api.fetchStates, action)
+    //const data = mappedState
+    yield put({ type: ActionTypes.SUCCESS_FETCH_STATES, data })
+  } catch(err) {
+    console.log(err)
+  }
+}
+
 function* fetchSkuMappedStates(action) {
   try {
     const data = yield call(Api.fetchSkuMappedStates, action)
@@ -125,8 +135,8 @@ function* updateSkuStateMap(action) {
 
 function* fetchSkuUnmappedStates(action) {
   try {
-    //const data = yield call(Api.fetchSkuUnmappedStates, action)
-    const data = unmappedStates
+    const data = yield call(Api.fetchSkuUnmappedStates, action)
+    //const data = unmappedStates
     yield put({ type: ActionTypes.SUCCESS_FETCH_UNMAPPED_STATES, data })
     //Notify('Successfully mapped the state', 'success')
     action.CB(data)
@@ -468,6 +478,12 @@ function* watchRequestUpdateSku() {
   }
 }
 
+function* watchRequestFetchStates() {
+  while (true) {
+    yield* takeLatest(ActionTypes.REQUEST_FETCH_STATES, fetchStates)
+  }
+}
+
 function* watchRequestFetchStatesMappedToSku() {
   while (true) {
     yield* takeLatest(ActionTypes.REQUEST_FETCH_STATES_MAPPED_TO_SKU, fetchSkuMappedStates)
@@ -628,6 +644,7 @@ export default function* rootSaga() {
     // fork(watchRequestFetchVolumeList),
     fork(watchRequestUpdateSku),
     fork(watchRequestUpdateSKUStatus),
+    fork(watchRequestFetchStates),
     fork(watchRequestFetchStatesMappedToSku),
     fork(watchRequestUpdateSkuStateMap),
     fork(watchRequestFetchSkuUnmappedStates),

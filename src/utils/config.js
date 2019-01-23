@@ -14,7 +14,8 @@ function getAPIObj() {
       orderman: scheme + '://orderman' + baseHost,
       socketUrl: 'https://livered' + baseHost,
       api2: 'https://api2.' + appName + '.hasura-app.io',
-      catalog: 'https://catalog.' + appName + '.hasura-app.io'
+      catalog: 'https://catalog.' + appName + '.hasura-app.io',
+      retailer: 'https://retailer.' + appName + '.hasura-app.io'
     }
   } else {
     let scheme = window.location.href.split(':')[0]
@@ -34,7 +35,8 @@ function getAPIObj() {
       orderman: scheme + '://orderman' + baseHost,
       socketUrl: scheme + '://livered' + baseHost,
       api2: scheme + '://api2' + baseHost,
-      catalog: scheme + '://catalog' + baseHost
+      catalog: scheme + '://catalog' + baseHost,
+      retailer: scheme + '://retailer' + baseHost
     }
   }
 }

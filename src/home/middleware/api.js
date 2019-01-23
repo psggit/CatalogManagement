@@ -36,6 +36,15 @@ export const updateSKUStatus = action => (
   })
 ) 
 
+export const fetchStates = action => (
+  POST({
+    api: '/Api/listStates',
+    apiBase: 'retailer',
+    data: action.data,
+    handleError: true
+  })
+) 
+
 export const fetchSkuMappedStates = action => (
   POST({
     api: '/Api/listSkuPrice',
@@ -45,14 +54,14 @@ export const fetchSkuMappedStates = action => (
   })
 ) 
 
-// export const fetchSkuUnmappedStates = action => (
-//   POST({
-//     api: '/SkuManagement/unmappedStatesList',
-//     apiBase: 'catalogsystem',
-//     data: action.data,
-//     handleError: true
-//   })
-// )
+export const fetchSkuUnmappedStates = action => (
+  POST({
+    api: '/SkuManagement/unmappedStatesList',
+    apiBase: 'catalog',
+    data: action.data,
+    handleError: true
+  })
+)
 
 // export const mapStateToSku = action => (
 //   POST({

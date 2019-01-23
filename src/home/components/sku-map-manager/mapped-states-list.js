@@ -52,17 +52,18 @@ class MappedStatesList extends React.Component {
 
   mapStates() {
     let mappedStates = {}
-    this.props.skuMappedData.map((item) => {
-      mappedStates[item.sku_pricing_id] = {
-        state_name: item.state_name,
-        state_short_name: item.state_short_name,
-        sku_price: item.sku_price,
-        sku_pricing_id: item.sku_pricing_id,
-        is_active: item.is_active,
-        is_modified: false
-      }
-    })
-
+    if(this.props.skuMappedData) {
+      this.props.skuMappedData.map((item) => {
+        mappedStates[item.sku_pricing_id] = {
+          state_name: item.state_name,
+          state_short_name: item.state_short_name,
+          sku_price: item.sku_price,
+          sku_pricing_id: item.sku_pricing_id,
+          is_active: item.is_active,
+          is_modified: false
+        }
+      })
+    }
     const mappedSkuStates = Object.values(mappedStates)
     this.setState({ mappedStatesList: mappedSkuStates, stateMap: mappedStates })
   }
@@ -155,7 +156,7 @@ class MappedStatesList extends React.Component {
           {
             !this.props.loadingStatesMappedToSku && this.state.stateMap && Object.keys(this.state.stateMap).length > 0
             &&
-            this.state.mappedStatesList.map((item, i) => {
+            this.state.mappedStatesList && this.state.mappedStatesList.map((item, i) => {
               return <TableRow key={i}>
                 <TableRowColumn style={styles[0]}>
                   <Checkbox

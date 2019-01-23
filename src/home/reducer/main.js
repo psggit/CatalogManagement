@@ -42,6 +42,7 @@ loadingBrandDetails: true,
 //   //loadingAllBrands: true,
 loadingOriginList: true,
 loadingBrandTypeList: true,
+loadingStates: true,
 //   contactNumbersOfRetailer: [],
 //   imageAdsData: [],
 //   collectionAdsData: [],
@@ -63,6 +64,7 @@ loadingBrandTypeList: true,
 //brandList: [],
 originList: [],
 brandTypeList: [],
+statesList: [],
 //   cityDetails: {},
 //   collectionsCount: 0,
 //   brandCount: 0,
@@ -377,6 +379,13 @@ const actionsMap = {
   //     volumeList: action.data
   //   })
   // },
+  
+  [ActionTypes.SUCCESS_FETCH_STATES]: (state, action) => {
+    return Object.assign({}, state, {
+      loadingStates: false,
+      statesList: action.data
+    })
+  },
 
   [ActionTypes.SUCCESS_FETCH_STATES_MAPPED_TO_SKU]: (state, action) => {
     return Object.assign({}, state, {

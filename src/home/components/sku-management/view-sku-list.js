@@ -69,7 +69,7 @@ class ViewSKUList extends React.Component {
         is_active: item.is_active,
         volume: item.volume
       }
-      this.props.history.push(`/admin/sku-mapping/${item.id}`, queryObj)
+      this.props.history.push(`/admin/sku-mapping/${item.sku_id}`, queryObj)
     }
   }
 

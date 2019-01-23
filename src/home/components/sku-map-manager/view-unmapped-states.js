@@ -43,10 +43,12 @@ class ViewUnmappedStates extends React.Component {
     this.handleAddState = this.handleAddState.bind(this)
     //this.handleCheckboxes = this.handleCheckboxes.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.successCallback = this.successCallback.bind(this)
   }
 
   componentDidMount() {
-    this.props.actions.fetchSkuUnmappedStates({
+    this.props.actions.fetchStates({}, this.successCallback)
+    this.props.actions.fetchStatesMappedToSku({
       sku_id: parseInt(this.props.skuId)
     }, (response) => {
       let stateMap = {}
@@ -62,6 +64,10 @@ class ViewUnmappedStates extends React.Component {
       })
       this.setState({stateMap, unmappedStatesList: Object.values(stateMap), loadingUnmappedStates: false })
     })
+  }
+
+  successCallback() {
+    console.log("success callback")
   }
 
   handleAddState(state_short_name) {
