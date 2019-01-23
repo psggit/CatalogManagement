@@ -29,6 +29,16 @@ function* fetchBrands(action) {
   }
 }
 
+function* fetchBrandList(action) {
+  try {
+    const data = yield call(Api.fetchBrandList, action)
+    //const data = brandList
+    yield put({ type: ActionTypes.SUCCESS_FETCH_BRAND_LIST, data })
+  } catch(err) {
+    console.log(err)
+  }
+}
+
 function* fetchLiveOrders(action) {
   try {
     //const data = yield call(Api.fetchLiveOrders, action)
@@ -38,32 +48,32 @@ function* fetchLiveOrders(action) {
   }
 }
 
-// function* createSku(action) {
-//   try {
-//     const data = yield call(Api.createSku, action)
-//     Notify('Successfully created sku', 'success')
-//     action.CB(data)
-//     setTimeout(() => {
-//       window.location.href = `/home/manage-sku`
-//     }, 1000)
-//   } catch(err) {
-//     console.log(err)
-//     action.CB()
-//   }
-// }
+function* createSku(action) {
+  try {
+    const data = yield call(Api.createSku, action)
+    Notify('Successfully created sku', 'success')
+    action.CB(data)
+    setTimeout(() => {
+      window.location.href = `/admin/manage-sku`
+    }, 1000)
+  } catch(err) {
+    console.log(err)
+    action.CB()
+  }
+}
 
-// function* updateSku(action) {
-//   try {
-//     const data = yield call(Api.updateSKU, action)
-//     Notify('Successfully updated sku', 'success')
-//     action.CB(data)
-//     setTimeout(() => {
-//       window.location.href = `/home/manage-sku`
-//     }, 1000)
-//   } catch(err) {
-//     console.log(err)
-//   }
-// }
+function* updateSku(action) {
+  try {
+    const data = yield call(Api.updateSKU, action)
+    Notify('Successfully updated sku', 'success')
+    action.CB(data)
+    setTimeout(() => {
+      window.location.href = `/admin/manage-sku`
+    }, 1000)
+  } catch(err) {
+    console.log(err)
+  }
+}
 
 // function* fetchVolumeList(action) {
 //   try {
@@ -77,8 +87,8 @@ function* fetchLiveOrders(action) {
 
 function* fetchSkuMappedStates(action) {
   try {
-    //const data = yield call(Api.fetchSkuMappedStates, action)
-    const data = mappedState
+    const data = yield call(Api.fetchSkuMappedStates, action)
+    //const data = mappedState
     yield put({ type: ActionTypes.SUCCESS_FETCH_STATES_MAPPED_TO_SKU, data })
   } catch(err) {
     console.log(err)
@@ -398,17 +408,23 @@ function* watchRequestFetchBrands() {
   }
 }
 
+function* watchRequestFetchBrandList() {
+  while (true) {
+    yield* takeLatest(ActionTypes.REQUEST_FETCH_BRAND_LIST, fetchBrandList)
+  }
+}
+
 function* watchFetchLiveOrders() {
   while (true) {
     yield* takeLatest(ActionTypes.REQUEST_FETCH_LIVE_ORDERS, fetchLiveOrders)
   }
 }
 
-// function* watchRequestCreateSku() {
-//   while (true) {
-//     yield* takeLatest(ActionTypes.REQUEST_CREATE_SKU, createSku)
-//   }
-// }
+function* watchRequestCreateSku() {
+  while (true) {
+    yield* takeLatest(ActionTypes.REQUEST_CREATE_SKU, createSku)
+  }
+}
 
 // function* watchRequestFetchVolumeList() {
 //   while (true) {
@@ -416,11 +432,11 @@ function* watchFetchLiveOrders() {
 //   }
 // }
 
-// function* watchRequestUpdateSku() {
-//   while (true) {
-//     yield* takeLatest(ActionTypes.REQUEST_UPDATE_SKU, updateSku)
-//   }
-// }
+function* watchRequestUpdateSku() {
+  while (true) {
+    yield* takeLatest(ActionTypes.REQUEST_UPDATE_SKU, updateSku)
+  }
+}
 
 function* watchRequestFetchStatesMappedToSku() {
   while (true) {
@@ -564,10 +580,11 @@ export default function* rootSaga() {
   yield [
     fork(watchRequestFetchSKUs),
     fork(watchRequestFetchBrands),
+    fork(watchRequestFetchBrandList),
     fork(watchFetchLiveOrders),
-    // fork(watchRequestCreateSku),
+    fork(watchRequestCreateSku),
     // fork(watchRequestFetchVolumeList),
-    // fork(watchRequestUpdateSku),
+    fork(watchRequestUpdateSku),
     fork(watchRequestFetchStatesMappedToSku),
     fork(watchRequestUpdateSkuStateMap),
     fork(watchRequestFetchSkuUnmappedStates),

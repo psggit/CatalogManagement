@@ -10,6 +10,11 @@ export const fetchBrands = (data) => ({
   data
 })
 
+export const fetchBrandList = (data) => ({
+  type: ActionTypes.REQUEST_FETCH_BRAND_LIST,
+  data
+})
+
 export const fetchLiveOrders = (data) => ({
   type: ActionTypes.REQUEST_FETCH_LIVE_ORDERS,
   data
@@ -26,11 +31,11 @@ export const createSku = (data, CB) => ({
   CB
 })
 
-// export const updateSku = (data, CB) => ({
-//   type: ActionTypes.REQUEST_UPDATE_SKU,
-//   data,
-//   CB
-// })
+export const updateSku = (data, CB) => ({
+  type: ActionTypes.REQUEST_UPDATE_SKU,
+  data,
+  CB
+})
 
 // export const fetchVolumeList = (data) => ({
 //   type: ActionTypes.REQUEST_FETCH_VOLUME_LIST,

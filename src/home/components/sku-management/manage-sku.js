@@ -31,9 +31,9 @@ class SkuList extends React.Component {
       brandName: ''
     }
     this.filter = {
-      searchField: '',
-      searchOperator: '',
-      searchText: ''
+      column: '',
+      operator: '',
+      value: ''
     }
 
     this.pagesLimit = 5
@@ -57,9 +57,9 @@ class SkuList extends React.Component {
 
   applyFilter(filterObj) {
     const queryObj = {
-      searchBy: filterObj.filter_by,
-      searchOperator: filterObj.operator,
-      searchText: filterObj.search_text,
+      column: filterObj.column,
+      operator: filterObj.operator,
+      value: filterObj.value,
       offset: 0,
       activePage: 1,
     }
@@ -82,50 +82,70 @@ class SkuList extends React.Component {
       this.filter[item[0]] = item[1]
     })
 
-    this.props.actions.fetchSKUs({
-      offset: queryObj.offset ? parseInt(queryObj.offset) : 0,
-      limit: this.pagesLimit,
-      filter: {
-        filter_by: queryObj.searchBy,
-        operator: queryObj.searchOperator,
-        search_text: queryObj.searchText
-      }
-    })
+    if(queryObj.column && queryObj.column.length > 0) {
+      this.props.actions.fetchSKUs({
+          offset: queryObj.offset ? parseInt(queryObj.offset) : 0,
+          limit: this.pagesLimit,
+          filter: {
+            column: queryObj.column,
+            operator: queryObj.operator,
+            value: queryObj.value
+          }
+      })
+    } else {
+      this.props.actions.fetchSKUs({
+          offset: queryObj.offset ? parseInt(queryObj.offset) : 0,
+          limit: this.pagesLimit
+      })
+    }
   }
 
   handlePageChange(pageObj) {
     const queryUri = location.search.slice(1)
     const queryObj = getQueryObj(queryUri)
+    let queryParamsObj = {}
     let filterObj = null
 
     let pageNumber = pageObj.activePage
     let offset = this.pagesLimit * (pageNumber - 1)
     this.setState({ activePage: pageNumber, pageOffset: offset })
 
-    if(location.search.length) {
-      const queryParamsObj = {
-        searchBy: queryObj.searchBy,
-        searchOperator: queryObj.searchOperator,
-        searchText: queryObj.searchText,
-        offset: pageObj.offset,
-        activePage: pageObj.activePage,
+    if(queryObj && queryObj.column && queryObj.column.length > 0) {
+      queryParamsObj = {
+          column: queryObj.column,
+          operator: queryObj.operator,
+          value: queryObj.value,
+          offset: pageObj.offset,
+          activePage: pageObj.activePage,
       }
-      filterObj = {
-        filter_by: queryObj.searchBy,
-        operator: queryObj.searchOperator,
-        search_text: queryObj.searchText
+    } else {
+      queryParamsObj = {
+          offset: pageObj.offset,
+          activePage: pageObj.activePage,
       }
-      history.pushState(queryParamsObj, "sku listing", `/admin/manage-sku?${getQueryUri(queryParamsObj)}`)
     }
 
-    this.props.actions.fetchSKUs({
-      offset: pageObj.offset,
-      limit: this.pagesLimit,
-      filter: filterObj
-    })
+    if(location.search.length && queryObj.column && queryObj.column.length > 0) {
+      let filterObj = {
+          column: queryObj.column,
+          operator: queryObj.operator,
+          value: queryObj.value
+      }
+   
+      this.props.actions.fetchSKUs({
+        offset: pageObj.offset,
+        limit: this.pagesLimit,
+        filter: filterObj
+      })
 
-    queryObj.activePage = pageObj.activePage
-    queryObj.offset = pageObj.offset
+    } else{
+      this.props.actions.fetchSKUs({
+        offset: pageObj.offset,
+        limit: this.pagesLimit
+      })
+    }
+
+    history.pushState(queryParamsObj, "sku listing", `/admin/manage-sku?${getQueryUri(queryParamsObj)}`)
   }
 
   mountFilterDialog() {
@@ -219,22 +239,22 @@ class SkuList extends React.Component {
               </ModalFooter>
               
           </ModalBox>
-      }
+        }
 
-      {
-        !loadingSkuList 
-        ? 
-          <React.Fragment>
-            <Pagination
-              activePage={parseInt(activePage)}
-              itemsCountPerPage={this.pagesLimit}
-              totalItemsCount={totalSkuCount}
-              pageRangeDisplayed={5}
-              setPage={this.handlePageChange}
-            />
-          </React.Fragment>
-        : ''
-      }
+        {
+          !loadingSkuList && skuList && skuList.length > 1 
+          ? 
+            <React.Fragment>
+              <Pagination
+                activePage={parseInt(activePage)}
+                itemsCountPerPage={this.pagesLimit}
+                totalItemsCount={totalSkuCount}
+                pageRangeDisplayed={5}
+                setPage={this.handlePageChange}
+              />
+            </React.Fragment>
+          : ''
+        }
 
         {
         this.state.shouldMountFilterDialog

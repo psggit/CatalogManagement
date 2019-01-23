@@ -101,10 +101,10 @@ class ViewBrandList extends React.Component {
                 )
             }
             {
-              !this.props.loadingBrandList && !this.props.brands &&
+              !this.props.loadingBrandList && this.props.brands && this.props.brands.length === 0 &&
               <tr>
                 <td style={{ textAlign: 'center' }} colSpan='7'>
-                  <p style={{fontWeight: '16px'}}>No records found</p>
+                  <p style={{fontWeight: '16px'}}>No brands found</p>
                 </td>
               </tr>
             }

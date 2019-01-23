@@ -61,11 +61,6 @@ class ManageBrand extends React.Component {
       this.props.actions.fetchBrands({
         limit: this.pagesLimit,
         offset: 0,
-        filter: {
-          column : "BrandName",
-          operator: "CASEIGNORE",
-          value: "Jack daniEl's Old No.7"
-        }
         //filter: {}
       })
     }
@@ -80,52 +75,70 @@ class ManageBrand extends React.Component {
       this.filter[item[0]] = item[1]
     })
 
-    this.props.actions.fetchBrands({
-      offset: queryObj.offset ? parseInt(queryObj.offset) : 0,
-      limit: this.pagesLimit,
-      filter: {
-        column: queryObj.column,
-        operator: queryObj.operator,
-        value: queryObj.value
-      }
-    })
+    if(queryObj.column && queryObj.column.length > 0) {
+      this.props.actions.fetchBrands({
+          offset: queryObj.offset ? parseInt(queryObj.offset) : 0,
+          limit: this.pagesLimit,
+          filter: {
+            column: queryObj.column,
+            operator: queryObj.operator,
+            value: queryObj.value
+          }
+      })
+    } else {
+      this.props.actions.fetchBrands({
+          offset: queryObj.offset ? parseInt(queryObj.offset) : 0,
+          limit: this.pagesLimit
+      })
+    }
   }
 
   handlePageChange(pageObj) {
     const queryUri = location.search.slice(1)
     const queryObj = getQueryObj(queryUri)
+    let queryParamsObj = {}
     let filterObj = null
 
     let pageNumber = pageObj.activePage
     let offset = this.pagesLimit * (pageNumber - 1)
     this.setState({ activePage: pageNumber, pageOffset: offset })
 
-    if(location.search.length) {
-      const queryParamsObj = {
-        column: filterObj.column,
-        operator: filterObj.operator,
-        value: filterObj.value,
-        offset: pageObj.offset,
-        activePage: pageObj.activePage,
+    if(queryObj && queryObj.column && queryObj.column.length > 0) {
+      queryParamsObj = {
+          column: queryObj.column,
+          operator: queryObj.operator,
+          value: queryObj.value,
+          offset: pageObj.offset,
+          activePage: pageObj.activePage,
       }
-  
-      history.pushState(queryParamsObj, "brand listing", `/admin/manage-brand?${getQueryUri(queryParamsObj)}`)
-
-      filterObj = {
-        column: queryObj.column,
-        operator: queryObj.operator,
-        value: queryObj.value
+    } else {
+      queryParamsObj = {
+          offset: pageObj.offset,
+          activePage: pageObj.activePage,
       }
     }
 
-    this.props.actions.fetchBrands({
-      offset: pageObj.offset,
-      limit: this.pagesLimit,
-      filter: filterObj
-    })
+    if(location.search.length && queryObj.column && queryObj.column.length > 0) {
+      let filterObj = {
+          column: queryObj.column,
+          operator: queryObj.operator,
+          value: queryObj.value
+      }
+   
+      this.props.actions.fetchBrands({
+        offset: pageObj.offset,
+        limit: this.pagesLimit,
+        filter: filterObj
+      })
 
-    queryObj.activePage = pageObj.activePage
-    queryObj.offset = pageObj.offset
+    } else{
+      this.props.actions.fetchBrands({
+        offset: pageObj.offset,
+        limit: this.pagesLimit
+      })
+    }
+
+    history.pushState(queryParamsObj, "brand listing", `/admin/manage-brand?${getQueryUri(queryParamsObj)}`)
   }
 
   mountFilterDialog() {
@@ -150,8 +163,8 @@ class ManageBrand extends React.Component {
   updateBrandStatus() {
     this.setState({mountDialog: false})
     this.props.actions.updateBrand({
-      brand_id: this.state.brandId,
-      type: this.state.brandType,
+      brand_id: parseInt(this.state.brandId),
+      type: parseInt(this.state.brandType),
       is_active: !this.state.brandStatus
     }, this.callbackUpdate)
     //console.log("update")
@@ -185,7 +198,7 @@ class ManageBrand extends React.Component {
   }
 
   render() {
-    const { loadingBrandList, brands, totalBrandCount} = this.props
+    const { loadingBrandDetails, brands, totalBrandCount} = this.props
     const { activePage } = this.state
 
     return (
@@ -216,7 +229,7 @@ class ManageBrand extends React.Component {
         <h3>Listing all brands</h3>
 
         <ViewBrands
-          loadingBrandList={loadingBrandList}
+          loadingBrandList={loadingBrandDetails}
           brandList={brands}
           history={this.props.history}
           showDialog={this.showDialog}
@@ -245,7 +258,7 @@ class ManageBrand extends React.Component {
           </ModalBox>
         }
         {
-          !loadingBrandList && brands && brands.length > 1 
+          !loadingBrandDetails && brands && brands.length > 1 
           ? 
             <React.Fragment>
               <Pagination
@@ -260,16 +273,16 @@ class ManageBrand extends React.Component {
         }
 
         {
-        this.state.shouldMountFilterDialog
-          ? (
-            <FilterModal
-              applyFilter={this.applyFilter}
-              title="Filter Brands"
-              unmountFilterModal={this.unmountFilterModal}
-              filter="brandFilter"
-            ></FilterModal>
-          )
-          : ''
+          this.state.shouldMountFilterDialog
+            ? (
+              <FilterModal
+                applyFilter={this.applyFilter}
+                title="Filter Brands"
+                unmountFilterModal={this.unmountFilterModal}
+                filter="brandFilter"
+              ></FilterModal>
+            )
+            : ''
         }
       </div>
     )

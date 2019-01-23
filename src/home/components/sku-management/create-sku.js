@@ -20,7 +20,7 @@ class createSKU extends React.Component {
   }
 
   componentDidMount() {
-    this.props.actions.fetchBrands({
+    this.props.actions.fetchBrandList({
       limit: 99999,
       offset: 0
     })
@@ -46,7 +46,7 @@ class createSKU extends React.Component {
   }
 
   render() {
-    const {loadingBrandList, brands} = this.props
+    const {loadingBrandList, brandList} = this.props
     return (
       <div style={{
         width: '40%',
@@ -67,12 +67,13 @@ class createSKU extends React.Component {
             <SkuDetailsForm
               ref={(node) => { this.skuDetailsForm = node }}
               isDisabled={false}
+              disableSave={this.state.isDisabled}
               submit={this.submit}
               //statusData={['active', 'inactive']}
               //status={true}
               //brandName={this.state.brandName}
               loadingBrandList={loadingBrandList}
-              brandList={brands}
+              brandList={brandList}
               action="create"
             />
           </Card>

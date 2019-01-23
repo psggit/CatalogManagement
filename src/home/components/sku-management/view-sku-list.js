@@ -99,7 +99,7 @@ class ViewSKUList extends React.Component {
             {
               !this.props.loadingSkuList
                 ? (
-                  this.props.skuList.map((item, i) => {
+                  this.props.skuList && this.props.skuList.map((item, i) => {
                     return (
                       <TableRow key={i}>
                         <TableRowColumn style={styles[0]}>
@@ -110,9 +110,9 @@ class ViewSKUList extends React.Component {
                             /> 
                           }
                         </TableRowColumn>
-                        <TableRowColumn style={styles[1]}>{item.brand_id}</TableRowColumn>
+                        <TableRowColumn style={styles[1]}>{item.sku_id}</TableRowColumn>
                         <TableRowColumn style={styles[2]}>{item.brand_name}</TableRowColumn>
-                        <TableRowColumn style={styles[3]}>{item.volume}</TableRowColumn>
+                        <TableRowColumn style={styles[3]}>{item.sku_volume}</TableRowColumn>
                         {/* <TableRowColumn style={styles[4]}>{item.is_active ? 'ACTIVE' : 'INACTIVE'}</TableRowColumn> */}
                         <TableRowColumn style={styles[4]}>{item.created_at}</TableRowColumn>
                         <TableRowColumn style={styles[5]}>
@@ -127,6 +127,14 @@ class ViewSKUList extends React.Component {
                     <TableLoadingShell />
                   ))
                 )
+            }
+            {
+              !this.props.loadingSkuList && this.props.skuList && this.props.skuList.length === 0 &&
+              <tr>
+                <td style={{ textAlign: 'center' }} colSpan='7'>
+                  <p style={{fontWeight: '16px'}}>No SKUs found</p>
+                </td>
+              </tr>
             }
           </TableBody>
         </Table>

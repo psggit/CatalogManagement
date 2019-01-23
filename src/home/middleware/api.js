@@ -1,13 +1,13 @@
 import { GET, POST } from '@utils/fetch'
 
-// export const createSku = action => (
-//   POST({
-//     api: '/SkuManagement/createSKU',
-//     apiBase: 'catalogsystem',
-//     data: action.data,
-//     handleError: true
-//   })
-// )
+export const createSku = action => (
+  POST({
+    api: '/Api/createSku',
+    apiBase: 'catalog',
+    data: action.data,
+    handleError: true
+  })
+)
 
 export const fetchSKUs = action => (
   POST({
@@ -18,23 +18,23 @@ export const fetchSKUs = action => (
   })
 )
 
-// export const updateSKU = action => (
-//   POST({
-//     api: '/SkuManagement/updatedSKU',
-//     apiBase: 'catalogsystem',
-//     data: action.data,
-//     handleError: true
-//   })
-// ) 
+export const updateSKU = action => (
+  POST({
+    api: '/Api/updateSku',
+    apiBase: 'catalog',
+    data: action.data,
+    handleError: true
+  })
+) 
 
-// export const fetchSkuMappedStates = action => (
-//   POST({
-//     api: '/SkuManagement/mappedStatesList',
-//     apiBase: 'catalogsystem',
-//     data: action.data,
-//     handleError: true
-//   })
-// ) 
+export const fetchSkuMappedStates = action => (
+  POST({
+    api: '/Api/listSkuPrice',
+    apiBase: 'catalog',
+    data: action.data,
+    handleError: true
+  })
+) 
 
 // export const fetchSkuUnmappedStates = action => (
 //   POST({
@@ -66,6 +66,16 @@ export const fetchSKUs = action => (
 export const fetchBrands = action => (
   POST({
     api: '/Api/listBrandDetails',
+    apiBase: 'catalog',
+    data: action.data,
+    handleError: true
+  })
+  .then(json => json)
+)
+
+export const fetchBrandList = action => (
+  POST({
+    api: '/Api/listBrands',
     apiBase: 'catalog',
     data: action.data,
     handleError: true

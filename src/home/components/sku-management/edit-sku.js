@@ -59,6 +59,7 @@ class editSKU extends React.Component {
               ref={(node) => { this.skuDetailsForm = node }}
               skuInfo={this.props.history.location.state}
               submit={this.submit}
+              disableSave={this.state.isDisabled}
               brandName={this.props.match.params.brandName}
               isDisabled={true}
               action="edit"

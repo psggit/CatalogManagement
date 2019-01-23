@@ -37,6 +37,11 @@ class SkuDetailsForm extends React.Component {
       volumeErr: {
         value: '',
         status: false
+      },
+
+      brandNameErr: {
+        value: '',
+        status: false
       }
     }
 
@@ -189,8 +194,8 @@ class SkuDetailsForm extends React.Component {
                   !this.props.loadingBrandList &&
                   this.props.brandList.map((item, i) => {
                     return <MenuItem
-                      value={i + 1}
-                      key={i}
+                      value={item.id}
+                      key={item.id}
                       primaryText={item.brand_name}
                     />
                   })
@@ -340,7 +345,7 @@ class SkuDetailsForm extends React.Component {
 
         <RaisedButton
           primary
-          disabled={volumeErr.status}
+          disabled={volumeErr.status || this.props. disableSave}
           label="Save"
           onClick={this.handleSave}
           style={{ marginTop: '40px' }}

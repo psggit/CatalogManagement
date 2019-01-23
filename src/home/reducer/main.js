@@ -37,6 +37,7 @@ loadingSkuMappedRetailers: true,
 //   loadingCredits: true,
 loadingSkuList: true,
 loadingBrandList: true,
+loadingBrandDetails: true,
 //   loadingVolumeList: true,
 //   //loadingAllBrands: true,
 loadingOriginList: true,
@@ -73,6 +74,7 @@ brandTypeList: [],
 //   volumeList: [],
 skuList: [],
 brands: [],
+brandList: [],
 liveOrdersData: [],
 //   brandDetails: [],
 mappedStatesToSkuData: [],
@@ -89,6 +91,7 @@ skuUnmappedStates: [],
 //   validCreditsCount: 0,
 totalSkuCount: 0,
 totalBrandCount: 0,
+totalBrandListCount: 0,
 //   brandListCount: 0,
 //   brandsMappedToCategoriesCount: 0,
 //   unmappedBrandListCount: 0,
@@ -100,7 +103,7 @@ const actionsMap = {
   [ActionTypes.SUCCESS_FETCH_SKUS]: (state, action) => {
     //console.log("success")
     return Object.assign({}, state, {
-      skuList: action.data.sku_list,
+      skuList: action.data.skuList,
       totalSkuCount: action.data.count,
       loadingSkuList: false
     })
@@ -109,10 +112,19 @@ const actionsMap = {
   [ActionTypes.SUCCESS_FETCH_BRANDS]: (state, action) => {
     return Object.assign({}, state, {
       brands: action.data.brand_details,
-      loadingBrandList: false,
+      loadingBrandDetails: false,
       totalBrandCount: action.data.count
     })
   },
+
+  [ActionTypes.SUCCESS_FETCH_BRAND_LIST]: (state, action) => {
+    return Object.assign({}, state, {
+      brandList: action.data.brand_list,
+      loadingBrandList: false,
+      totalBrandListCount: action.data.count
+    })
+  },
+
   [ActionTypes.SUCCESS_FETCH_LIVE_ORDERS]: (state, action) => {
     // console.log("data", action)
     return Object.assign({}, state, {
@@ -369,7 +381,7 @@ const actionsMap = {
   [ActionTypes.SUCCESS_FETCH_STATES_MAPPED_TO_SKU]: (state, action) => {
     return Object.assign({}, state, {
       loadingStatesMappedToSku: false,
-      mappedStatesToSkuData: action.data
+      mappedStatesToSkuData: action.data.skupricelist
     })
   },
 
