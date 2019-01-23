@@ -116,14 +116,14 @@ export const updateBrand = action => (
   .then(json => json)
 )
 
-// export const fetchBrandTypes = action => (
-//   GET({
-//     api: '/SkuManagement/brand/brandType',
-//     apiBase: 'catalogsystem',
-//     data: action.data,
-//     handleError: true
-//   })
-// ) 
+export const fetchBrandTypes = action => (
+  POST({
+    api: '/Api/listBrandType',
+    apiBase: 'catalog',
+    data: action.data,
+    handleError: true
+  })
+) 
 
 export const fetchOriginList = action => (
   POST({

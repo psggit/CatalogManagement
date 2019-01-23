@@ -48,6 +48,7 @@ class CreateBrand extends React.Component {
   }
 
   render() {
+    console.log("create brand", this.props.brandTypeList)
     return (
       <div style={{
         width: '40%',
