@@ -23,7 +23,7 @@ const TableHeaderItems = [
   'BRAND NAME',
   'VOLUME',
   // 'STATUS',
-  'CREATED AT',
+  'BRAND ID',
   'STATUS'
 ]
 
@@ -115,7 +115,7 @@ class ViewSKUList extends React.Component {
                         <TableRowColumn style={styles[2]}>{item.brand_name}</TableRowColumn>
                         <TableRowColumn style={styles[3]}>{item.sku_volume}</TableRowColumn>
                         {/* <TableRowColumn style={styles[4]}>{item.is_active ? 'ACTIVE' : 'INACTIVE'}</TableRowColumn> */}
-                        <TableRowColumn style={styles[4]}>{item.created_at}</TableRowColumn>
+                        <TableRowColumn style={styles[4]}>{item.brand_id}</TableRowColumn>
                         <TableRowColumn style={styles[5]}>
                             <Switch toggled={item.is_active} onToggle={this.updateSKUStatus} value={item} />
                         </TableRowColumn>
