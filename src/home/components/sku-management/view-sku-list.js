@@ -11,7 +11,7 @@ import {
 
 import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
-import Switch from './../../../components/switch'
+import Switch from '@components/switch'
 import CircularProgress from 'material-ui/CircularProgress'
 import { NavLink } from 'react-router-dom'
 import TableLoadingShell from './../table-loading-shell'

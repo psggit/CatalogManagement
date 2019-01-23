@@ -408,7 +408,7 @@ class BrandForm extends React.Component {
         </div>
         <RaisedButton
           primary
-          disabled={brandNameErr.status}
+          disabled={brandNameErr.status || this.props.isDisabled}
           label="Save"
           onClick={this.handleSave}
           style={{ marginTop: '40px' }}

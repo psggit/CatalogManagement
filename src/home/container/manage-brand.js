@@ -13,6 +13,11 @@ import * as Actions from './../actions'
 import ViewBrands from './../components/manage-brand/view-brand-list'
 import Pagination from '@components/pagination'
 import '@sass/components/_pagination.scss'
+import {unMountModal} from '@components/ModalBox/utils'
+import ModalHeader from '@components/ModalBox/ModalHeader'
+import ModalBody from '@components/ModalBox/ModalBody'
+import ModalBox from '@components/ModalBox'
+import ModalFooter from '@components/ModalBox/ModalFooter';
 
 import * as Roles from './../constants/roles'
 
@@ -23,7 +28,10 @@ class ManageBrand extends React.Component {
       //shouldMountCreateSKU: false,
       shouldMountFilterDialog: false,
       activePage: 1,
-      pageOffset: 0
+      pageOffset: 0,
+      brandStatus: '',
+      brandName: '',
+      brandId: ''
     }
     this.filter = {
       column: '',
@@ -35,10 +43,18 @@ class ManageBrand extends React.Component {
     this.mountFilterDialog = this.mountFilterDialog.bind(this)
     this.unmountFilterModal = this.unmountFilterModal.bind(this)
     this.applyFilter = this.applyFilter.bind(this)
+    this.showDialog = this.showDialog.bind(this)
+    this.updateBrandStatus = this.updateBrandStatus.bind(this)
+    this.setDialogState = this.setDialogState.bind(this)
+    this.fetchBrands = this.fetchBrands.bind(this)
   }
 
   componentDidMount() {
     //console.log("history", this.props.history)
+    this.fetchBrands()
+  }
+
+  fetchBrands() {
     if (location.search.length) {
       this.setQueryParamas()
     } else {
@@ -120,6 +136,36 @@ class ManageBrand extends React.Component {
     this.setState({ shouldMountFilterDialog: false })
   }
 
+  showDialog(brandObj) {
+    //console.log("brand status", brandObj.newStatus)
+    this.setState({
+      brandStatus: !brandObj.newStatus, 
+      mountDialog: true, 
+      brandName: brandObj.brandName, 
+      brandId: brandObj.brandId,
+      brandType: brandObj.brandType
+    })
+  }
+
+  updateBrandStatus() {
+    this.setState({mountDialog: false})
+    this.props.actions.updateBrand({
+      brand_id: this.state.brandId,
+      type: this.state.brandType,
+      is_active: !this.state.brandStatus
+    }, this.callbackUpdate)
+    //console.log("update")
+  }
+
+  callbackUpdate() {
+    this.fetchBrands()
+  }
+
+  setDialogState() {
+    this.setState({mountDialog: false})
+    unMountModal()
+  }
+
   applyFilter(filterObj) {
     const queryObj = {
       column: filterObj.column,
@@ -173,10 +219,33 @@ class ManageBrand extends React.Component {
           loadingBrandList={loadingBrandList}
           brandList={brands}
           history={this.props.history}
+          showDialog={this.showDialog}
         />
-
         {
-          !loadingBrandList && brands.length > 1 
+          this.state.mountDialog &&
+          <ModalBox>
+            <ModalHeader>
+                <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                    <div style={{fontSize: '18px'}}>{this.state.brandStatus === true ? 'Deactivate' : 'Activate'} BRAND</div>
+                </div>
+            </ModalHeader>
+            <ModalBody height='60px'>
+                <table className='table--hovered'>
+                    <tbody>
+                        Are you sure you want to {this.state.brandStatus === true ? 'Deactivate' : 'Activate'} this brand - {this.state.brandName} ({this.state.brandId})
+                    </tbody>
+                </table>
+            </ModalBody>
+            <ModalFooter>
+                <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', fontWeight: '600' }}>
+                    <button className='btn btn-primary' onClick={() => this.updateBrandStatus()}> OK </button>
+                    <button className='btn btn-secondary' onClick={() => this.setDialogState()}> Cancel </button>
+                </div>
+            </ModalFooter>
+          </ModalBox>
+        }
+        {
+          !loadingBrandList && brands && brands.length > 1 
           ? 
             <React.Fragment>
               <Pagination

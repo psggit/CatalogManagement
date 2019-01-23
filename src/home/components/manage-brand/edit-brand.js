@@ -21,10 +21,6 @@ class EditBrand extends React.Component {
   }
 
   componentDidMount() {
-    // this.props.actions.fetchOriginList({
-    //   limit: 1000,
-    //   offset: 0
-    // })
     this.props.actions.fetchBrandTypes({})
   }
 
@@ -38,9 +34,7 @@ class EditBrand extends React.Component {
     this.props.actions.updateBrand({
       brand_id: parseInt(this.props.history.location.state.id),
       brand_name: data.brandName,
-      //short_name: this.props.history.location.state.short_name,
       type: data.typeIdx,    
-      //origin_name: data.origin,
       alcohol_per: (data.alcoholPercentage),
       temperature: (data.temperature),
       cal_per: (data.caloriesPercentage),
@@ -76,10 +70,9 @@ class EditBrand extends React.Component {
               ref={(node) => { this.brandForm = node }}
               brandInfo={this.props.history.location.state}
               disableNameField={true}
-              //originList={this.props.originList}
+              isDisabled={this.state.isDisabled}
               brandTypeList={this.props.brandTypeList}
               submit={this.submit}
-              //loadingOriginList={this.props.loadingOriginList}
               loadingBrandTypeList={this.props.loadingBrandTypeList}
             />
           </Card>

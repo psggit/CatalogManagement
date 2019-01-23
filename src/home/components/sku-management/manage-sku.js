@@ -11,11 +11,11 @@ import {getIcon} from '@utils/icon-utils'
 import ViewSKU from './view-sku-list'
 import Pagination from '@components/pagination'
 import { getQueryObj, getQueryUri } from '@utils/url-utils'
-import {unMountModal} from './../../../components/ModalBox/utils'
-import ModalHeader from './../../../components/ModalBox/ModalHeader'
-import ModalBody from './../../../components/ModalBox/ModalBody'
-import ModalBox from './../../../components/ModalBox'
-import ModalFooter from './../../../components/ModalBox/ModalFooter';
+import {unMountModal} from '@components/ModalBox/utils'
+import ModalHeader from '@components/ModalBox/ModalHeader'
+import ModalBody from '@components/ModalBox/ModalBody'
+import ModalBox from '@components/ModalBox'
+import ModalFooter from '@components/ModalBox/ModalFooter';
 
 class SkuList extends React.Component {
   constructor(props) {
@@ -221,20 +221,20 @@ class SkuList extends React.Component {
           </ModalBox>
       }
 
-        {
-          !loadingSkuList 
-          ? 
-            <React.Fragment>
-              <Pagination
-                activePage={parseInt(activePage)}
-                itemsCountPerPage={this.pagesLimit}
-                totalItemsCount={totalSkuCount}
-                pageRangeDisplayed={5}
-                setPage={this.handlePageChange}
-              />
-            </React.Fragment>
-          : ''
-        }
+      {
+        !loadingSkuList 
+        ? 
+          <React.Fragment>
+            <Pagination
+              activePage={parseInt(activePage)}
+              itemsCountPerPage={this.pagesLimit}
+              totalItemsCount={totalSkuCount}
+              pageRangeDisplayed={5}
+              setPage={this.handlePageChange}
+            />
+          </React.Fragment>
+        : ''
+      }
 
         {
         this.state.shouldMountFilterDialog

@@ -15,16 +15,11 @@ class CreateBrand extends React.Component {
     this.state = {
       isDisabled: false
     }
-
     this.submit = this.submit.bind(this)
     this.callbackUpdate = this.callbackUpdate.bind(this)
   }
 
   componentDidMount() {
-    // this.props.actions.fetchOriginList({
-    //   limit: 1000,
-    //   offset: 0
-    // })
     this.props.actions.fetchBrandTypes({})
   }
 
@@ -35,12 +30,10 @@ class CreateBrand extends React.Component {
   submit() {
     const data = this.brandForm.getData()
     if(data.brandName.length > 0) {
-    //if(data.brandName.length > 0) {
       this.setState({ isDisabled: true })
       this.props.actions.createBrand({
         brand_name: data.brandName,
         type: data.typeIdx,
-        //origin_name: data.origin,
         alcohol_per: (data.alcoholPercentage),
         temperature: (data.temperature),
         cal_per: (data.caloriesPercentage),
@@ -75,10 +68,9 @@ class CreateBrand extends React.Component {
             <BrandForm
               ref={(node) => { this.brandForm = node }}
               disableNameField={false}
-              //originList={this.props.originList}
               brandTypeList={this.props.brandTypeList}
+              isDisabled={this.state.isDisabled}
               submit={this.submit}
-              //loadingOriginList={this.props.loadingOriginList}
               loadingBrandTypeList={this.props.loadingBrandTypeList}
             />
           </Card> 
