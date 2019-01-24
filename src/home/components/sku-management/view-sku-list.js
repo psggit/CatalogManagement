@@ -24,7 +24,7 @@ const TableHeaderItems = [
   'VOLUME',
   // 'STATUS',
   'BRAND ID',
-  'STATUS'
+  'SKU STATUS'
 ]
 
 const styles = [

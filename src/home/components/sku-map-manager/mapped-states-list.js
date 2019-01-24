@@ -13,13 +13,13 @@ import '@sass/components/_table.scss'
 import Checkbox from 'material-ui/Checkbox'
 
 const styles = [
-  { width: '38px', textAlign: 'center' },
-  { width: '60px', textAlign: 'center' },
-  { width: '80px', textAlign: 'center' },
-  { width: '80px', textAlign: 'center' },
-  { width: '80px', textAlign: 'center' },
+  { width: '38px', textAlign: 'left' },
+  { width: '60px', textAlign: 'left' },
+  { width: '80px', textAlign: 'left' },
+  { width: '80px', textAlign: 'left' },
+  { width: '60px', textAlign: 'left' },
   // { width: '60px', textAlign: 'center' },
-  { width: '38px', textAlign: 'center' }
+  { width: '38px', textAlign: 'left' }
 ]
 
 class MappedStatesList extends React.Component {

@@ -23,7 +23,7 @@ const TableHeaderItems = [
   'BRAND TYPE',
   'ALCOHOL PERCENTAGE',
   'TEMPERATURE',
-  'STATUS'
+  'BRAND STATUS'
 ]
 
 const styles = [
