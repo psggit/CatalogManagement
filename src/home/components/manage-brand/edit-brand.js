@@ -51,7 +51,7 @@ class EditBrand extends React.Component {
   }
 
   render() {
-    console.log("params", this.props.history.location.state)
+    //console.log("params", this.props.history.location.state)
     return (
       <div style={{
         width: '40%',

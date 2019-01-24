@@ -20,6 +20,7 @@ const TableHeaderItems = [
   '',
   'ID',
   'BRAND NAME',
+  'BRAND TYPE',
   'ALCOHOL PERCENTAGE',
   'TEMPERATURE',
   'STATUS'
@@ -29,6 +30,7 @@ const styles = [
   { width: '60px' },
   { width: '30px' },
   { width: '130px' },
+  {  width: '60px' },
   { width: '130px' },
   { width: '60px' }, 
   { width: '70px' }
@@ -85,10 +87,11 @@ class ViewBrandList extends React.Component {
                       </TableRowColumn>
                       <TableRowColumn style={styles[1]}>{item.id}</TableRowColumn>
                       <TableRowColumn style={styles[2]}>{item.brand_name}</TableRowColumn>
-                      <TableRowColumn style={styles[3]}>{item.alcohol_per}</TableRowColumn>
-                      <TableRowColumn style={styles[4]}>{item.temperature}</TableRowColumn>
+                      <TableRowColumn style={styles[3]}>{item.brand_type}</TableRowColumn>
+                      <TableRowColumn style={styles[4]}>{item.alcohol_per}</TableRowColumn>
+                      <TableRowColumn style={styles[5]}>{item.temperature}</TableRowColumn>
                       {/* <TableRowColumn style={styles[5]}>{item.is_active ? 'ACTIVE' : 'INACTIVE'}</TableRowColumn> */}
-                      <TableRowColumn style={styles[5]}>
+                      <TableRowColumn style={styles[6]}>
                         <Switch toggled={item.is_active} onToggle={this.updateBrandStatus} value={item} />
                       </TableRowColumn>
                     </TableRow>

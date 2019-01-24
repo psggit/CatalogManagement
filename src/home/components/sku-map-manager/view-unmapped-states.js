@@ -43,83 +43,78 @@ class ViewUnmappedStates extends React.Component {
     this.handleAddState = this.handleAddState.bind(this)
     //this.handleCheckboxes = this.handleCheckboxes.bind(this)
     this.handleChange = this.handleChange.bind(this)
-    this.successCallback = this.successCallback.bind(this)
-    this.mapStates = this.mapStates.bind(this)
+    //this.successCallback = this.successCallback.bind(this)
+    //this.mapStates = this.mapStates.bind(this)
   }
 
   componentDidMount() {
-    this.props.actions.fetchStates({}, this.successCallback)
+    //this.props.actions.fetchStates({}, this.successCallback)
+    this.mapStates()
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.skuMappedData !== prevProps.skuMappedData) {
+      this.mapStates()
+    }
+  }
+  // successCallback() {
+  //   this.props.actions.fetchStatesMappedToSku({
+  //     sku_id: parseInt(this.props.skuId)
+  //   }, this.mapStates)
+  // }
+
   mapStates() {
-      //console.log("response")
-      //console.log("response", this.props.mappedStatesToSkuData)
-      let stateMap = {}
-      if(!this.props.mappedStatesToSkuData) {
-        // let stateMap = {}
-        const list = this.props.statesList.map((item) => {
-          return stateMap[item.state_short_name] = {
-            state_id: parseInt(item.state_id),
-            state_name: item.state_name,
+    let stateMap = {}
+    const {
+      skuMappedData,
+      loadingStatesMappedToSku
+    } = this.props
+    //console.log("loadin", loadingStatesMappedToSku, skuMappedData.length)
+    if(skuMappedData && skuMappedData.length === 0 && !loadingStatesMappedToSku) {
+      //console.log("if")
+      this.props.statesList.map((item) => {
+        stateMap[item.state_short_name] = {
+          state_id: parseInt(item.state_id),
+          state_name: item.state_name,
+          sku_id: parseInt(this.props.skuId),
+          price: 0,
+          is_active: true,
+          state_short_name: item.state_short_name
+        }
+      })
+    } else {
+      //console.log("else")
+      const statesMap = {}
+      this.props.statesList.map((item) => {
+        return statesMap[item.state_id] = {
+          state_id: item.state_id,
+          state_name: item.state_name,
+          state_short_name: item.state_short_name
+        }
+      })
+
+      this.props.statesList.map((stateDetails) => {
+        // console.log("1", this.props.skuMappedData)
+        // console.log("2", stateDetails.state_id)
+        // console.log("res", this.props.skuMappedData.map(item => parseInt(item.state_id)).indexOf((parseInt(stateDetails.state_id))))
+        if(this.props.skuMappedData.map(item => parseInt(item.state_id)).indexOf((parseInt(stateDetails.state_id))) === -1) {
+          stateMap[statesMap[stateDetails.state_id].state_short_name] = {
+            state_id: parseInt(stateDetails.state_id),
+            state_name: statesMap[stateDetails.state_id].state_name,
             sku_id: parseInt(this.props.skuId),
             price: 0,
             is_active: true,
-            state_short_name: item.state_short_name
+            state_short_name: statesMap[stateDetails.state_id].state_short_name
           }
-        })
-        //console.log("map", Object.values(stateMap))
-        //this.setState({stateMap, unmappedStatesList: Object.values(stateMap), loadingUnmappedStates: false })
-      } else {
-        // let stateMap = {}
-        console.log("else")
-        const statesMap = {}
-        this.props.statesList.map((item) => {
-          return statesMap[item.state_id] = {
-            state_id: item.state_id,
-            state_name: item.state_name,
-            state_short_name: item.state_short_name
-          }
-        })
-
-        const list = this.props.statesList.map((stateDetails) => {
-          // console.log("sku", this.props.mappedStatesToSkuData)
-          // console.log("state", stateDetails, this.props.mappedStatesToSkuData.map(item => item.state_id).indexOf((stateDetails.state_id)))
-          if(this.props.mappedStatesToSkuData.map(item => item.state_id).indexOf((stateDetails.state_id)) === -1) {
-            //console.log("success", statesMap[stateDetails.state_id].state_short_name)
-            stateMap[statesMap[stateDetails.state_id].state_short_name] = {
-              state_id: parseInt(stateDetails.state_id),
-              state_name: statesMap[stateDetails.state_id].state_name,
-              sku_id: parseInt(this.props.skuId),
-              price: 0,
-              is_active: true,
-              state_short_name: statesMap[stateDetails.state_id].state_short_name
-            }
-          }
-          
-        })
-        //console.log("map", stateMap)
-      }
-      this.setState({stateMap, unmappedStatesList: Object.values(stateMap), loadingUnmappedStates: false })
-      
-      // let stateMap = {}
-      // //console.log("response", response)
-      // const list = response.map((item) => {
-      //   stateMap[item.short_name] = {
-      //     state_name: item.state_name,
-      //     sku_id: parseInt(this.props.skuId),
-      //     sku_price: 0,
-      //     is_active: true,
-      //     state_short_name: item.short_name
-      //   }
-  }
-
-  successCallback() {
-    console.log("success callback", this.props.statesList, this.props)
-    this.props.actions.fetchStatesMappedToSku({
-      sku_id: parseInt(this.props.skuId)
-    }, this.mapStates)
-      //this.setState({stateMap, unmappedStatesList: Object.values(stateMap), loadingUnmappedStates: false })
-    //})
+        } 
+      })
+    }
+    //console.log("state map", stateMap)
+    this.setState({
+      stateMap, 
+      unmappedStatesList: Object.values(stateMap), 
+      loadingUnmappedStates: false 
+    })
   }
 
   handleAddState(state_short_name) {
@@ -145,6 +140,10 @@ class ViewUnmappedStates extends React.Component {
       unmappedStatesList
     } = this.state
 
+    // const {
+    //   loadingStatesMappedToSku
+    // } = this.props
+    //console.log("state ", unmappedStatesList)
     const notificationStyle = {
       boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.08)',
       display: 'flex',

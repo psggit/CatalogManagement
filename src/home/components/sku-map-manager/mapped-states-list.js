@@ -51,46 +51,18 @@ class MappedStatesList extends React.Component {
   }
 
   mapStates() {
-    let mappedStates = {}
-    //console.log("mapped", this.props.skuMappedData)
     if(this.props.skuMappedData) {
-      // const statesMap = {}
-      // this.props.statesList.map((item) => {
-      //   return statesMap[item.state_id] = {
-      //     state_id: item.state_id,
-      //     state_name: item.state_name,
-      //     state_short_name: item.state_short_name
-      //   }
-      // })
-      // const stateMap = {}
-      // this.props.skuMappedData.map((item) => {
-      //   //console.log("item", item)
-      //   this.props.skuMappedData.map((item) => {
-      //     console.log("price", item)
-      //     return stateMap[statesMap[item.state_id].state_short_name] = {
-      //       sku_pricing_id: item.id,
-      //       state_id: parseInt(item.state_id),
-      //       state_name: statesMap[item.state_id].state_name,
-      //       sku_id: parseInt(this.props.skuId),
-      //       price: item.price,
-      //       is_active: item.is_active,
-      //       state_short_name: statesMap[item.state_id].state_short_name
-      //     }
-      //   })
-      // })
-      // console.log("statemap", stateMap)
       this.setState({ mappedStatesList: this.props.skuMappedData, stateMap: this.props.skuStateMap })
     }
   }
 
   enableInputBox(stateShortName) {
-    //console.log("satet", this.state.stateMap, stateShortName)
     let updatedStateMap = Object.assign({}, this.state.stateMap)
     if (!this.state.stateMap[stateShortName].is_modified) {
       updatedStateMap[stateShortName].is_modified = true
       this.setState({ 
         selectedPricingId: this.state.stateMap[stateShortName].sku_pricing_id, 
-        stateMap: updatedStateMap ,
+        stateMap: updatedStateMap,
         selectStateShortName: stateShortName
       })
     } 
@@ -99,7 +71,6 @@ class MappedStatesList extends React.Component {
         is_active: updatedStateMap[stateShortName].is_active,
         price: updatedStateMap[stateShortName].price,
         id: this.state.stateMap[stateShortName].sku_pricing_id,
-        //selectStateShortName: stateShortName
       })
     }
   }
@@ -143,7 +114,6 @@ class MappedStatesList extends React.Component {
       width: '60px',
       padding: '0px 10px'
     }
-    console.log("data",    !this.props.loadingStatesMappedToSku, this.state.stateMap, Object.keys(this.state.stateMap).length)
     return (
       <Table
         className="bordered--table"

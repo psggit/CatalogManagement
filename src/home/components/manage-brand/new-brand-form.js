@@ -15,6 +15,7 @@ class BrandForm extends React.Component {
   constructor(props) {
     super(props)
     this.uploadedImageUrl = ''
+    //console.log("brand info", this.props.brandInfo, "props", this.props.brandTypeList)
     this.intitialState = {
       shouldTrim: true,
       brandName: props.brandInfo ? props.brandInfo.brand_name : '',
@@ -28,7 +29,7 @@ class BrandForm extends React.Component {
       image_url: props.brandInfo ? props.brandInfo.image : '',
       high_res_image: props.brandInfo ? props.brandInfo.high_res_image : '',
       low_res_image: props.brandInfo ? props.brandInfo.low_res_image : '',
-      typeIdx: props.brandInfo ? props.brandTypeList.map(item => item.id).indexOf(parseInt(props.brandInfo.type)) + 1 : 1,
+      typeIdx: props.brandInfo ? props.brandTypeList.map(item => parseInt(item.id)).indexOf(parseInt(props.brandInfo.type)) + 1 : 1,
       //brandType: props.brandInfo ? props.brandTypeList.map(item => item.id)[props.brandTypeList.map(item => item.id).indexOf(this.props.brandInfo.Type)] : props.brandTypeList.map(item => item.name)[0],
       //originIdx: props.brandInfo ? props.originList.map(item => item.short_name).indexOf(props.brandInfo.origin_name) + 1 : 1,
       //origin: props.brandInfo ? props.originList.map(item => item.short_name)[props.originList.map(item => item.short_name).indexOf(this.props.brandInfo.origin_name)] : props.originList.map(item => item.short_name)[0],
@@ -63,7 +64,7 @@ class BrandForm extends React.Component {
     if((this.props.brandTypeList !== prevProps.brandTypeList)) {
       this.setState({
         //originIdx: this.props.brandInfo ? this.props.originList.map(item => item.short_name).indexOf(this.props.brandInfo.origin_name) + 1 : 1,
-        typeIdx: this.props.brandInfo ? this.props.brandTypeList.map(item => item.id).indexOf(parseInt(this.props.brandInfo.type)) + 1 : 1,
+        typeIdx: this.props.brandInfo ? this.props.brandTypeList.map(item => parseInt(item.id)).indexOf(parseInt(this.props.brandInfo.type)) + 1 : 1,
         //origin: this.props.brandInfo ? this.props.originList.map(item => item.short_name)[this.props.originList.map(item => item.short_name).indexOf(this.props.brandInfo.origin_name)] : this.props.originList.map(item => item.short_name)[0],
         //brandType: this.props.brandInfo ? this.props.brandTypeList.map(item => item.name)[this.props.brandTypeList.map(item => item.id).indexOf(this.props.brandInfo.Type)] : this.props.brandTypeList.map(item => item.name)[0]
       })
@@ -182,6 +183,7 @@ class BrandForm extends React.Component {
 
   render() {
     const { brandNameErr } = this.state
+    //console.log("state", this.state)
     return (
       <Fragment>
         
@@ -282,7 +284,7 @@ class BrandForm extends React.Component {
               !this.props.loadingBrandTypeList && this.props.brandTypeList.map((item, i) => (
                 <MenuItem
                   value={i + 1}
-                  key={item.id}
+                  key={i}
                   primaryText={item.name}
                 />
               ))

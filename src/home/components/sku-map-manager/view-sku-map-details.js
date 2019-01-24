@@ -29,12 +29,11 @@ class ViewSKUMapDetails extends React.Component {
     this.mapStateToSku = this.mapStateToSku.bind(this)
     this.successFetchStatesCallback = this.successFetchStatesCallback.bind(this)
     this.mapStates = this.mapStates.bind(this)
-    this.failureCallback = this.failureCallback.bind(this)
+    //this.failureCallback = this.failureCallback.bind(this)
   }
 
   componentDidMount() {
     const history = this.props.history.location.state
-    //console.log("history", history)
     this.setState({
       brandId: history.brand_id,
       brandName: history.brand_name,
@@ -53,13 +52,12 @@ class ViewSKUMapDetails extends React.Component {
     }, this.mapStates)
   }
 
-  failureCallback() {
-    this.setState({loadingData: false})
-  }
+  // failureCallback() {
+  //   this.setState({loadingData: false})
+  // }
 
   mapStates() {
     if(!this.props.mappedStatesToSkuData) {
-      //console.log("no states mapped")
       this.setState({loadingData: false})
     } else {
       const statesMap = {}
@@ -84,15 +82,16 @@ class ViewSKUMapDetails extends React.Component {
           is_modified: false
         }
       })
-      //console.log("map", mappedStatesToSku)
-      this.setState({mappedStatesToSkuMap: mappedStatesToSku, mappedStatesToSkuList: Object.values(mappedStatesToSku), loadingData: false })
+      this.setState({
+        mappedStatesToSkuMap: mappedStatesToSku, 
+        mappedStatesToSkuList: Object.values(mappedStatesToSku), 
+        loadingData: false 
+      })
     }
   }
 
   updateStateMappedToSku(stateDetailObj) {
-    //console.log("update", stateDetailObj)
     this.setState({disableSave: true})
-    //stateDetailObj['sku_id'] = parseInt(this.state.skuId)
     this.props.actions.updateSkuStateMap(stateDetailObj,() => {
       setTimeout(() => {
         this.setState({disableSave: false})
@@ -117,10 +116,8 @@ class ViewSKUMapDetails extends React.Component {
   }
 
   mapStateToSku(mappedStateObj) {
-    //console.log("map state", mappedStateObj)
     this.props.actions.mapStateToSku(mappedStateObj, 
     (response) => {
-      //console.log("id", this.props.match.params.skuId)
       this.props.actions.fetchStatesMappedToSku({
         sku_id: parseInt(this.props.match.params.skuId)
       }, this.mapStates)
@@ -128,7 +125,6 @@ class ViewSKUMapDetails extends React.Component {
   }
 
   render() {
-    
     return (
       <div style={{ width: '100%'}}>
         <Card
@@ -177,6 +173,9 @@ class ViewSKUMapDetails extends React.Component {
             skuId = {this.props.match.params.skuId}
             handleClose = {this.unmountAddStateToSkuDialog}
             handleAddStateToSku = {this.mapStateToSku}
+            statesList = {this.props.statesList}
+            skuMappedData = {this.state.mappedStatesToSkuList}
+            loadingStatesMappedToSku = {this.state.loadingData}
             //statesList = {this.props.statesList}
           />
         } 

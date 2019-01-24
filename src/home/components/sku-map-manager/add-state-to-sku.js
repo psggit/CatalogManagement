@@ -35,7 +35,14 @@ class AddStateToSku extends React.Component {
           onRequestClose={this.handleClose}
           autoScrollBodyContent
         >
-          <ViewUnmappedStates handleClose={this.handleClose} skuId={this.props.skuId} handleAddStateToSku={this.props.handleAddStateToSku}/> 
+          <ViewUnmappedStates 
+            handleClose={this.handleClose} 
+            skuId={this.props.skuId} 
+            handleAddStateToSku={this.props.handleAddStateToSku}
+            statesList = {this.props.statesList}
+            skuMappedData = {this.props.skuMappedData}
+            loadingStatesMappedToSku = {this.props.loadingStatesMappedToSku}
+          /> 
         </Dialog>
       </div>
     )
