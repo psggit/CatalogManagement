@@ -28,11 +28,11 @@ class MappedStatesList extends React.Component {
     this.state = {
       mappedStatesList: [],
       stateMap: {},
-      selectedPricingId: 0
+      selectedPricingId: 0,
+      selectStateShortName: ''
     }
     this.handleCheckboxes = this.handleCheckboxes.bind(this)
     this.enableInputBox = this.enableInputBox.bind(this)
-    //this.unMapState = this.unMapState.bind(this)
   }
 
   componentDidMount() {
@@ -45,41 +45,61 @@ class MappedStatesList extends React.Component {
     }
     else if (prevProps.disableSave !== this.props.disableSave && !this.props.disableSave) {
       let updatedStateMap = Object.assign({}, this.state.stateMap)
-      updatedStateMap[this.state.selectedPricingId].modified = false
+      updatedStateMap[this.state.selectStateShortName].is_modified = false
       this.setState({ stateMap: updatedStateMap })
     }
   }
 
   mapStates() {
     let mappedStates = {}
+    //console.log("mapped", this.props.skuMappedData)
     if(this.props.skuMappedData) {
-      this.props.skuMappedData.map((item) => {
-        mappedStates[item.sku_pricing_id] = {
-          state_name: item.state_name,
-          state_short_name: item.state_short_name,
-          sku_price: item.sku_price,
-          sku_pricing_id: item.sku_pricing_id,
-          is_active: item.is_active,
-          is_modified: false
-        }
-      })
+      // const statesMap = {}
+      // this.props.statesList.map((item) => {
+      //   return statesMap[item.state_id] = {
+      //     state_id: item.state_id,
+      //     state_name: item.state_name,
+      //     state_short_name: item.state_short_name
+      //   }
+      // })
+      // const stateMap = {}
+      // this.props.skuMappedData.map((item) => {
+      //   //console.log("item", item)
+      //   this.props.skuMappedData.map((item) => {
+      //     console.log("price", item)
+      //     return stateMap[statesMap[item.state_id].state_short_name] = {
+      //       sku_pricing_id: item.id,
+      //       state_id: parseInt(item.state_id),
+      //       state_name: statesMap[item.state_id].state_name,
+      //       sku_id: parseInt(this.props.skuId),
+      //       price: item.price,
+      //       is_active: item.is_active,
+      //       state_short_name: statesMap[item.state_id].state_short_name
+      //     }
+      //   })
+      // })
+      // console.log("statemap", stateMap)
+      this.setState({ mappedStatesList: this.props.skuMappedData, stateMap: this.props.skuStateMap })
     }
-    const mappedSkuStates = Object.values(mappedStates)
-    this.setState({ mappedStatesList: mappedSkuStates, stateMap: mappedStates })
   }
 
-  enableInputBox(pricingId) {
+  enableInputBox(stateShortName) {
+    //console.log("satet", this.state.stateMap, stateShortName)
     let updatedStateMap = Object.assign({}, this.state.stateMap)
-    if (!this.state.stateMap[pricingId].modified) {
-      updatedStateMap[pricingId].modified = true
-      this.setState({ selectedPricingId: pricingId, stateMap: updatedStateMap })
+    if (!this.state.stateMap[stateShortName].is_modified) {
+      updatedStateMap[stateShortName].is_modified = true
+      this.setState({ 
+        selectedPricingId: this.state.stateMap[stateShortName].sku_pricing_id, 
+        stateMap: updatedStateMap ,
+        selectStateShortName: stateShortName
+      })
     } 
     else {
       this.props.handleSaveStateDetails({
-        //state_short_name: updatedStateMap[pricingId].state_short_name,
-        is_active: updatedStateMap[pricingId].is_active,
-        sku_price: updatedStateMap[pricingId].sku_price,
-        sku_pricing_id: pricingId
+        is_active: updatedStateMap[stateShortName].is_active,
+        price: updatedStateMap[stateShortName].price,
+        id: this.state.stateMap[stateShortName].sku_pricing_id,
+        //selectStateShortName: stateShortName
       })
     }
   }
@@ -98,15 +118,15 @@ class MappedStatesList extends React.Component {
  
   // }
 
-  handleChange(e, pricingId) {
+  handleChange(e, stateShortName) {
     let updatedMap = Object.assign({}, this.state.stateMap)
-    updatedMap[pricingId].sku_price = parseInt(e.target.value)
+    updatedMap[stateShortName].price = parseInt(e.target.value)
     this.setState({ stateMap: updatedMap, mappedStatesList: Object.values(updatedMap) })
   }
 
-  handleCheckboxes(e, pricingId) {
+  handleCheckboxes(e, stateShortName) {
     let updatedMap = Object.assign({}, this.state.stateMap)
-    updatedMap[pricingId].is_active = (e.target.checked)
+    updatedMap[stateShortName].is_active = (e.target.checked)
     this.setState({ stateMap: updatedMap, mappedStatesList: Object.values(updatedMap) })
   }
 
@@ -123,6 +143,7 @@ class MappedStatesList extends React.Component {
       width: '60px',
       padding: '0px 10px'
     }
+    console.log("data",    !this.props.loadingStatesMappedToSku, this.state.stateMap, Object.keys(this.state.stateMap).length)
     return (
       <Table
         className="bordered--table"
@@ -135,7 +156,7 @@ class MappedStatesList extends React.Component {
         >
           <TableRow>
             <TableHeaderColumn style={styles[0]}>IS_ACTIVE</TableHeaderColumn>
-            <TableHeaderColumn style={styles[1]}>STATE NAME</TableHeaderColumn>
+            <TableHeaderColumn style={styles[1]}>STATE SHORT NAME</TableHeaderColumn>
             <TableHeaderColumn style={styles[2]}>STATE NAME</TableHeaderColumn>
             <TableHeaderColumn style={styles[3]}>SKU PRICE</TableHeaderColumn>
             <TableHeaderColumn style={styles[4]}>SKU PRICING ID</TableHeaderColumn>
@@ -160,10 +181,10 @@ class MappedStatesList extends React.Component {
               return <TableRow key={i}>
                 <TableRowColumn style={styles[0]}>
                   <Checkbox
-                    onCheck={(e) => this.handleCheckboxes(e, item.sku_pricing_id)}
-                    checked={this.state.stateMap[item.sku_pricing_id].is_active}
+                    onCheck={(e) => this.handleCheckboxes(e, item.state_short_name)}
+                    checked={this.state.stateMap[item.state_short_name].is_active}
                     name="isActive"
-                    disabled={!this.state.stateMap[item.sku_pricing_id].modified}
+                    disabled={!this.state.stateMap[item.state_short_name].is_modified}
                   />
                 </TableRowColumn>
                 {/* <TableRowColumn style={styles[0]}>
@@ -179,20 +200,20 @@ class MappedStatesList extends React.Component {
                 <TableRowColumn style={styles[3]}>
                   <input
                     type="number"
-                    value={this.state.stateMap[item.sku_pricing_id].sku_price}
-                    onChange={(e) => this.handleChange(e, item.sku_pricing_id)}
-                    style={!this.state.stateMap[item.sku_pricing_id].modified ? editInputStyle : { width: '60px', padding: '0px 10px' }}
-                    disabled={!this.state.stateMap[item.sku_pricing_id].modified}
+                    value={this.state.stateMap[item.state_short_name].price}
+                    onChange={(e) => this.handleChange(e, item.state_short_name)}
+                    style={!this.state.stateMap[item.state_short_name].is_modified ? editInputStyle : { width: '60px', padding: '0px 10px' }}
+                    disabled={!this.state.stateMap[item.state_short_name].is_modified}
                   />
                 </TableRowColumn>
                 <TableRowColumn style={styles[4]}>{item.sku_pricing_id}</TableRowColumn>
                 {/* <TableRowColumn style={styles[5]}>{item.is_active ? 'Active' : 'Inactive'}</TableRowColumn> */}
                 <TableRowColumn style={styles[5]}>
                   <button
-                    onClick={() => this.enableInputBox(item.sku_pricing_id)}
+                    onClick={() => this.enableInputBox(item.state_short_name)}
                     style={this.props.disableSave ? { opacity: '0.55', pointerEvents: 'none', fontSize: '13px', textTransform: 'none', width: '50px' } : { fontSize: '13px', textTransform: 'none', width: '50px' }}
                   >
-                    {!this.state.stateMap[item.sku_pricing_id].modified ? 'Edit' : 'Save'}
+                    {!this.state.stateMap[item.state_short_name].is_modified ? 'Edit' : 'Save'}
                   </button>
                 </TableRowColumn>
               </TableRow>

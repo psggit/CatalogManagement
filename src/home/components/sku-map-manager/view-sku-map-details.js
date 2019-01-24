@@ -7,8 +7,6 @@ import * as Actions from './../../actions'
 import { getQueryObj } from '@utils/url-utils'
 import MappedStatesList from './mapped-states-list'
 import AddStatesToSku from './add-state-to-sku'
-import AddRetailersToSku from './add-retailers-to-sku'
-import MappedSKURetailersList from './mapped-sku-retailer-list'
 import { Card } from 'material-ui/Card';
 
 class ViewSKUMapDetails extends React.Component {
@@ -18,23 +16,20 @@ class ViewSKUMapDetails extends React.Component {
       brandId: 0,
       brandName: '',
       skuId: 0,
-      //skuPricingId: 0,
       volume: 0,
       SKUStatus: false,
-      // shouldMountAddRetailerDialog: false,
-      // shouldMountAddStateToSkuDialog: false,
       disableSave: false,
-      //disableSaveInRetailerList: false
+      loadingData: true,
+      mappedStatesToSkuList: [],
+      mappedStatesToSkuMap: {}
     }
     this.updateStateMappedToSku = this.updateStateMappedToSku.bind(this)
     this.mountAddStateToSkuDialog = this.mountAddStateToSkuDialog.bind(this)
     this.unmountAddStateToSkuDialog = this.unmountAddStateToSkuDialog.bind(this)
-    // this.mountAddRetailerDialog = this.mountAddRetailerDialog.bind(this)
-    // this.unmountAddRetailerDialog = this.unmountAddRetailerDialog.bind(this)
     this.mapStateToSku = this.mapStateToSku.bind(this)
-    //this.mapRetailerToSku = this.mapRetailerToSku.bind(this)
-    //this.handleUpdateRetailerDetails = this.handleUpdateRetailerDetails.bind(this)
-    //this.handleUnmapState = this.handleUnmapState.bind(this)
+    this.successFetchStatesCallback = this.successFetchStatesCallback.bind(this)
+    this.mapStates = this.mapStates.bind(this)
+    this.failureCallback = this.failureCallback.bind(this)
   }
 
   componentDidMount() {
@@ -44,22 +39,58 @@ class ViewSKUMapDetails extends React.Component {
       brandId: history.brand_id,
       brandName: history.brand_name,
       skuId: this.props.match.params.skuId,
-      //skuPricingId: history.sku_pricing_id,
       volume: history.volume,
       SKUStatus: history.is_active
-      //status: history.is_active
-    })
-    //console.log("skuid", this.props.match.params.skuId)
-    this.props.actions.fetchStatesMappedToSku({
-      sku_id: parseInt(this.props.match.params.skuId)
     })
 
-    // this.props.actions.fetchRetailersMappedToSku({
-    //   sku_id: this.props.match.params.skuId
-    // })
+    this.props.actions.fetchStates({}, this.successFetchStatesCallback)
+  }
+
+  successFetchStatesCallback() {
+    //console.log("success fetch states", this.props.statesList)
+    this.props.actions.fetchStatesMappedToSku({
+      sku_id: parseInt(this.props.match.params.skuId)
+    }, this.mapStates)
+  }
+
+  failureCallback() {
+    this.setState({loadingData: false})
+  }
+
+  mapStates() {
+    if(!this.props.mappedStatesToSkuData) {
+      //console.log("no states mapped")
+      this.setState({loadingData: false})
+    } else {
+      const statesMap = {}
+      this.props.statesList && this.props.statesList.map((item) => {
+        return statesMap[item.state_id] = {
+          state_id: item.state_id,
+          state_name: item.state_name,
+          state_short_name: item.state_short_name
+        }
+      })
+      const mappedStatesToSku = {}
+      this.props.mappedStatesToSkuData.map((item) => {
+        //console.log("item price", item)
+        mappedStatesToSku[statesMap[item.state_id].state_short_name] = {
+          sku_pricing_id: parseInt(item.id),
+          state_id: parseInt(item.state_id),
+          state_name: statesMap[item.state_id].state_name,
+          sku_id: parseInt(this.props.match.params.skuId),
+          price: item.price,
+          is_active: item.is_active,
+          state_short_name: statesMap[item.state_id].state_short_name,
+          is_modified: false
+        }
+      })
+      //console.log("map", mappedStatesToSku)
+      this.setState({mappedStatesToSkuMap: mappedStatesToSku, mappedStatesToSkuList: Object.values(mappedStatesToSku), loadingData: false })
+    }
   }
 
   updateStateMappedToSku(stateDetailObj) {
+    //console.log("update", stateDetailObj)
     this.setState({disableSave: true})
     //stateDetailObj['sku_id'] = parseInt(this.state.skuId)
     this.props.actions.updateSkuStateMap(stateDetailObj,() => {
@@ -68,94 +99,13 @@ class ViewSKUMapDetails extends React.Component {
       })
       this.props.actions.fetchStatesMappedToSku({
         sku_id: parseInt(this.props.match.params.skuId)
-      })
+      }, this.mapStates)
     })
   }
 
   // handleUnmapState(stateDetailObj) {
   //   stateDetailObj['sku_id'] = this.state.skuId
   //   this.props.actions.updateSkuStateMap(stateDetailObj,() => {})
-  // }
-
-  // handleUpdateRetailerDetails(retailerDetailObj) {
-  //   this.setState({disableSaveInRetailerList: true})
-  //   retailerDetailObj['sku_id'] = this.state.skuId
-  //   this.props.actions.updateSkuRetailerMap(retailerDetailObj,() => {
-  //     setTimeout(() => {
-  //       this.setState({disableSaveInRetailerList: false})
-  //     })
-  //   })
-  // }
-
-  // handleDeleteRetailer(id) {
-  //   const queryObj = getQueryObj(location.search.slice(1))
-  //   this.props.actions.deleteRetailerFromLocalityMap({
-  //     retailer_id: id,
-  //     locality_id: parseInt(queryObj.id)
-  //   })
-  // }
-
-  // handleDeleteDp(id) {
-  //   const queryObj = getQueryObj(location.search.slice(1))
-  //   this.props.actions.deleteDpFromLocalityMap({
-  //     dp_id: id,
-  //     locality_id: parseInt(queryObj.id)
-  //   })
-  // }
-
-  // handleMakePrimeRetailer(id) {
-  //   const queryObj = getQueryObj(location.search.slice(1))
-  //   if (!this.primeRetailerId) {
-  //     this.props.actions.mapRetailerToLocalityAsPrime({
-  //       retailer_id: id,
-  //       locality_id: parseInt(queryObj.id)
-  //     })
-  //   } else {
-  //     const CB = this.state.isPrime
-  //       ? () => {
-  //         this.props.actions.mapRetailerToLocalityAsPrime({
-  //           retailer_id: id,
-  //           locality_id: parseInt(queryObj.id)
-  //         })
-  //       }
-  //       : () => {
-  //         this.props.actions.fetchLocalityRetailersMap({
-  //           locality_id: parseInt(queryObj.id)
-  //         })
-  //       }
-  //     this.props.actions.unmapRetailerToLocalityAsPrime({
-  //       retailer_id: this.primeRetailerId,
-  //       locality_id: parseInt(queryObj.id)
-  //     }, CB)
-  //   }
-  // }
-
-  // unmountConfirmDeleteRetailer() {
-  //   this.setState({ shouldMountConfirmDeleteRetailer: false })
-  // }
-
-  // mountConfirmDeleteRetailer(retailer_id) {
-  //   this.setState({ shouldMountConfirmDeleteRetailer: true, retailer_id })
-  // }
-
-  // unmountConfirmDeleteDp() {
-  //   this.setState({ shouldMountConfirmDeleteDp: false })
-  // }
-
-  // mountConfirmDeleteDp(dp_id) {
-  //   this.setState({ shouldMountConfirmDeleteDp: true, dp_id })
-  // }
-
-  // unmountConfirmMakePrimeRetailer() {
-  //   this.setState({ shouldMountConfirmMakePrimeRetailer: false })
-  // }
-
-  // mountConfirmMakePrimeRetailer(retailer_id, val) {
-  //   this.setState({ shouldMountConfirmMakePrimeRetailer: true, retailer_id, isPrime: val })
-  // }
-
-  // mountAddRetailerDialog() {
-  //   this.setState({ shouldMountAddRetailerDialog: true })
   // }
 
   mountAddStateToSkuDialog() {
@@ -166,33 +116,16 @@ class ViewSKUMapDetails extends React.Component {
     this.setState({ shouldMountAddStateToSkuDialog: false })
   }
 
-  // mountAddRetailerDialog() {
-  //   this.setState({ shouldMountAddRetailerDialog: true })
-  // }
-
-  // unmountAddRetailerDialog() {
-  //   this.setState({ shouldMountAddRetailerDialog: false })
-  // }
-
   mapStateToSku(mappedStateObj) {
+    //console.log("map state", mappedStateObj)
     this.props.actions.mapStateToSku(mappedStateObj, 
     (response) => {
       //console.log("id", this.props.match.params.skuId)
       this.props.actions.fetchStatesMappedToSku({
         sku_id: parseInt(this.props.match.params.skuId)
-      })
+      }, this.mapStates)
     })
   }
-
-  // mapRetailerToSku(mappedRetailerObj) {
-  //   //console.log("mapped retailer object", mappedRetailerObj)
-  //   this.props.actions.mapRetailerToSku(mappedRetailerObj, 
-  //   (response) => {
-  //     this.props.actions.updateSkuRetailerMap({
-  //       sku_id: this.props.match.params.skuId
-  //     })
-  //   })
-  // }
 
   render() {
     
@@ -228,79 +161,25 @@ class ViewSKUMapDetails extends React.Component {
             style={{ margin: '20px 0' }}
           />
           <MappedStatesList
-            loadingStatesMappedToSku = {this.props.loadingStatesMappedToSku}
-            skuMappedData = {this.props.mappedStatesToSkuData}
+            loadingStatesMappedToSku = {this.state.loadingData}
+            skuMappedData = {this.state.mappedStatesToSkuList}
+            skuStateMap = {this.state.mappedStatesToSkuMap}
             handleSaveStateDetails = {this.updateStateMappedToSku}
+            //statesList = {this.props.statesList}
             //handleUnmapState = {this.handleUnmapState}
             disableSave = {this.state.disableSave}
           />
         </div>
         <br/><br/>
-        {/* <div>
-          <h3 style={{ margin: 0 }}>Listing mapped retailers</h3>
-          <RaisedButton
-            primary
-            label="Add retailer"
-            onClick={this.mountAddRetailerDialog}
-            style={{ margin: '20px 0' }}
-          />
-          <MappedSKURetailersList
-            loadingMappedRetailers = {this.props.loadingSkuMappedRetailers}
-            mappedRetailersData = {this.props.mappedRetailersData}
-            handleUpdateRetailerDetails = {this.handleUpdateRetailerDetails}
-            disableSave = {this.state.disableSaveInRetailerList}
-          />
-        </div> */}
-        {/* {
-          this.state.shouldMountConfirmDeleteRetailer &&
-          <ConfirmDeleteRetailer
-            retailer_id={this.state.retailer_id}
-            unmountConfirmDeleteRetailer={this.unmountConfirmDeleteRetailer}
-            handleDeleteRetailer={this.handleDeleteRetailer}
-          />
-        }
-
-        {
-          this.state.shouldMountConfirmDeleteDp &&
-          <ConfirmDeleteDp
-            dp_id={this.state.dp_id}
-            unmountConfirmDeleteDp={this.unmountConfirmDeleteDp}
-            handleDeleteDp={this.handleDeleteDp}
-          />
-        }
-
-        {
-          this.state.shouldMountConfirmMakePrimeRetailer &&
-          <ConfirmMakePrimeRetailer
-            retailer_id={this.state.retailer_id}
-            unmountConfirmMakePrimeRetailer={this.unmountConfirmMakePrimeRetailer}
-            handleMakePrimeRetailer={this.handleMakePrimeRetailer}
-          />
-        }
-
-        {
-          this.state.shouldMountAddRetailerDialog &&
-          <AddRetailerDialog
-            unmountAddRetailerDialog={this.unmountAddRetailerDialog}
-          />
-        } */}
-
         {
           this.state.shouldMountAddStateToSkuDialog &&
           <AddStatesToSku
             skuId = {this.props.match.params.skuId}
             handleClose = {this.unmountAddStateToSkuDialog}
             handleAddStateToSku = {this.mapStateToSku}
+            //statesList = {this.props.statesList}
           />
         } 
-        {/* {
-          this.state.shouldMountAddRetailerDialog &&
-          <AddRetailersToSku
-            skuId = {this.props.match.params.skuId}
-            handleClose = {this.unmountAddRetailerDialog}
-            handleAddRetailerToSku = {this.mapRetailerToSku}
-          />
-        }  */}
       </div>
     )
   }

@@ -383,7 +383,7 @@ const actionsMap = {
   [ActionTypes.SUCCESS_FETCH_STATES]: (state, action) => {
     return Object.assign({}, state, {
       loadingStates: false,
-      statesList: action.data
+      statesList: action.data.states
     })
   },
 

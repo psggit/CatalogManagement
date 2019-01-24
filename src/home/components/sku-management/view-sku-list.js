@@ -46,10 +46,9 @@ class ViewSKUList extends React.Component {
 
   handleClick(e, item) {
     let queryObj = {}
-    console.log("item", item)
-    // if(props.navigateTo !== "editSKU" && !item.is_active) {
-    //   e.preventDefault()
-    // } 
+    if(this.props.navigateTo !== "editSKU" && !item.is_active) {
+      e.preventDefault()
+    } 
     if(this.props.navigateTo === "editSKU") {
       queryObj = {
         brand_id: item.brand_id,
@@ -65,9 +64,9 @@ class ViewSKUList extends React.Component {
       queryObj = {
         brand_id: item.brand_id,
         brand_name: item.brand_name,
-        sku_pricing_id: item.sku_pricing_id,
+        //sku_pricing_id: item.sku_pricing_id,
         is_active: item.is_active,
-        volume: item.volume
+        volume: item.sku_volume
       }
       this.props.history.push(`/admin/sku-mapping/${item.sku_id}`, queryObj)
     }

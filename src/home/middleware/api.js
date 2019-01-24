@@ -63,23 +63,23 @@ export const fetchSkuUnmappedStates = action => (
   })
 )
 
-// export const mapStateToSku = action => (
-//   POST({
-//     api: '/SkuManagement/createSkuStateMap',
-//     apiBase: 'catalogsystem',
-//     data: action.data,
-//     handleError: true
-//   })
-// ) 
+export const mapStateToSku = action => (
+  POST({
+    api: '/Api/createSkuPrice',
+    apiBase: 'catalog',
+    data: action.data,
+    handleError: true
+  })
+) 
 
-// export const updateSkuStateMap = action => (
-//   POST({
-//     api: '/SkuManagement/updateSkuStateMap',
-//     apiBase: 'catalogsystem',
-//     data: action.data,
-//     handleError: true
-//   })
-// ) 
+export const updateSkuStateMap = action => (
+  POST({
+    api: '/Api/updateSkuPrice',
+    apiBase: 'catalog',
+    data: action.data,
+    handleError: true
+  })
+) 
 
 export const fetchBrands = action => (
   POST({

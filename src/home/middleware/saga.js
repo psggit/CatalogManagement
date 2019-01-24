@@ -105,6 +105,7 @@ function* fetchStates(action) {
     const data = yield call(Api.fetchStates, action)
     //const data = mappedState
     yield put({ type: ActionTypes.SUCCESS_FETCH_STATES, data })
+    action.CB()
   } catch(err) {
     console.log(err)
   }
@@ -115,6 +116,7 @@ function* fetchSkuMappedStates(action) {
     const data = yield call(Api.fetchSkuMappedStates, action)
     //const data = mappedState
     yield put({ type: ActionTypes.SUCCESS_FETCH_STATES_MAPPED_TO_SKU, data })
+    action.CB()
   } catch(err) {
     console.log(err)
   }
@@ -122,7 +124,7 @@ function* fetchSkuMappedStates(action) {
 
 function* updateSkuStateMap(action) {
   try {
-    //const data = yield call(Api.updateSkuStateMap, action)
+    const data = yield call(Api.updateSkuStateMap, action)
     yield put({ type: ActionTypes.SUCCESS_UPDATE_SKU_STATE_MAP, data })
     Notify('Successfully updated sku', 'success')
     action.CB()
@@ -147,8 +149,8 @@ function* fetchSkuUnmappedStates(action) {
 
 function* mapStateToSku(action) {
   try {
-    //const data = yield call(Api.mapStateToSku, action)
-    const data = createdSku
+    const data = yield call(Api.mapStateToSku, action)
+    //const data = createdSku
     //yield put({ type: ActionTypes.SUCCESS_MAP_STATE_TO_SKU, data })
     Notify('Successfully mapped the state', 'success')
     action.CB(data)

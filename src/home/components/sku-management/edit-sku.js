@@ -31,7 +31,7 @@ class editSKU extends React.Component {
     this.props.actions.updateSku({
       sku_id: parseInt(queryObj.sku_id),
       brand_id: parseInt(queryObj.brand_id),
-      volume: parseInt(data.volume),
+      sku_volume: parseInt(data.volume),
       image_url: data.image_url,
       high_res_image: data.high_res_image,
       low_res_image: data.low_res_image,
