@@ -21,7 +21,7 @@ class createSKU extends React.Component {
 
   componentDidMount() {
     this.props.actions.fetchBrands({
-      limit: 10,
+      limit: 1000,
       offset: 0
     })
   }
