@@ -176,7 +176,7 @@ class SkuDetailsForm extends React.Component {
   }
 
   render() {
-    //console.log("props", this.props)
+    console.log("props", this.props)
     const {volumeErr} = this.state
     return (
       <Fragment>
