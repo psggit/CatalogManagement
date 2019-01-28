@@ -227,6 +227,7 @@ class SkuDetailsForm extends React.Component {
             defaultValue={this.props.skuInfo ? this.props.skuInfo.volume : ''}
             name="volume"
             autoComplete='off'
+            disabled={this.props.isDisabled}
             style={{ width: '100%' }}
             onKeyDown={(e) => { this.handleChange(e) }} 
             onKeyUp={(e) => { this.handleChange(e) }} 

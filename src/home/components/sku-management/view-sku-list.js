@@ -131,7 +131,7 @@ class ViewSKUList extends React.Component {
                 )
             }
             {
-              NoSKUsNotification &&
+              !this.props.loadingSkuList && !this.props.skuList && 
               <tr>
                 <td style={{ textAlign: 'center' }} colSpan='7'>
                   <p style={{fontWeight: '16px'}}>No SKUs found</p>

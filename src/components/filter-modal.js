@@ -102,7 +102,11 @@ class FilterModal extends React.Component {
   }
 
   handleFieldChange(e, index) {
-    this.setState({searchField: index === 0 ? 'ID' : 'BrandName', searchFieldIdx: index + 1})
+    this.setState({
+      searchField: index === 0 ? 'ID' : 'BrandName', 
+      searchFieldIdx: index + 1, 
+      searchOperatorIdx: 1
+    })
   }
 
   handleOperatorChange(e, index) {
