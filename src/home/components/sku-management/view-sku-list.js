@@ -78,6 +78,8 @@ class ViewSKUList extends React.Component {
   }
 
   render() {
+    const NoSKUsNotification = (!this.props.loadingSkuList && !this.props.skuList) || 
+    (!this.props.loadingSkuList && this.props.skuList && this.props.skuList.length === 0)
     return (
       <React.Fragment>
         <Table
@@ -129,7 +131,7 @@ class ViewSKUList extends React.Component {
                 )
             }
             {
-              !this.props.loadingSkuList && this.props.skuList && this.props.skuList.length === 0 &&
+              NoSKUsNotification &&
               <tr>
                 <td style={{ textAlign: 'center' }} colSpan='7'>
                   <p style={{fontWeight: '16px'}}>No SKUs found</p>

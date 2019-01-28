@@ -190,6 +190,7 @@ class SkuDetailsForm extends React.Component {
                 onChange={this.handleBrandChange}
                 iconStyle={{ fill: '#9b9b9b' }}
                 style={{ width: '100%' }}
+                autoComplete='off'
                 //floatingLabelText="Select brand"
                 //hintText="Hint text"
               >

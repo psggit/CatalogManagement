@@ -69,11 +69,14 @@ class ViewBrandList extends React.Component {
   }
 
   render() {
+    //console.log(!this.props.loadingBrandList, this.props.brands)
+    const NoBrandsNotification = (!this.props.loadingBrandList && !this.props.brands) || 
+    (!this.props.loadingBrandList && this.props.brands && this.props.brands.length === 0)  
     return (
       <React.Fragment>
         <Table
           wrapperStyle={{ height: 'auto' }}
-          //className="bordered--table"
+          className="bordered--table"
           selectable={false}
           fixedHeader
         >
@@ -115,7 +118,7 @@ class ViewBrandList extends React.Component {
                 )
             }
             {
-              !this.props.loadingBrandList && this.props.brands && this.props.brands.length === 0 &&
+              NoBrandsNotification && 
               <tr>
                 <td style={{ textAlign: 'center' }} colSpan='7'>
                   <p style={{fontWeight: '16px'}}>No brands found</p>
