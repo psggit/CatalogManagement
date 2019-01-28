@@ -163,10 +163,15 @@ const actionsMap = {
   //     cityDetails: action.data.states
   //   })
   // },
-
-  // [ActionTypes.SUCCESS_SET_LOADING_STATE]: (state, action) => {
-  //   if (action.data) {
-  //     return Object.assign({}, state, {
+  [ActionTypes.SUCCESS_SET_LOADING_STATE]: (state, action) => {
+    return Object.assign({}, state, {
+      loadingBrandDetails: true,
+      brands: []
+    })
+  },
+  //  [ActionTypes.SUCCESS_SET_LOADING_STATE]: (state, action) => {
+  // if (action.data) {
+  //      return Object.assign({}, state, {
   //       [action.data]: true
   //     })
   //   }
@@ -189,7 +194,7 @@ const actionsMap = {
   //     loadingBrandsInCollection: true,
   //     updatingListingOrder: true,
   //     loadingSkuList: true,
-         loadingBrandList: true,
+  //loadingBrandList: true,
   //     loadingVolumeList: true,
   //     loadingSkuDetails: true,
   //     loadingSkuUnmappedStates: true,

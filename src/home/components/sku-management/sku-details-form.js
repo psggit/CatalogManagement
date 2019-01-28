@@ -61,6 +61,10 @@ class SkuDetailsForm extends React.Component {
     this.isFormValid = this.isFormValid.bind(this)
   }
 
+  // componentDidMount() {
+  //   this.props.actions.setLoadingState()
+  // }
+
   handleStatusChange(e, k) {
     //const { statusData } = this.props
     const statusIdx = k + 1
@@ -176,7 +180,7 @@ class SkuDetailsForm extends React.Component {
   }
 
   render() {
-    console.log("props", this.props)
+    //console.log("props", this.props)
     const {volumeErr} = this.state
     return (
       <Fragment>

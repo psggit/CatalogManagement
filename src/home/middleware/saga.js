@@ -311,6 +311,14 @@ function* updateBrandStatus(action) {
   }
 }
 
+function* setLoadingState(action) {
+  try {
+    yield put({ type: ActionTypes.SUCCESS_SET_LOADING_STATE, data: action.data })
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 // function* fetchBrandsMappedToCategories(action) {
 //   try {
 //     const data = brandMappedToCategories
@@ -582,6 +590,12 @@ function* watchRequestUpdateSKUStatus() {
   }
 }
 
+function* watchSetLoadingState() {
+  while (true) {
+    yield* takeLatest(ActionTypes.REQUEST_SET_LOADING_STATE, setLoadingState)
+  }
+}
+
 // function* watchRequestFetchBrandsMappedToCategories() {
 //   while (true) {
 //     yield* takeLatest(ActionTypes.REQUEST_FETCH_BRANDS_MAPPED_TO_CATEGORIES, fetchBrandsMappedToCategories)
@@ -643,6 +657,7 @@ export default function* rootSaga() {
     fork(watchRequestFetchBrandList),
     fork(watchFetchLiveOrders),
     fork(watchRequestCreateSku),
+    fork(watchSetLoadingState),
     // fork(watchRequestFetchVolumeList),
     fork(watchRequestUpdateSku),
     fork(watchRequestUpdateSKUStatus),

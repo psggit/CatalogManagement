@@ -134,6 +134,11 @@ export const createBrand = (data, CB) => ({
   CB
 })
 
+export const setLoadingState = data => ({
+  type: ActionTypes.REQUEST_SET_LOADING_STATE,
+  data
+})
+
 export const updateBrand = (data, CB) => ({
   type: ActionTypes.REQUEST_UPDATE_BRAND,
   data,
