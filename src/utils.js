@@ -42,3 +42,7 @@ export function checkCtrlV(e) {
   }
   return false
 }
+
+export function overrideTableStyle() {
+  document.querySelectorAll(".bordered--table")[1].parentElement.style.overflow = ""
+}

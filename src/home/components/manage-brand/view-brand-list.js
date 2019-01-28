@@ -15,6 +15,7 @@ import { NavLink } from 'react-router-dom'
 import TableLoadingShell from './../table-loading-shell'
 import '@sass/components/_table.scss'
 import Switch from '@components/switch'
+import {overrideTableStyle} from '@utils'
 
 const TableHeaderItems = [
   '',
@@ -48,6 +49,15 @@ class ViewBrandList extends React.Component {
   constructor() {
     super()
     this.updateBrandStatus = this.updateBrandStatus.bind(this)
+  }
+
+  componentDidMount() {
+    this.overrideTableStyle()
+  }
+
+  overrideTableStyle() {
+    // document.querySelectorAll(".bordered--table")[1].parentElement.style.overflow = "auto"
+    overrideTableStyle()
   }
 
   editBrand(brandDetails) {
