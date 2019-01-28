@@ -73,7 +73,7 @@ class ViewBrandList extends React.Component {
       <React.Fragment>
         <Table
           wrapperStyle={{ height: 'auto' }}
-          className="bordered--table"
+          //className="bordered--table"
           selectable={false}
           fixedHeader
         >
