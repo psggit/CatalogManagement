@@ -69,7 +69,7 @@ class ViewBrandList extends React.Component {
   }
 
   render() {
-    console.log(!this.props.loadingBrandList, !this.props.brands, !this.props.loadingBrandList && this.props.brands && this.props.brands.length === 0)
+    //console.log(!this.props.loadingBrandList, !this.props.brands, !this.props.loadingBrandList && this.props.brands && this.props.brands.length === 0)
     const NoBrandsNotification = (!this.props.loadingBrandList && !this.props.brands) || 
     (!this.props.loadingBrandList && this.props.brands && this.props.brands.length === 0)  
     return (
