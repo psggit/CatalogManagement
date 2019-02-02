@@ -204,7 +204,7 @@ class BrandForm extends React.Component {
   }
 
   render() {
-    const { brandNameErr } = this.state
+    const { brandNameErr, highResBrandLogoErr, lowResBrandLogoErr } = this.state
     //console.log("state", this.state)
     return (
       <Fragment>
@@ -426,13 +426,13 @@ class BrandForm extends React.Component {
             onChange={this.handleTextFields}
             name="high_res_brand_logo"
             autoComplete='off'
-            hintText="https://cloudfront.ads.johnny_walker.jpg"
+            //hintText="https://cloudfront.ads.johnny_walker.jpg"
             value={this.state.high_res_brand_logo}
             style={{ width: '100%' }}
           />
           {
-            this.state.highResBrandLogoErr.status && 
-            <p style={{ color: '#ff3b34'}}>{this.state.highResBrandLogoErr.value}</p>
+            highResBrandLogoErr.status && 
+            <p style={{ color: '#ff3b34'}}>* {highResBrandLogoErr.value}</p>
           }
           
         </div>
@@ -444,13 +444,13 @@ class BrandForm extends React.Component {
             onChange={this.handleTextFields}
             name="low_res_brand_logo"
             autoComplete='off'
-            hintText="https://cloudfront.ads.johnny_walker.jpg"
+            //hintText="https://cloudfront.ads.johnny_walker.jpg"
             value={this.state.low_res_brand_logo}
             style={{ width: '100%' }}
           />
           {
-            this.state.lowResBrandLogoErr.status && 
-            <p style={{ color: '#ff3b34'}}>{this.state.lowResBrandLogoErr.value}</p>
+            lowResBrandLogoErr.status && 
+            <p style={{ color: '#ff3b34'}}>* {lowResBrandLogoErr.value}</p>
           }
         </div>
 

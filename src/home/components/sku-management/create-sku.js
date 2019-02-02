@@ -44,7 +44,7 @@ class createSKU extends React.Component {
         low_res_image: data.low_res_image,
         gs1_barcode: data.gs1_barcode,
         barcode_image: data.barcode_image,
-        tag: "",
+        tag: data.tag,
         is_active: data.statusIdx === 1 ? true : false
       }, this.callbackUpdate)
     }

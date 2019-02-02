@@ -35,6 +35,9 @@ class editSKU extends React.Component {
       image_url: data.image_url,
       high_res_image: data.high_res_image,
       low_res_image: data.low_res_image,
+      gs1_barcode: data.gs1_barcode,
+      barcode_image: data.barcode_image,
+      tag: data.tag,
       is_active: data.statusIdx === 1 ? true : false,
     }, this.callbackUpdate)
   }

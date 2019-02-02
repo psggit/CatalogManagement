@@ -23,6 +23,7 @@ const TableHeaderItems = [
   'SKU_ID',
   'BRAND NAME',
   'VOLUME',
+  'TAGS',
   // 'STATUS',
   'BRAND ID',
   'BARCODE IMAGE',
@@ -35,6 +36,7 @@ const styles = [
   { width: '120px' },
   { width: '60px' },
   // { width: '60px' },
+  { width: '100px' },
   { width: '100px' },
   { width: '100px' },
   { width: '60px' }
@@ -71,7 +73,8 @@ class ViewSKUList extends React.Component {
         high_res_image: item.high_res_image,
         low_res_image: item.low_res_image,
         barcode_image: item.barcode_image,
-        gs1_barcode: item.gs1_barcode
+        gs1_barcode: item.gs1_barcode,
+        tag: item.tag
       }
       this.props.history.push(`/admin/manage-sku/edit/${item.brand_name}?sku_id=${item.sku_id}&brand_id=${item.brand_id}`, queryObj) 
     } else {
@@ -130,9 +133,10 @@ class ViewSKUList extends React.Component {
                         <TableRowColumn style={styles[1]}>{item.sku_id}</TableRowColumn>
                         <TableRowColumn style={styles[2]}>{item.brand_name}</TableRowColumn>
                         <TableRowColumn style={styles[3]}>{item.sku_volume}</TableRowColumn>
+                        <TableRowColumn style={styles[4]}>{item.tag}</TableRowColumn>
                         {/* <TableRowColumn style={styles[4]}>{item.is_active ? 'ACTIVE' : 'INACTIVE'}</TableRowColumn> */}
-                        <TableRowColumn style={styles[4]}>{item.brand_id}</TableRowColumn>
-                        <TableRowColumn style={styles[5]}>
+                        <TableRowColumn style={styles[5]}>{item.brand_id}</TableRowColumn>
+                        <TableRowColumn style={styles[6]}>
                           <a target="_blank" href={item.barcode_image}>
                             <img
                               alt="barcode_image"
@@ -145,7 +149,7 @@ class ViewSKUList extends React.Component {
                             />
                           </a>
                         </TableRowColumn>
-                        <TableRowColumn style={styles[6]}>
+                        <TableRowColumn style={styles[7]}>
                             <Switch toggled={item.is_active} onToggle={this.updateSKUStatus} value={item} />
                         </TableRowColumn>
                       </TableRow>
