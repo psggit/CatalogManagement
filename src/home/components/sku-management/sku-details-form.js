@@ -32,9 +32,23 @@ class SkuDetailsForm extends React.Component {
       image_url: props.skuInfo ? props.skuInfo.image_url : '',
       high_res_image: props.skuInfo ? props.skuInfo.high_res_image : '',
       low_res_image: props.skuInfo ? props.skuInfo.low_res_image : '',
+      barcode_image: props.skuInfo ? props.skuInfo.barcode_image : '',
+      gs1_barcode: props.skuInfo ? props.skuInfo.gs1_barcode : '', 
       high_res_image_err: false,
       low_res_image_err: false,
+      //gs1_barcode_err: false,
+      //barcode_image_err: false,
       volumeErr: {
+        value: '',
+        status: false
+      },
+
+      gs1BarcodeErr: {
+        value: '',
+        status: false
+      },
+
+      barcodeImageErr: {
         value: '',
         status: false
       },
@@ -46,7 +60,9 @@ class SkuDetailsForm extends React.Component {
     }
 
     this.inputNameMap = {
-      'volume': 'Volume'
+      'volume': 'Volume',
+      'gs1Barcode': 'Gs1 barcode',
+      'barcodeImage': 'Barcode image'
     }
     
     this.state = Object.assign({}, this.intitialState)
@@ -131,7 +147,13 @@ class SkuDetailsForm extends React.Component {
     const volumeErr = validateNumberField(this.inputNameMap['volume'], this.state.volume)
     this.setState({ volumeErr: validateNumberField(this.inputNameMap['volume'], this.state.volume) })
 
-    if(!volumeErr.status) {
+    const gs1BarcodeErr = validateTextField(this.inputNameMap['gs1Barcode'], this.state.gs1_barcode)
+    this.setState({ gs1BarcodeErr: validateTextField(this.inputNameMap['gs1Barcode'], this.state.gs1_barcode) })
+
+    const barcodeImageErr = validateTextField(this.inputNameMap['barcodeImage'], this.state.barcode_image)
+    this.setState({ barcodeImageErr: validateTextField(this.inputNameMap['barcodeImage'], this.state.barcode_image) })
+
+    if(!volumeErr.status && !gs1BarcodeErr.status && !barcodeImageErr.status) {
       return true;
     }
     return false
@@ -330,13 +352,14 @@ class SkuDetailsForm extends React.Component {
           <TextField
             onChange={this.handleTextFields}
             name="high_res_image"
+            autoComplete='off'
             hintText="https://cloudfront.ads.johnny_walker.jpg"
             value={this.state.high_res_image}
             style={{ width: '100%' }}
           />
           {
             this.state.high_res_image_err &&
-            <p style={{ color: '#ff3b34' }}> High res image url is not valid </p>
+            <p style={{ color: '#ff3b34' }}> High res image url is required </p>
           }
         </div>
 
@@ -345,13 +368,46 @@ class SkuDetailsForm extends React.Component {
           <TextField
             onChange={this.handleTextFields}
             name="low_res_image"
+            autoComplete='off'
             hintText="https://cloudfront.ads.johnny_walker.jpg"
             value={this.state.low_res_image}
             style={{ width: '100%' }}
           />
           {
             this.state.low_res_image_err &&
-            <p style={{ color: '#ff3b34' }}> Low res image url is not valid </p>
+            <p style={{ color: '#ff3b34' }}> Low res image url is required </p>
+          }
+        </div>
+
+        <div className="form-group">
+          <label className="label">Gs1 barcode</label><br />
+          <TextField
+            onChange={this.handleTextFields}
+            name="gs1_barcode"
+            autoComplete='off'
+            hintText="https://cloudfront.ads.johnny_walker.jpg"
+            value={this.state.gs1_barcode}
+            style={{ width: '100%' }}
+          />
+          {
+            this.state.gs1BarcodeErr.status &&
+            <p style={{ color: '#ff3b34' }}>{ this.state.gs1BarcodeErr.value }</p>
+          }
+        </div>
+
+        <div className="form-group">
+          <label className="label">Barcode image</label><br />
+          <TextField
+            onChange={this.handleTextFields}
+            name="barcode_image"
+            autoComplete='off'
+            hintText="https://cloudfront.ads.johnny_walker.jpg"
+            value={this.state.barcode_image}
+            style={{ width: '100%' }}
+          />
+          {
+            this.state.barcodeImageErr.status &&
+            <p style={{ color: '#ff3b34' }}>{ this.state.barcodeImageErr.value }</p>
           }
         </div>
 

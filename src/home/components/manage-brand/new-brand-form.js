@@ -38,16 +38,28 @@ class BrandForm extends React.Component {
       description: props.brandInfo ? props.brandInfo.description : '',
       high_res_image_err: false,
       low_res_image_err: false,
-      high_res_brand_logo_err: false,
-      low_res_brand_logo_err: false,
+      // high_res_brand_logo_err: false,
+      // low_res_brand_logo_err: false,
 
       brandNameErr: {
+        value: '',
+        status: false
+      },
+
+      highResBrandLogoErr: {
+        value: '',
+        status: false
+      },
+
+      lowResBrandLogoErr: {
         value: '',
         status: false
       }
     }
     this.inputNameMap = {
-      'brandName': 'Brand name'
+      'brandName': 'Brand name',
+      'lowResBrandLogo': 'Low res brand logo',
+      'highResBrandLogo': 'High res brand logo'
     }
 
     //console.log("type id",props.brandTypeList,  props.brandInfo ? props.brandTypeList.map(item => item.id).indexOf(parseInt(props.brandInfo.type)) + 1 : 1)
@@ -156,7 +168,13 @@ class BrandForm extends React.Component {
     const brandNameErr = validateTextField(this.inputNameMap['brandName'], this.state.brandName)
     this.setState({ brandNameErr: validateTextField(this.inputNameMap['brandName'], this.state.brandName) })
 
-    if(!brandNameErr.status) {
+    const lowResBrandLogoErr = validateTextField(this.inputNameMap['lowResBrandLogo'], this.state.low_res_brand_logo)
+    this.setState({ lowResBrandLogoErr: validateTextField(this.inputNameMap['lowResBrandLogo'], this.state.low_res_brand_logo) })
+
+    const highResBrandLogoErr = validateTextField(this.inputNameMap['highResBrandLogo'], this.state.high_res_brand_logo)
+    this.setState({ highResBrandLogoErr: validateTextField(this.inputNameMap['highResBrandLogo'], this.state.high_res_brand_logo) })
+     
+    if(!brandNameErr.status && !highResBrandLogoErr.status && !lowResBrandLogoErr.status) {
       return true;
     }
     return false
@@ -372,13 +390,14 @@ class BrandForm extends React.Component {
             disabled={this.props.isDisabled}
             onChange={this.handleTextFields}
             name="high_res_image"
+            autoComplete='off'
             hintText="https://cloudfront.ads.johnny_walker.jpg"
             value={this.state.high_res_image}
             style={{ width: '100%' }}
           />
           {
             this.state.high_res_image_err && 
-            <p style={{ color: '#ff3b34'}}> High res bottle image is not valid </p>
+            <p style={{ color: '#ff3b34'}}> High res bottle image is required </p>
           }
           
         </div>
@@ -389,13 +408,14 @@ class BrandForm extends React.Component {
             disabled={this.props.isDisabled}
             onChange={this.handleTextFields}
             name="low_res_image"
+            autoComplete='off'
             hintText="https://cloudfront.ads.johnny_walker.jpg"
             value={this.state.low_res_image}
             style={{ width: '100%' }}
           />
           {
             this.state.low_res_image_err && 
-            <p style={{ color: '#ff3b34'}}> Low res bottle image is not valid </p>
+            <p style={{ color: '#ff3b34'}}> Low res bottle image is required</p>
           }
         </div>
 
@@ -405,13 +425,14 @@ class BrandForm extends React.Component {
             disabled={this.props.isDisabled}
             onChange={this.handleTextFields}
             name="high_res_brand_logo"
+            autoComplete='off'
             hintText="https://cloudfront.ads.johnny_walker.jpg"
             value={this.state.high_res_brand_logo}
             style={{ width: '100%' }}
           />
           {
-            this.state.high_res_brand_logo_err && 
-            <p style={{ color: '#ff3b34'}}> High res brand logo is not valid </p>
+            this.state.highResBrandLogoErr.status && 
+            <p style={{ color: '#ff3b34'}}>{this.state.highResBrandLogoErr.value}</p>
           }
           
         </div>
@@ -422,13 +443,14 @@ class BrandForm extends React.Component {
             disabled={this.props.isDisabled}
             onChange={this.handleTextFields}
             name="low_res_brand_logo"
+            autoComplete='off'
             hintText="https://cloudfront.ads.johnny_walker.jpg"
             value={this.state.low_res_brand_logo}
             style={{ width: '100%' }}
           />
           {
-            this.state.low_res_brand_logo_err && 
-            <p style={{ color: '#ff3b34'}}> Low res brand logo is not valid </p>
+            this.state.lowResBrandLogoErr.status && 
+            <p style={{ color: '#ff3b34'}}>{this.state.lowResBrandLogoErr.value}</p>
           }
         </div>
 

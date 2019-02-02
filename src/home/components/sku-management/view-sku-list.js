@@ -16,6 +16,7 @@ import CircularProgress from 'material-ui/CircularProgress'
 import { NavLink } from 'react-router-dom'
 import TableLoadingShell from './../table-loading-shell'
 import '@sass/components/_table.scss'
+import {overrideTableStyle} from '@utils'
 
 const TableHeaderItems = [
   '',
@@ -24,6 +25,7 @@ const TableHeaderItems = [
   'VOLUME',
   // 'STATUS',
   'BRAND ID',
+  'BARCODE IMAGE',
   'SKU STATUS'
 ]
 
@@ -34,6 +36,7 @@ const styles = [
   { width: '60px' },
   // { width: '60px' },
   { width: '100px' },
+  { width: '100px' },
   { width: '60px' }
 ]
 
@@ -42,6 +45,15 @@ class ViewSKUList extends React.Component {
   constructor() {
     super()
     this.updateSKUStatus = this.updateSKUStatus.bind(this)
+  }
+
+  componentDidMount() {
+    this.overrideTableStyle()
+  }
+
+  overrideTableStyle() {
+    // document.querySelectorAll(".bordered--table")[1].parentElement.style.overflow = "auto"
+    overrideTableStyle()
   }
 
   handleClick(e, item) {
@@ -57,7 +69,9 @@ class ViewSKUList extends React.Component {
         volume: item.sku_volume,
         image_url: item.image_url,
         high_res_image: item.high_res_image,
-        low_res_image: item.low_res_image
+        low_res_image: item.low_res_image,
+        barcode_image: item.barcode_image,
+        gs1_barcode: item.gs1_barcode
       }
       this.props.history.push(`/admin/manage-sku/edit/${item.brand_name}?sku_id=${item.sku_id}&brand_id=${item.brand_id}`, queryObj) 
     } else {
@@ -83,6 +97,7 @@ class ViewSKUList extends React.Component {
     return (
       <React.Fragment>
         <Table
+          wrapperStyle={{ height: 'auto' }}
           className="bordered--table"
           selectable={false}
           fixedHeader
@@ -118,6 +133,19 @@ class ViewSKUList extends React.Component {
                         {/* <TableRowColumn style={styles[4]}>{item.is_active ? 'ACTIVE' : 'INACTIVE'}</TableRowColumn> */}
                         <TableRowColumn style={styles[4]}>{item.brand_id}</TableRowColumn>
                         <TableRowColumn style={styles[5]}>
+                          <a target="_blank" href={item.barcode_image}>
+                            <img
+                              alt="barcode_image"
+                              style={{
+                                width: '40px',
+                                height: '40px',
+                                objectFit: 'contain'
+                              }}
+                              src={item.barcode_image}
+                            />
+                          </a>
+                        </TableRowColumn>
+                        <TableRowColumn style={styles[6]}>
                             <Switch toggled={item.is_active} onToggle={this.updateSKUStatus} value={item} />
                         </TableRowColumn>
                       </TableRow>
