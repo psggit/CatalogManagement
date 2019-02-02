@@ -24,6 +24,7 @@ const TableHeaderItems = [
   'BRAND TYPE',
   'ALCOHOL PERCENTAGE',
   'TEMPERATURE',
+  'BRAND_LOGO_HIGH_RES',
   'BRAND STATUS'
 ]
 
@@ -34,6 +35,7 @@ const styles = [
   {  width: '60px' },
   { width: '130px' },
   { width: '60px' }, 
+  { width: '130px' }, 
   { width: '70px' }
 ]
 
@@ -106,6 +108,19 @@ class ViewBrandList extends React.Component {
                       <TableRowColumn style={styles[5]}>{item.temperature}</TableRowColumn>
                       {/* <TableRowColumn style={styles[5]}>{item.is_active ? 'ACTIVE' : 'INACTIVE'}</TableRowColumn> */}
                       <TableRowColumn style={styles[6]}>
+                        <a target="_blank" href={item.brand_logo_high_res_image}>
+                          <img
+                            alt="brand_logo"
+                            style={{
+                              width: '40px',
+                              height: '40px',
+                              objectFit: 'contain'
+                            }}
+                            src={item.brand_logo_high_res_image}
+                          />
+                        </a>
+                      </TableRowColumn>
+                      <TableRowColumn style={styles[7]}>
                         <Switch toggled={item.is_active} onToggle={this.updateBrandStatus} value={item} />
                       </TableRowColumn>
                     </TableRow>

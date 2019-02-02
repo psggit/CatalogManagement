@@ -29,6 +29,8 @@ class BrandForm extends React.Component {
       image_url: props.brandInfo ? props.brandInfo.image : '',
       high_res_image: props.brandInfo ? props.brandInfo.high_res_image : '',
       low_res_image: props.brandInfo ? props.brandInfo.low_res_image : '',
+      high_res_brand_logo: props.brandInfo ? props.brandInfo.brand_logo_high_res_image : '',
+      low_res_brand_logo: props.brandInfo ? props.brandInfo.brand_logo_low_res_image : '',
       typeIdx: props.brandInfo ? props.brandTypeList.map(item => parseInt(item.id)).indexOf(parseInt(props.brandInfo.type)) + 1 : 1,
       //brandType: props.brandInfo ? props.brandTypeList.map(item => item.id)[props.brandTypeList.map(item => item.id).indexOf(this.props.brandInfo.Type)] : props.brandTypeList.map(item => item.name)[0],
       //originIdx: props.brandInfo ? props.originList.map(item => item.short_name).indexOf(props.brandInfo.origin_name) + 1 : 1,
@@ -36,6 +38,8 @@ class BrandForm extends React.Component {
       description: props.brandInfo ? props.brandInfo.description : '',
       high_res_image_err: false,
       low_res_image_err: false,
+      high_res_brand_logo_err: false,
+      low_res_brand_logo_err: false,
 
       brandNameErr: {
         value: '',
@@ -361,7 +365,73 @@ class BrandForm extends React.Component {
             style={{ width: '100%' }}
           />
         </div>
-        
+
+        <div className="form-group">
+          <label className="label">High res bottle image</label><br />
+          <TextField
+            disabled={this.props.isDisabled}
+            onChange={this.handleTextFields}
+            name="high_res_image"
+            hintText="https://cloudfront.ads.johnny_walker.jpg"
+            value={this.state.high_res_image}
+            style={{ width: '100%' }}
+          />
+          {
+            this.state.high_res_image_err && 
+            <p style={{ color: '#ff3b34'}}> High res bottle image is not valid </p>
+          }
+          
+        </div>
+
+        <div className="form-group">
+          <label className="label">Low res bottle image</label><br />
+          <TextField
+            disabled={this.props.isDisabled}
+            onChange={this.handleTextFields}
+            name="low_res_image"
+            hintText="https://cloudfront.ads.johnny_walker.jpg"
+            value={this.state.low_res_image}
+            style={{ width: '100%' }}
+          />
+          {
+            this.state.low_res_image_err && 
+            <p style={{ color: '#ff3b34'}}> Low res bottle image is not valid </p>
+          }
+        </div>
+
+        <div className="form-group">
+          <label className="label">High res brand logo</label><br />
+          <TextField
+            disabled={this.props.isDisabled}
+            onChange={this.handleTextFields}
+            name="high_res_brand_logo"
+            hintText="https://cloudfront.ads.johnny_walker.jpg"
+            value={this.state.high_res_brand_logo}
+            style={{ width: '100%' }}
+          />
+          {
+            this.state.high_res_brand_logo_err && 
+            <p style={{ color: '#ff3b34'}}> High res brand logo is not valid </p>
+          }
+          
+        </div>
+
+        <div className="form-group">
+          <label className="label">Low res brand logo</label><br />
+          <TextField
+            disabled={this.props.isDisabled}
+            onChange={this.handleTextFields}
+            name="low_res_brand_logo"
+            hintText="https://cloudfront.ads.johnny_walker.jpg"
+            value={this.state.low_res_brand_logo}
+            style={{ width: '100%' }}
+          />
+          {
+            this.state.low_res_brand_logo_err && 
+            <p style={{ color: '#ff3b34'}}> Low res brand logo is not valid </p>
+          }
+        </div>
+
         <div className="form-group">
           <label className="label">Description</label>
           <br />
@@ -376,38 +446,6 @@ class BrandForm extends React.Component {
           </div>
         </div>
 
-        <div className="form-group">
-          <label className="label">High res image</label><br />
-          <TextField
-            disabled={this.props.isDisabled}
-            onChange={this.handleTextFields}
-            name="high_res_image"
-            hintText="https://cloudfront.ads.johnny_walker.jpg"
-            value={this.state.high_res_image}
-            style={{ width: '100%' }}
-          />
-          {
-            this.state.high_res_image_err && 
-            <p style={{ color: '#ff3b34'}}> High res image url is not valid </p>
-          }
-          
-        </div>
-
-        <div className="form-group">
-          <label className="label">Low res image</label><br />
-          <TextField
-            disabled={this.props.isDisabled}
-            onChange={this.handleTextFields}
-            name="low_res_image"
-            hintText="https://cloudfront.ads.johnny_walker.jpg"
-            value={this.state.low_res_image}
-            style={{ width: '100%' }}
-          />
-          {
-            this.state.low_res_image_err && 
-            <p style={{ color: '#ff3b34'}}> Low res image url is not valid </p>
-          }
-        </div>
         <RaisedButton
           primary
           disabled={brandNameErr.status || this.props.isDisabled}
