@@ -11,13 +11,15 @@ import {
 import TableLoadingShell from './../table-loading-shell'
 import '@sass/components/_table.scss'
 import Checkbox from 'material-ui/Checkbox'
+import {overrideTableStyle} from '@utils'
 
 const styles = [
   { width: '38px', textAlign: 'left' },
-  { width: '60px', textAlign: 'left' },
+  { width: '100px', textAlign: 'left' },
   { width: '80px', textAlign: 'left' },
   { width: '80px', textAlign: 'left' },
-  { width: '60px', textAlign: 'left' },
+  { width: '100px', textAlign: 'left' },
+  { width: '200px', textAlign: 'left' },
   // { width: '60px', textAlign: 'center' },
   { width: '38px', textAlign: 'left' }
 ]
@@ -33,9 +35,11 @@ class MappedStatesList extends React.Component {
     }
     this.handleCheckboxes = this.handleCheckboxes.bind(this)
     this.enableInputBox = this.enableInputBox.bind(this)
+    this.handleTagChange = this.handleTagChange.bind(this)
   }
 
   componentDidMount() {
+    this.overrideTableStyle()
     this.mapStates()
   }
 
@@ -48,6 +52,11 @@ class MappedStatesList extends React.Component {
       updatedStateMap[this.state.selectStateShortName].is_modified = false
       this.setState({ stateMap: updatedStateMap })
     }
+  }
+
+  overrideTableStyle() {
+    // document.querySelectorAll(".bordered--table")[1].parentElement.style.overflow = "auto"
+    overrideTableStyle()
   }
 
   mapStates() {
@@ -70,6 +79,7 @@ class MappedStatesList extends React.Component {
       this.props.handleSaveStateDetails({
         is_active: updatedStateMap[stateShortName].is_active,
         price: updatedStateMap[stateShortName].price,
+        tag: updatedStateMap[stateShortName].tag,
         id: this.state.stateMap[stateShortName].sku_pricing_id,
       })
     }
@@ -95,6 +105,12 @@ class MappedStatesList extends React.Component {
     this.setState({ stateMap: updatedMap, mappedStatesList: Object.values(updatedMap) })
   }
 
+  handleTagChange(e, stateShortName) {
+    let updatedMap = Object.assign({}, this.state.stateMap)
+    updatedMap[stateShortName].tag = (e.target.value)
+    this.setState({ stateMap: updatedMap, mappedStatesList: Object.values(updatedMap) })
+  }
+
   handleCheckboxes(e, stateShortName) {
     let updatedMap = Object.assign({}, this.state.stateMap)
     updatedMap[stateShortName].is_active = (e.target.checked)
@@ -111,11 +127,12 @@ class MappedStatesList extends React.Component {
     const editInputStyle = {
       border: 0,
       borderWidth: 0,
-      width: '60px',
+      width: '200px',
       padding: '0px 10px'
     }
     return (
       <Table
+        wrapperStyle={{ height: 'auto' }}
         className="bordered--table"
         selectable={false}
         fixedHeader
@@ -130,8 +147,9 @@ class MappedStatesList extends React.Component {
             <TableHeaderColumn style={styles[2]}>STATE NAME</TableHeaderColumn>
             <TableHeaderColumn style={styles[3]}>SKU PRICE</TableHeaderColumn>
             <TableHeaderColumn style={styles[4]}>SKU PRICING ID</TableHeaderColumn>
+            <TableHeaderColumn style={styles[5]}>TAG</TableHeaderColumn>
             {/* <TableHeaderColumn style={styles[5]}>STATUS</TableHeaderColumn> */}
-            <TableHeaderColumn style={styles[5]} />
+            <TableHeaderColumn style={styles[6]} />
           </TableRow>
         </TableHeader>
         <TableBody
@@ -179,6 +197,15 @@ class MappedStatesList extends React.Component {
                 <TableRowColumn style={styles[4]}>{item.sku_pricing_id}</TableRowColumn>
                 {/* <TableRowColumn style={styles[5]}>{item.is_active ? 'Active' : 'Inactive'}</TableRowColumn> */}
                 <TableRowColumn style={styles[5]}>
+                  <input
+                    type="text"
+                    value={this.state.stateMap[item.state_short_name].tag}
+                    onChange={(e) => this.handleTagChange(e, item.state_short_name)}
+                    style={!this.state.stateMap[item.state_short_name].is_modified ? editInputStyle : { width: '200px', padding: '0px 10px' }}
+                    disabled={!this.state.stateMap[item.state_short_name].is_modified}
+                  />
+                </TableRowColumn>
+                <TableRowColumn style={styles[6]}>
                   <button
                     onClick={() => this.enableInputBox(item.state_short_name)}
                     style={this.props.disableSave ? { opacity: '0.55', pointerEvents: 'none', fontSize: '13px', textTransform: 'none', width: '50px' } : { fontSize: '13px', textTransform: 'none', width: '50px' }}

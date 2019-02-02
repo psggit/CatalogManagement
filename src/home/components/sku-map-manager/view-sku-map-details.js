@@ -77,6 +77,7 @@ class ViewSKUMapDetails extends React.Component {
           state_name: statesMap[item.state_id].state_name,
           sku_id: parseInt(this.props.match.params.skuId),
           price: item.price,
+          tag: item.tag,
           is_active: item.is_active,
           state_short_name: statesMap[item.state_id].state_short_name,
           is_modified: false

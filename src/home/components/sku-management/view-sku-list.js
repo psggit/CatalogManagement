@@ -24,9 +24,9 @@ const TableHeaderItems = [
   'BRAND NAME',
   'VOLUME',
   'TAGS',
+  'BARCODE IMAGE',
   // 'STATUS',
   'BRAND ID',
-  'BARCODE IMAGE',
   'SKU STATUS'
 ]
 
@@ -35,10 +35,10 @@ const styles = [
   { width: '60px' },
   { width: '120px' },
   { width: '60px' },
+  { width: '100px' },
   // { width: '60px' },
   { width: '100px' },
-  { width: '100px' },
-  { width: '100px' },
+  { width: '60px' },
   { width: '60px' }
 ]
 
@@ -134,9 +134,7 @@ class ViewSKUList extends React.Component {
                         <TableRowColumn style={styles[2]}>{item.brand_name}</TableRowColumn>
                         <TableRowColumn style={styles[3]}>{item.sku_volume}</TableRowColumn>
                         <TableRowColumn style={styles[4]}>{item.tag}</TableRowColumn>
-                        {/* <TableRowColumn style={styles[4]}>{item.is_active ? 'ACTIVE' : 'INACTIVE'}</TableRowColumn> */}
-                        <TableRowColumn style={styles[5]}>{item.brand_id}</TableRowColumn>
-                        <TableRowColumn style={styles[6]}>
+                        <TableRowColumn style={styles[5]}>
                           <a target="_blank" href={item.barcode_image}>
                             <img
                               alt="barcode_image"
@@ -149,6 +147,8 @@ class ViewSKUList extends React.Component {
                             />
                           </a>
                         </TableRowColumn>
+                        {/* <TableRowColumn style={styles[4]}>{item.is_active ? 'ACTIVE' : 'INACTIVE'}</TableRowColumn> */}
+                        <TableRowColumn style={styles[6]}>{item.brand_id}</TableRowColumn>
                         <TableRowColumn style={styles[7]}>
                             <Switch toggled={item.is_active} onToggle={this.updateSKUStatus} value={item} />
                         </TableRowColumn>

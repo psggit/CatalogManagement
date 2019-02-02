@@ -14,12 +14,14 @@ import {
 } from 'material-ui/Table'
 import TableLoadingShell from './../table-loading-shell'
 import '@sass/components/_table.scss'
+import {overrideTableStyle} from '@utils'
 
 const TableHeaderItems = [
   // '',
   'STATE NAME',
   'STATE SHORT NAME',
   'SKU PRICE',
+  'TAG',
   ''
 ]
 
@@ -28,6 +30,7 @@ const styles = [
   { width: '100px', textAlign: 'center' },
   { width: '120px', textAlign: 'center' },
   { width: '70px', textAlign: 'center' },
+  { width: '120px', textAlign: 'center' },
   { width: '60px', textAlign: 'center' },
 ]
 
@@ -43,13 +46,20 @@ class ViewUnmappedStates extends React.Component {
     this.handleAddState = this.handleAddState.bind(this)
     //this.handleCheckboxes = this.handleCheckboxes.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.handleTagChange = this.handleTagChange.bind(this)
     //this.successCallback = this.successCallback.bind(this)
     //this.mapStates = this.mapStates.bind(this)
   }
 
   componentDidMount() {
     //this.props.actions.fetchStates({}, this.successCallback)
+    this.overrideTableStyle()
     this.mapStates()
+  }
+
+  overrideTableStyle() {
+    // document.querySelectorAll(".bordered--table")[1].parentElement.style.overflow = "auto"
+    overrideTableStyle()
   }
 
   componentDidUpdate(prevProps) {
@@ -78,6 +88,7 @@ class ViewUnmappedStates extends React.Component {
           state_name: item.state_name,
           sku_id: parseInt(this.props.skuId),
           price: 0,
+          tag: '',
           is_active: true,
           state_short_name: item.state_short_name
         }
@@ -103,6 +114,7 @@ class ViewUnmappedStates extends React.Component {
             state_name: statesMap[stateDetails.state_id].state_name,
             sku_id: parseInt(this.props.skuId),
             price: 0,
+            tag: '',
             is_active: true,
             state_short_name: statesMap[stateDetails.state_id].state_short_name
           }
@@ -128,6 +140,11 @@ class ViewUnmappedStates extends React.Component {
     this.setState({stateMap: updatedMap, unmappedStatesList: Object.values(updatedMap)})
   }
 
+  handleTagChange(e, stateShortName) {
+    let updatedMap = Object.assign({}, this.state.stateMap)
+    updatedMap[stateShortName].tag = (e.target.value)
+    this.setState({stateMap: updatedMap, unmappedStatesList: Object.values(updatedMap)})
+  }
   // handleCheckboxes(e, stateShortName) {
   //   let updatedMap = Object.assign({}, this.state.stateMap)
   //   updatedMap[stateShortName].is_active = (e.target.checked)
@@ -152,8 +169,9 @@ class ViewUnmappedStates extends React.Component {
     }
    
     return (
-      <div>
+      <div style={{ height: 'auto'}}>
         <Table
+          wrapperStyle={{ height: 'auto' }}
           onCellClick={this.expandColumn}
           className="bordered--table"
           selectable={false}
@@ -199,6 +217,14 @@ class ViewUnmappedStates extends React.Component {
                     />
                   </TableRowColumn>
                   <TableRowColumn style={styles[3]}>
+                    <input 
+                      type="text" 
+                      value={this.state.stateMap[item.state_short_name].tag} 
+                      onChange={(e) => this.handleTagChange(e, item.state_short_name)} 
+                      style = {{ width: '120px', padding: '0 10px'}}
+                    />
+                  </TableRowColumn>
+                  <TableRowColumn style={styles[4]}>
                     <FlatButton
                       disabled={this.state.stateMap[item.state_short_name].price==0}
                       label="add"
