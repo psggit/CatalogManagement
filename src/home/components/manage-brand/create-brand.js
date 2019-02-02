@@ -46,6 +46,7 @@ class CreateBrand extends React.Component {
         low_res_image: data.low_res_image,
         brand_logo_high_res_image: data.high_res_brand_logo,
         brand_logo_low_res_image: data.low_res_brand_logo,
+        tag: data.tag,
         description: data.description,
         is_active: true
       }, this.callbackUpdate)

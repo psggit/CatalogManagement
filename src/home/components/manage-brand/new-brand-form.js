@@ -27,6 +27,7 @@ class BrandForm extends React.Component {
       isImageUploading: false,
       isImageSelected: false,
       image_url: props.brandInfo ? props.brandInfo.image : '',
+      tag: props.brandInfo ? props.brandInfo.tag : '',
       high_res_image: props.brandInfo ? props.brandInfo.high_res_image : '',
       low_res_image: props.brandInfo ? props.brandInfo.low_res_image : '',
       high_res_brand_logo: props.brandInfo ? props.brandInfo.brand_logo_high_res_image : '',
@@ -51,6 +52,11 @@ class BrandForm extends React.Component {
         status: false
       },
 
+      tagNameErr: {
+        value: '',
+        status: false
+      },
+
       lowResBrandLogoErr: {
         value: '',
         status: false
@@ -59,7 +65,8 @@ class BrandForm extends React.Component {
     this.inputNameMap = {
       'brandName': 'Brand name',
       'lowResBrandLogo': 'Low res brand logo',
-      'highResBrandLogo': 'High res brand logo'
+      'highResBrandLogo': 'High res brand logo',
+      'tagName': 'Tag'
     }
 
     //console.log("type id",props.brandTypeList,  props.brandInfo ? props.brandTypeList.map(item => item.id).indexOf(parseInt(props.brandInfo.type)) + 1 : 1)
@@ -174,7 +181,14 @@ class BrandForm extends React.Component {
     const highResBrandLogoErr = validateTextField(this.inputNameMap['highResBrandLogo'], this.state.high_res_brand_logo)
     this.setState({ highResBrandLogoErr: validateTextField(this.inputNameMap['highResBrandLogo'], this.state.high_res_brand_logo) })
      
-    if(!brandNameErr.status && !highResBrandLogoErr.status && !lowResBrandLogoErr.status) {
+    const tagNameErr = validateTextField(this.inputNameMap['tagName'], this.state.tag)
+    this.setState({ tagNameErr: validateTextField(this.inputNameMap['tagName'], this.state.tag) })
+
+    if(!brandNameErr.status && 
+      !highResBrandLogoErr.status && 
+      !lowResBrandLogoErr.status &&
+      !tagNameErr.status
+    ) {
       return true;
     }
     return false
@@ -204,7 +218,7 @@ class BrandForm extends React.Component {
   }
 
   render() {
-    const { brandNameErr, highResBrandLogoErr, lowResBrandLogoErr } = this.state
+    const { brandNameErr, highResBrandLogoErr, lowResBrandLogoErr, tagNameErr } = this.state
     //console.log("state", this.state)
     return (
       <Fragment>
@@ -312,6 +326,24 @@ class BrandForm extends React.Component {
               ))
             }
           </SelectField>
+        </div>
+
+        <div className="form-group">
+          <label className="label">Tag</label><br />
+          <TextField
+            //disabled={this.props.isDisabled}
+            defaultValue={this.props.brandInfo ? this.props.brandInfo.tag : ''}
+            name="tag"
+            autoComplete='off'
+            hintText="tag1, tag2, tag3"
+            //disabled={this.props.isDisabled}
+            style={{ width: '100%' }}
+            onChange={this.handleTextFields}
+          />
+          {
+            tagNameErr.status &&
+            <p className="error">* {tagNameErr.value}</p>
+          }
         </div>
 
         <div className="form-group">

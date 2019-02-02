@@ -69,7 +69,7 @@ class SkuDetailsForm extends React.Component {
       'volume': 'Volume',
       'gs1Barcode': 'Gs1 barcode',
       'barcodeImage': 'Barcode image',
-      'tag': 'Tag'
+      'tagName': 'Tag'
     }
     
     this.state = Object.assign({}, this.intitialState)
