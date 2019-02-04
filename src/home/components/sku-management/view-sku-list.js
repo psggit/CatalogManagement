@@ -39,7 +39,7 @@ const styles = [
   // { width: '60px' },
   { width: '100px' },
   { width: '60px' },
-  { width: '60px' }
+  { width: '100px' }
 ]
 
 class ViewSKUList extends React.Component {
