@@ -32,7 +32,7 @@ class ManageGenre extends React.Component {
       genreId: '',
     }
 
-    this.pagesLimit = 10
+    this.pagesLimit = 5
     this.handlePageChange = this.handlePageChange.bind(this)
     this.showDialog = this.showDialog.bind(this)
     this.updateGenreStatus = this.updateGenreStatus.bind(this)
