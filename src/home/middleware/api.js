@@ -9,6 +9,15 @@ export const createSku = action => (
   })
 )
 
+export const createGenre = action => (
+  POST({
+    api: '/Api/createGenre',
+    apiBase: 'catalog',
+    data: action.data,
+    handleError: true
+  })
+)
+
 export const fetchSKUs = action => (
   POST({
     api: '/Api/listSku',

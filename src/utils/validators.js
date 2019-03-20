@@ -1,6 +1,7 @@
 import { emailRegex } from './regex'
 
 export function validateTextField(fieldName, fieldValue) {
+  console.log("value", fieldValue, fieldValue.length, !fieldValue.length)
   if (!fieldValue.length) {
     return {
       status: true,

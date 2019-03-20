@@ -36,6 +36,12 @@ export const createSku = (data, CB) => ({
   CB
 })
 
+export const createGenre = (data, CB) => ({
+  type: ActionTypes.REQUEST_CREATE_GENRE,
+  data,
+  CB
+})
+
 export const updateSku = (data, CB) => ({
   type: ActionTypes.REQUEST_UPDATE_SKU,
   data,
