@@ -33,6 +33,8 @@ class BrandForm extends React.Component {
       high_res_brand_logo: props.brandInfo ? props.brandInfo.brand_logo_high_res_image : '',
       low_res_brand_logo: props.brandInfo ? props.brandInfo.brand_logo_low_res_image : '',
       typeIdx: props.brandInfo ? props.brandTypeList.map(item => parseInt(item.id)).indexOf(parseInt(props.brandInfo.type)) + 1 : 1,
+      genreIdx: props.brandInfo ? props.genreList.map(item => parseInt(item.id)).indexOf(parseInt(props.brandInfo.genre_name)) + 1 : 1,
+      genreName: "",
       //brandType: props.brandInfo ? props.brandTypeList.map(item => item.id)[props.brandTypeList.map(item => item.id).indexOf(this.props.brandInfo.Type)] : props.brandTypeList.map(item => item.name)[0],
       //originIdx: props.brandInfo ? props.originList.map(item => item.short_name).indexOf(props.brandInfo.origin_name) + 1 : 1,
       //origin: props.brandInfo ? props.originList.map(item => item.short_name)[props.originList.map(item => item.short_name).indexOf(this.props.brandInfo.origin_name)] : props.originList.map(item => item.short_name)[0],
@@ -80,6 +82,7 @@ class BrandForm extends React.Component {
     this.submitUploadedImage = this.submitUploadedImage.bind(this)
     this.handleSave = this.handleSave.bind(this)
     this.isFormValid = this.isFormValid.bind(this)
+    this.handleGenreChange = this.handleGenreChange.bind(this)
   }
  
   componentDidUpdate (prevProps) {
@@ -91,6 +94,11 @@ class BrandForm extends React.Component {
         //origin: this.props.brandInfo ? this.props.originList.map(item => item.short_name)[this.props.originList.map(item => item.short_name).indexOf(this.props.brandInfo.origin_name)] : this.props.originList.map(item => item.short_name)[0],
         //brandType: this.props.brandInfo ? this.props.brandTypeList.map(item => item.name)[this.props.brandTypeList.map(item => item.id).indexOf(this.props.brandInfo.Type)] : this.props.brandTypeList.map(item => item.name)[0]
       })
+    } 
+    if(this.props.genreList !== prevProps.genreList) {
+      this.setState({
+        genreIdx: this.props.brandInfo ? this.props.genreList.map(item => (item.genre_name)).indexOf((this.props.brandInfo.genre_name)) + 1 : 1
+      })
     }
   }
 
@@ -99,6 +107,14 @@ class BrandForm extends React.Component {
     this.setState({
       typeIdx,
       //brandType: this.props.brandTypeList[k].name
+    })
+  }
+
+  handleGenreChange(e, k) {
+    const genreIdx = k + 1
+    this.setState({
+      genreIdx,
+      genreName: this.props.genreList[k].genre_name
     })
   }
 
@@ -322,6 +338,25 @@ class BrandForm extends React.Component {
                   value={i + 1}
                   key={i}
                   primaryText={item.name}
+                />
+              ))
+            }
+          </SelectField>
+        </div>
+
+        <div className="form-group">
+          <label className="label">Genre</label><br />
+          <SelectField
+            value={this.state.genreIdx}
+            onChange={this.handleGenreChange}
+            style={{ width: '100%' }}
+          >
+            {
+              !this.props.loadingGenreList && this.props.genreList.map((item, i) => (
+                <MenuItem
+                  value={i + 1}
+                  key={i}
+                  primaryText={item.genre_name}
                 />
               ))
             }

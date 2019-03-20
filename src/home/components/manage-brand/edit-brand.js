@@ -25,6 +25,10 @@ class EditBrand extends React.Component {
       limit: 10,
       offset: 0
     })
+    this.props.actions.fetchGenres({
+      limit: 14,
+      offset: 0
+    })
   }
 
   callbackUpdate() {
@@ -37,6 +41,7 @@ class EditBrand extends React.Component {
     this.props.actions.updateBrand({
       brand_id: parseInt(this.props.history.location.state.id),
       brand_name: data.brandName,
+      genre_name: data.genreName,
       type: data.typeIdx,    
       alcohol_per: (data.alcoholPercentage),
       temperature: (data.temperature),
@@ -54,7 +59,7 @@ class EditBrand extends React.Component {
   }
 
   render() {
-    //console.log("params", this.props.history.location.state)
+    console.log("params", this.props.history.location.state)
     return (
       <div style={{
         width: '40%',
@@ -79,6 +84,8 @@ class EditBrand extends React.Component {
               isDisabled={this.state.isDisabled}
               brandTypeList={this.props.brandTypeList}
               submit={this.submit}
+              genreList={this.props.genreList}
+              loadingGenreList={this.props.loadingGenreList}
               loadingBrandTypeList={this.props.loadingBrandTypeList}
             />
           </Card>

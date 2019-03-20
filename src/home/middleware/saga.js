@@ -160,9 +160,9 @@ function* createBrand(action) {
     const data = yield call(Api.createBrand, action)
     yield put({ type: ActionTypes.SUCCESS_CREATE_BRAND, data })
     Notify('Successfully created the brand', 'success')
-    setTimeout(() => {
-      window.location.href = `/admin/manage-brand`
-    }, 1000)
+    // setTimeout(() => {
+    //   window.location.href = `/admin/manage-brand`
+    // }, 1000)
     action.CB(data)
   } catch(err) {
     console.log(err)

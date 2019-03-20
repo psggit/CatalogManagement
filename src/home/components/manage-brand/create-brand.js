@@ -24,6 +24,10 @@ class CreateBrand extends React.Component {
       limit: 10,
       offset: 0
     })
+    this.props.actions.fetchGenres({
+      limit: 14,
+      offset: 0
+    })
   }
 
   callbackUpdate() {
@@ -38,6 +42,7 @@ class CreateBrand extends React.Component {
         brand_name: data.brandName,
         type: data.typeIdx,
         alcohol_per: (data.alcoholPercentage),
+        genre_name: data.genreName,
         temperature: (data.temperature),
         cal_per: (data.caloriesPercentage),
         cal_total: (data.caloriesTotal),
@@ -76,6 +81,8 @@ class CreateBrand extends React.Component {
               ref={(node) => { this.brandForm = node }}
               disableNameField={false}
               brandTypeList={this.props.brandTypeList}
+              genreList={this.props.genreList}
+              loadingGenreList={this.props.loadingGenreList}
               isDisabled={this.state.isDisabled}
               submit={this.submit}
               loadingBrandTypeList={this.props.loadingBrandTypeList}
