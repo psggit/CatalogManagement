@@ -19,6 +19,16 @@ function* fetchSKUs(action) {
   }
 }
 
+function* fetchGenres(action) {
+  try {
+    const data = yield call(Api.fetchGenres, action)
+    //const data = brandList
+    yield put({ type: ActionTypes.SUCCESS_FETCH_GENRES, data })
+  } catch(err) {
+    console.log(err)
+  }
+}
+
 function* fetchBrands(action) {
   try {
     const data = yield call(Api.fetchBrands, action)
@@ -61,6 +71,21 @@ function* updateSKUStatus(action) {
     const data = yield call(Api.updateSKUStatus, action)
     yield put({ type: ActionTypes.SUCCESS_UPDATE_SKU_STATUS, data })
     Notify('Successfully updated the sku status', 'success')
+    // setTimeout(() => {
+    //   window.location.href = `/admin/manage-brand`
+    // }, 1000)
+    action.CB()
+  } catch(err) {
+    console.log(err)
+    //action.CB()
+  }
+}
+
+function* updateGenreStatus(action) {
+  try {
+    const data = yield call(Api.updateGenreStatus, action)
+    yield put({ type: ActionTypes.SUCCESS_UPDATE_GENRE_STATUS, data })
+    Notify('Successfully updated the genre status', 'success')
     // setTimeout(() => {
     //   window.location.href = `/admin/manage-brand`
     // }, 1000)
@@ -198,6 +223,18 @@ function* watchRequestFetchBrands() {
   }
 }
 
+function* watchRequestFetchGenres() {
+  while (true) {
+    yield* takeLatest(ActionTypes.REQUEST_FETCH_GENRES, fetchGenres)
+  }
+}
+
+function* watchRequestUpdateGenreStatus() {
+  while (true) {
+    yield* takeLatest(ActionTypes.REQUEST_UPDATE_GENRE_STATUS, updateGenreStatus)
+  }
+}
+
 function* watchRequestCreateSku() {
   while (true) {
     yield* takeLatest(ActionTypes.REQUEST_CREATE_SKU, createSku)
@@ -286,6 +323,8 @@ export default function* rootSaga() {
     fork(watchRequestCreateBrand),
     fork(watchRequestUpdateBrand),
     fork(watchRequestUpdateBrandStatus),
+    fork(watchRequestFetchGenres),
+    fork(watchRequestUpdateGenreStatus)
   ]
 }
 

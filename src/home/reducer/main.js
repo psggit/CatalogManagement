@@ -43,6 +43,7 @@ loadingBrandDetails: true,
 loadingOriginList: true,
 loadingBrandTypeList: true,
 loadingStates: true,
+loadingGenreList: true,
 //   contactNumbersOfRetailer: [],
 //   imageAdsData: [],
 //   collectionAdsData: [],
@@ -77,6 +78,7 @@ statesList: [],
 skuList: [],
 brands: [],
 brandList: [],
+genreList: [],
 liveOrdersData: [],
 //   brandDetails: [],
 mappedStatesToSkuData: [],
@@ -167,6 +169,14 @@ const actionsMap = {
     return Object.assign({}, state, {
       loadingBrandDetails: true,
       brands: []
+    })
+  },
+
+  [ActionTypes.SUCCESS_FETCH_GENRES]: (state, action) => {
+    return Object.assign({}, state, {
+      loadingGenreList: false,
+      genreList:  action.data.genres,
+      genreCount: action.data.count
     })
   },
   //  [ActionTypes.SUCCESS_SET_LOADING_STATE]: (state, action) => {

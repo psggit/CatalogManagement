@@ -10,6 +10,11 @@ export const fetchBrands = (data) => ({
   data
 })
 
+export const fetchGenres = (data) => ({
+  type: ActionTypes.REQUEST_FETCH_GENRES,
+  data
+})
+
 export const fetchBrandList = (data) => ({
   type: ActionTypes.REQUEST_FETCH_BRAND_LIST,
   data

@@ -41,7 +41,8 @@ class NavigationBar extends  React.Component {
         name: 'Catalog Management',
         nestedItems: [
           { name: 'Manage Brand', path: '/admin/manage-brand', id: 2 },
-          { name: 'Manage SKU', path: '/admin/manage-sku', id: 3 }
+          { name: 'Manage SKU', path: '/admin/manage-sku', id: 3 },
+          { name: 'Manage Genre', path: '/admin/manage-genre', id:4 }
         ]
       },
     ]

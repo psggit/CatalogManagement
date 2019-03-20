@@ -45,6 +45,24 @@ export const fetchStates = action => (
   })
 ) 
 
+export const fetchGenres = action => (
+  POST({
+    api: '/Api/listGenre',
+    apiBase: 'catalog',
+    data: action.data,
+    handleError: true
+  })
+) 
+
+export const updateGenreStatus = action => (
+  POST({
+    api: '/Api/updateGenre',
+    apiBase: 'catalog',
+    data: action.data,
+    handleError: true
+  })
+)
+
 export const fetchSkuMappedStates = action => (
   POST({
     api: '/Api/listSkuPrice',
