@@ -3,7 +3,8 @@ import TextField from 'material-ui/TextField'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 import RaisedButton from 'material-ui/RaisedButton'
-import { validateTextField } from './../../../utils/validators'
+import { validateTextField, validateNumberField } from './../../../utils/validators'
+import { validateNumType, checkCtrlA, checkCtrlV } from './../../../utils'
 
 class GenreForm extends React.Component {
   constructor(props) {
@@ -96,6 +97,18 @@ class GenreForm extends React.Component {
     })
   }
 
+  handleChange(e) {
+    const errName = `${e.target.name}Err`
+    if(validateNumType(e.keyCode) || checkCtrlA(e) || checkCtrlV(e)) {
+      this.setState({ 
+          [e.target.name]: e.target.value,
+          [errName]: validateNumberField(this.inputNameMap[e.target.name], e.target.value)
+      })
+    } else {
+        e.preventDefault()
+    }   
+  }
+
   render() {
     console.log("props", this.props)
     const { genreNameErr, ordinalPositionErr, displayNameErr, genreImageErr } = this.state
@@ -116,11 +129,21 @@ class GenreForm extends React.Component {
         </div>
         <div className="form-group">
           <label className="label">Ordinal position</label><br />
-          <TextField
+          {/* <TextField
             onChange={this.handleTextFields}
             name="ordinalPosition"
             value={this.state.ordinalPosition}
             style={{ width: '100%' }}
+          /> */}
+           <TextField
+            //disabled={this.props.isDisabled}
+            defaultValue={this.props.genreData ? this.props.genreData.ordinal_position : ''}
+            name="ordinalPosition"
+            autoComplete='off'
+            //disabled={this.props.isDisabled}
+            style={{ width: '100%' }}
+            onKeyDown={(e) => { this.handleChange(e) }} 
+            onKeyUp={(e) => { this.handleChange(e) }} 
           />
           {
             ordinalPositionErr.status &&
@@ -144,6 +167,7 @@ class GenreForm extends React.Component {
           <label className="label">Genre image</label><br />
           <TextField
             name="genreImage"
+            onChange={this.handleTextFields}
             value={this.state.genreImage}
             style={{ width: '100%' }}
           />
