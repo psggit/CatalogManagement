@@ -6,15 +6,15 @@ import RaisedButton from 'material-ui/RaisedButton'
 import { validateTextField } from './../../../utils/validators'
 
 class GenreForm extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
 
     this.state = {
-      genreName: "",
-      ordinalPosition: "",
-      genreImage: "",
-      displayName: "",
-      statusIdx: 1,
+      genreName: props.genreData ? props.genreData.genre_name : "",
+      ordinalPosition: props.genreData ? props.genreData.ordinal_position : "",
+      genreImage: props.genreData ? props.genreData.image : "",
+      displayName: props.genreData ? props.genreData.display_name : "",
+      statusIdx: props.genreData ? props.genreData.is_active ? 1 : 2 : 1,
       genreImageErr: {
         value: "",
         status: false
@@ -104,7 +104,6 @@ class GenreForm extends React.Component {
         <div className="form-group">
           <label className="label">Genre name</label><br />
           <TextField
-            //disabled={this.props.disableNameField}
             onChange={this.handleTextFields}
             name="genreName"
             value={this.state.genreName}
@@ -118,7 +117,6 @@ class GenreForm extends React.Component {
         <div className="form-group">
           <label className="label">Ordinal position</label><br />
           <TextField
-            //disabled={this.props.disableNameField}
             onChange={this.handleTextFields}
             name="ordinalPosition"
             value={this.state.ordinalPosition}
@@ -132,7 +130,6 @@ class GenreForm extends React.Component {
         <div className="form-group">
           <label className="label">Display name</label><br />
           <TextField
-            //disabled={this.props.disableNameField}
             onChange={this.handleTextFields}
             name="displayName"
             value={this.state.displayName}
@@ -146,8 +143,6 @@ class GenreForm extends React.Component {
         <div className="form-group">
           <label className="label">Genre image</label><br />
           <TextField
-            //disabled={this.props.disableNameField}
-            onChange={this.handleTextFields}
             name="genreImage"
             value={this.state.genreImage}
             style={{ width: '100%' }}

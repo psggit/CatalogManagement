@@ -15,6 +15,7 @@ import Login from './login'
 import ManageBrand from './../src/home/container/manage-brand'
 import ManageGenre from './../src/home/container/manage-genre'
 import CreateGenre from './../src/home/components/manage-genre/create-genre'
+import EditGenre from './../src/home/components/manage-genre/edit-genre'
 import CreateBrand from './../src/home/components/manage-brand/create-brand'
 import EditBrand from './../src/home/components/manage-brand/edit-brand'
 import ViewSKU from './../src/home/components/sku-management/manage-sku'
@@ -166,7 +167,7 @@ class App extends React.Component {
 
                               <Route exact path="/admin/manage-genre/" component={ManageGenre} />
 															<Route exact path="/admin/manage-genre/create" component={CreateGenre} />
-															{/* <Route exact path="/admin/manage-brand/edit/:brandName" component={EditBrand} /> */}
+															<Route exact path="/admin/manage-genre/edit/:genreName" component={EditGenre} />
 					
 															<Route exact path="/admin/manage-sku" component={ViewSKU} />
 															<Route exact path="/admin/manage-sku/create" component={CreateSKU} />

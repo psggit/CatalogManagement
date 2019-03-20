@@ -18,6 +18,15 @@ export const createGenre = action => (
   })
 )
 
+export const updateGenre = action => (
+  POST({
+    api: '/Api/updateGenre',
+    apiBase: 'catalog',
+    data: action.data,
+    handleError: true
+  })
+)
+
 export const fetchSKUs = action => (
   POST({
     api: '/Api/listSku',
@@ -65,7 +74,7 @@ export const fetchGenres = action => (
 
 export const updateGenreStatus = action => (
   POST({
-    api: '/Api/updateGenre',
+    api: '/Api/changeGenreStatus',
     apiBase: 'catalog',
     data: action.data,
     handleError: true

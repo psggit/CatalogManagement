@@ -8,10 +8,7 @@ import {
   TableRowColumn
 } from 'material-ui/Table'
 
-import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
-import CircularProgress from 'material-ui/CircularProgress'
-import { NavLink } from 'react-router-dom'
 import TableLoadingShell from './../table-loading-shell'
 import '@sass/components/_table.scss'
 import Switch from '@components/switch'
@@ -39,14 +36,6 @@ const styles = [
   { width: '60px' },
 ]
 
-// function editBrand(brandDetails, data) {
-//   data.history.push(`/admin/manage-brand/edit/${brandDetails.brand_name}`, brandDetails)
-// }
-
-// function updateBrandStatus(item, isInputClicked) {
-//   data.showDialog({newStatus: isInputClicked, brandName: item.brand_name, volume: item.volume})
-// }
-
 class ViewGenreList extends React.Component {
   constructor() {
     super()
@@ -58,12 +47,11 @@ class ViewGenreList extends React.Component {
   }
 
   overrideTableStyle() {
-    // document.querySelectorAll(".bordered--table")[1].parentElement.style.overflow = "auto"
     overrideTableStyle()
   }
 
   editGenre(genreDetails) {
-    this.props.history.push(`/admin/manage-genre/edit/${brandDetails.genre_name}`, genreDetails)
+    this.props.history.push(`/admin/manage-genre/edit/${genreDetails.genre_name}`, genreDetails)
   }
   
   updateGenreStatus(item, isInputClicked) {
@@ -71,8 +59,6 @@ class ViewGenreList extends React.Component {
   }
 
   render() {
-    console.log("props", this.props)
-    //console.log(!this.props.loadingBrandList, !this.props.brands, !this.props.loadingBrandList && this.props.brands && this.props.brands.length === 0)
     return (
       <React.Fragment>
         <Table

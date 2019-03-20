@@ -25,11 +25,6 @@ export const fetchLiveOrders = (data) => ({
   data
 })
 
-// export const fetchRepositories = data => ({
-//   type : 'FETCH_REPOS',
-//   data
-// })
-
 export const createSku = (data, CB) => ({
   type: ActionTypes.REQUEST_CREATE_SKU,
   data,
@@ -38,6 +33,18 @@ export const createSku = (data, CB) => ({
 
 export const createGenre = (data, CB) => ({
   type: ActionTypes.REQUEST_CREATE_GENRE,
+  data,
+  CB
+})
+
+export const updateGenre = (data, CB) => ({
+  type: ActionTypes.REQUEST_UPDATE_GENRE,
+  data,
+  CB
+})
+
+export const updateGenreStatus = (data, CB) => ({
+  type: ActionTypes.REQUEST_UPDATE_GENRE_STATUS,
   data,
   CB
 })
@@ -53,11 +60,6 @@ export const updateSKUStatus = (data, CB) => ({
   data,
   CB
 })
-
-// export const fetchVolumeList = (data) => ({
-//   type: ActionTypes.REQUEST_FETCH_VOLUME_LIST,
-//   data
-// })
 
 export const fetchStates = (data, CB) => ({
   type: ActionTypes.REQUEST_FETCH_STATES,
@@ -112,23 +114,6 @@ export const mapRetailerToSku = (data, CB) => ({
   CB
 })
 
-// export const fetchCategoriesList = (data) => ({
-//   type: ActionTypes.REQUEST_FETCH_CATEGORIES,
-//   data
-// })
-
-// export const createCategory = (data, CB) => ({
-//   type: ActionTypes.REQUEST_CREATE_CATEGORY,
-//   data,
-//   CB
-// })
-
-// export const updateCategory = (data, CB) => ({
-//   type: ActionTypes.REQUEST_UPDATE_CATEGORY,
-//   data,
-//   CB
-// })
-
 export const fetchOriginList = (data) => ({
   type: ActionTypes.REQUEST_FETCH_ORIGIN_LIST,
   data
@@ -161,51 +146,6 @@ export const updateBrandStatus = (data, CB) => ({
   data,
   CB
 })
-
-// export const fetchBrandsMappedToCategories = (data) => ({
-//   type: ActionTypes.REQUEST_FETCH_BRANDS_MAPPED_TO_CATEGORIES,
-//   data
-// })
-
-// export const fetchUnmappedBrandList = (data) => ({
-//   type: ActionTypes.REQUEST_FETCH_UNMAPPED_BRAND_LIST,
-//   data
-// }) 
-
-// export const fetchMappedBrandList = (data) => ({
-//   type: ActionTypes.REQUEST_FETCH_MAPPED_BRAND_LIST,
-//   data
-// })
-
-// export const mapBrands = (data, CB) => ({
-//   type: ActionTypes.REQUEST_MAP_BRANDS,
-//   data,
-//   CB
-// }) 
-
-// export const unmapBrands = (data, CB) => ({
-//   type: ActionTypes.REQUEST_UNMAP_BRANDS,
-//   data,
-//   CB
-// }) 
-
-// export const fetchCompanyList = (data) => ({
-//   type: ActionTypes.REQUEST_FETCH_COMPANIES,
-//   data
-// }) 
-
-// export const createCompany = (data, CB) => ({
-//   type: ActionTypes.REQUEST_CREATE_COMPANY,
-//   data,
-//   CB
-// }) 
-
-// export const updateCompany = (data, CB) => ({
-//   type: ActionTypes.REQUEST_UPDATE_COMPANY,
-//   data,
-//   CB
-// }) 
-
 
 
 

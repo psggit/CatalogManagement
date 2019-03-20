@@ -175,6 +175,21 @@ function* createGenre(action) {
     const data = yield call(Api.createGenre, action)
     yield put({ type: ActionTypes.SUCCESS_CREATE_GENRE, data })
     Notify('Successfully created the genre', 'success')
+    // setTimeout(() => {
+    //   window.location.href = `/admin/manage-genre`
+    // }, 1000)
+    action.CB(data)
+  } catch(err) {
+    console.log(err)
+    action.CB()
+  }
+}
+
+function* updateGenre(action) {
+  try {
+    const data = yield call(Api.updateGenre, action)
+    yield put({ type: ActionTypes.SUCCESS_UPDATE_GENRE, data })
+    Notify('Successfully updated the genre', 'success')
     setTimeout(() => {
       window.location.href = `/admin/manage-genre`
     }, 1000)
@@ -262,6 +277,12 @@ function* watchRequestCreateGenre() {
   }
 }
 
+function* watchRequestUpdateGenre() {
+  while (true) {
+    yield* takeLatest(ActionTypes.REQUEST_UPDATE_GENRE, updateGenre)
+  }
+}
+
 function* watchRequestUpdateSku() {
   while (true) {
     yield* takeLatest(ActionTypes.REQUEST_UPDATE_SKU, updateSku)
@@ -346,7 +367,8 @@ export default function* rootSaga() {
     fork(watchRequestUpdateBrandStatus),
     fork(watchRequestFetchGenres),
     fork(watchRequestUpdateGenreStatus),
-    fork(watchRequestCreateGenre)
+    fork(watchRequestCreateGenre),
+    fork(watchRequestUpdateGenre)
   ]
 }
 
