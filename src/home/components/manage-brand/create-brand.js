@@ -25,7 +25,7 @@ class CreateBrand extends React.Component {
       offset: 0
     })
     this.props.actions.fetchGenres({
-      limit: 14,
+      limit: 10000,
       offset: 0
     })
   }
