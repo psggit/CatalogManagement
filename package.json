@@ -7,7 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "NODE_ENV=production webpack --config webpack.prod.js",
-    "start:dev": "NODE_ENV=development webpack-dev-server --config webpack.dev.js --history-api-fallback",
+    "start:dev": "NODE_ENV=development webpack-dev-server --config webpack.dev.js --host 0.0.0.0 --history-api-fallback",
     "start": "NODE_ENV=production node server.js"
   },
   "keywords": [],

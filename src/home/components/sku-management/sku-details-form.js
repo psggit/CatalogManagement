@@ -257,7 +257,7 @@ class SkuDetailsForm extends React.Component {
 
 
         <div className="form-group">
-          <label className="label">Volume in ml</label><br />
+          <label className="label">Volume in ml*</label><br />
           <TextField
             //disabled={this.props.isDisabled}
             defaultValue={this.props.skuInfo ? this.props.skuInfo.volume : ''}
@@ -275,7 +275,7 @@ class SkuDetailsForm extends React.Component {
         </div>
 
         <div className="form-group">
-          <label className="label">Tag</label><br />
+          <label className="label">Tag*</label><br />
           <TextField
             //disabled={this.props.isDisabled}
             defaultValue={this.props.skuInfo ? this.props.skuInfo.tag : ''}
@@ -409,7 +409,7 @@ class SkuDetailsForm extends React.Component {
         </div>
 
         <div className="form-group">
-          <label className="label">Gs1 barcode</label><br />
+          <label className="label">Gs1 barcode*</label><br />
           <TextField
             onChange={this.handleTextFields}
             name="gs1_barcode"
@@ -425,7 +425,7 @@ class SkuDetailsForm extends React.Component {
         </div>
 
         <div className="form-group">
-          <label className="label">Barcode image</label><br />
+          <label className="label">Barcode image*</label><br />
           <TextField
             onChange={this.handleTextFields}
             name="barcode_image"

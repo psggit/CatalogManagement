@@ -115,7 +115,7 @@ class GenreForm extends React.Component {
     return (
       <React.Fragment>
         <div className="form-group">
-          <label className="label">Genre name</label><br />
+          <label className="label">Genre name*</label><br />
           <TextField
             onChange={this.handleTextFields}
             name="genreName"
@@ -128,7 +128,7 @@ class GenreForm extends React.Component {
           }
         </div>
         <div className="form-group">
-          <label className="label">Ordinal position</label><br />
+          <label className="label">Ordinal position*</label><br />
            <TextField
             defaultValue={this.props.genreData ? this.props.genreData.ordinal_position : ''}
             name="ordinalPosition"
@@ -143,7 +143,7 @@ class GenreForm extends React.Component {
           }
         </div>
         <div className="form-group">
-          <label className="label">Display name</label><br />
+          <label className="label">Display name*</label><br />
           <TextField
             onChange={this.handleTextFields}
             name="displayName"
@@ -156,7 +156,7 @@ class GenreForm extends React.Component {
           }
         </div>
         <div className="form-group">
-          <label className="label">Genre image</label><br />
+          <label className="label">Genre image*</label><br />
           <TextField
             name="genreImage"
             onChange={this.handleTextFields}

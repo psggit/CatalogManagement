@@ -195,7 +195,7 @@ class BrandForm extends React.Component {
       <Fragment>
         
         <div className="form-group">
-          <label className="label">Brand name</label><br />
+          <label className="label">Brand name*</label><br />
           <TextField
             disabled={this.props.disableNameField}
             onChange={this.handleTextFields}
@@ -319,7 +319,7 @@ class BrandForm extends React.Component {
         </div>
 
         <div className="form-group">
-          <label className="label">Tag</label><br />
+          <label className="label">Tag*</label><br />
           <TextField
             //disabled={this.props.isDisabled}
             defaultValue={this.props.brandInfo ? this.props.brandInfo.tag : ''}
@@ -442,7 +442,7 @@ class BrandForm extends React.Component {
         </div>
 
         <div className="form-group">
-          <label className="label">High res brand logo</label><br />
+          <label className="label">High res brand logo*</label><br />
           <TextField
             disabled={this.props.isDisabled}
             onChange={this.handleTextFields}
@@ -460,7 +460,7 @@ class BrandForm extends React.Component {
         </div>
 
         <div className="form-group">
-          <label className="label">Low res brand logo</label><br />
+          <label className="label">Low res brand logo*</label><br />
           <TextField
             disabled={this.props.isDisabled}
             onChange={this.handleTextFields}

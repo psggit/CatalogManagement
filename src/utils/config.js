@@ -1,6 +1,6 @@
 
 function getAPIObj() {
-  if (window.location.href.split(':')[1] === '//localhost') {
+  if (window.location.href.split(':')[1] === '//localhost' || window.location.href.split(':')[1] === '//192.168.5.1') {
     
     let scheme = 'https'
     let baseHost = '.amebae21.hasura-app.io'
