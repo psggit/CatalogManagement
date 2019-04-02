@@ -26,7 +26,6 @@ class editSKU extends React.Component {
   submit() {
     const queryObj = getQueryObj(location.search.slice(1))
     const data = this.skuDetailsForm.getData()
-    // console.log("test", this.props.history.location.state)
     this.setState({ isDisabled: true })
     this.props.actions.updateSku({
       sku_id: parseInt(queryObj.sku_id),
@@ -69,13 +68,6 @@ class editSKU extends React.Component {
               action="edit"
             />
           </Card>
-          {/* <RaisedButton
-            primary
-            disabled={this.state.isDisabled}
-            label="Save"
-            onClick={this.submit}
-            style={{ marginTop: '40px' }}
-          /> */}
         </div>
 
       </div>

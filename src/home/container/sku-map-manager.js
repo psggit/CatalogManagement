@@ -89,11 +89,8 @@ class SKUMapManager extends React.Component {
 
   resetFilter() {
     this.setState({
-        // column: '',
-        // operator: 'EQUAL',
-        // value: '',
-        isFilterApplied: false,
-        filterObj: {}
+      isFilterApplied: false,
+      filterObj: {}
     })
     this.props.history.push(`/admin/sku-mapping`)
     this.fetchSKUs()
@@ -184,7 +181,6 @@ class SKUMapManager extends React.Component {
   }
 
   showDialog(skuDetailsObj) {
-    //if(skuDetailsObj.newStatus) {
     this.setState({
       skuStatus: !skuDetailsObj.newStatus, 
       mountDialog: true, 
@@ -192,12 +188,10 @@ class SKUMapManager extends React.Component {
       volume: skuDetailsObj.volume,
       brandName: skuDetailsObj.brandName
     })
-    //}
   }
 
   updateSKUStatus() {
     this.setState({mountDialog: false})
-    //this.setState({mountDialog: false})
     this.props.actions.updateSKUStatus({
       sku_id: parseInt(this.state.skuId),
       //type: parseInt(this.state.brandType),
@@ -216,7 +210,6 @@ class SKUMapManager extends React.Component {
 
   render() {
     const { loadingSkuList, skuList, totalSkuCount } = this.props
-    //console.log("map", loadingSkuList, "list", skuList)
     const { activePage } = this.state
     return (
       <div style={{ width: '100%'}}>
@@ -232,8 +225,6 @@ class SKUMapManager extends React.Component {
               onClick={this.resetFilter}
               label="Reset Filter"
               disabled={!this.state.isFilterApplied}
-              //style={{marginRight: '10px'}}
-              //icon={getIcon('filter')}
             />
         </div>
         <h3>Showing all SKUs</h3>
@@ -299,23 +290,6 @@ class SKUMapManager extends React.Component {
           )
           : ''
         }
-
-        {/* <LocalitiesList
-          localities={geoLocalitiesData.fences}
-          loadingLocalities={loadingGeolocalities}
-        />
-
-        {
-          !loadingGeolocalities && geoLocalitiesData.fences.length
-          ? <Pagination
-            activePage={parseInt(this.state.activePage)}
-            itemsCountPerPage={10}
-            totalItemsCount={geoLocalitiesData.count}
-            pageRangeDisplayed={5}
-            setPage={this.setPage}
-          />
-          : ''
-        } */}
       </div>
     )
   }

@@ -59,7 +59,6 @@ class EditBrand extends React.Component {
   }
 
   render() {
-    console.log("params", this.props.history.location.state)
     return (
       <div style={{
         width: '40%',
@@ -89,15 +88,7 @@ class EditBrand extends React.Component {
               loadingBrandTypeList={this.props.loadingBrandTypeList}
             />
           </Card>
-          {/* <RaisedButton
-            primary
-            disabled={this.state.isDisabled}
-            label="Update"
-            onClick={this.submit}
-            style={{ marginTop: '40px' }}
-          /> */}
         </div>
-
       </div>
     )
   }

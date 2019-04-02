@@ -118,16 +118,6 @@ export const fetchBrands = action => (
   .then(json => json)
 )
 
-// export const fetchBrandList = action => (
-//   POST({
-//     api: '/Api/listBrands',
-//     apiBase: 'catalog',
-//     data: action.data,
-//     handleError: true
-//   })
-//   .then(json => json)
-// )
-
 export const createBrand = action => (
   POST({
     api: '/Api/createBrand',

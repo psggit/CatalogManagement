@@ -162,8 +162,6 @@ class ViewSKUMapDetails extends React.Component {
             skuMappedData = {this.state.mappedStatesToSkuList}
             skuStateMap = {this.state.mappedStatesToSkuMap}
             handleSaveStateDetails = {this.updateStateMappedToSku}
-            //statesList = {this.props.statesList}
-            //handleUnmapState = {this.handleUnmapState}
             disableSave = {this.state.disableSave}
           />
         </div>
@@ -177,7 +175,6 @@ class ViewSKUMapDetails extends React.Component {
             statesList = {this.props.statesList}
             skuMappedData = {this.state.mappedStatesToSkuList}
             loadingStatesMappedToSku = {this.state.loadingData}
-            //statesList = {this.props.statesList}
           />
         } 
       </div>

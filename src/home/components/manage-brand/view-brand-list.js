@@ -62,7 +62,6 @@ class ViewBrandList extends React.Component {
   }
 
   overrideTableStyle() {
-    // document.querySelectorAll(".bordered--table")[1].parentElement.style.overflow = "auto"
     overrideTableStyle()
   }
 
@@ -74,10 +73,7 @@ class ViewBrandList extends React.Component {
     this.props.showDialog({newStatus: isInputClicked, brandName: item.brand_name, brandId: item.id, brandType: item.type})
   }
 
-  render() {
-    //console.log(!this.props.loadingBrandList, !this.props.brands, !this.props.loadingBrandList && this.props.brands && this.props.brands.length === 0)
-    const NoBrandsNotification = (!this.props.loadingBrandList && !this.props.brands) || 
-    (!this.props.loadingBrandList && this.props.brands && this.props.brands.length === 0)  
+  render() {  
     return (
       <React.Fragment>
         <Table

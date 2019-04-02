@@ -15,7 +15,6 @@ class BrandForm extends React.Component {
   constructor(props) {
     super(props)
     this.uploadedImageUrl = ''
-    //console.log("brand info", this.props.brandInfo, "props", this.props.brandTypeList)
     this.intitialState = {
       shouldTrim: true,
       brandName: props.brandInfo ? props.brandInfo.brand_name : '',
@@ -35,14 +34,9 @@ class BrandForm extends React.Component {
       typeIdx: props.brandInfo ? props.brandTypeList.map(item => parseInt(item.id)).indexOf(parseInt(props.brandInfo.type)) + 1 : 1,
       genreIdx: props.brandInfo ? props.genreList.map(item => parseInt(item.id)).indexOf(parseInt(props.brandInfo.genre_name)) + 1 : 1,
       genreName: "",
-      //brandType: props.brandInfo ? props.brandTypeList.map(item => item.id)[props.brandTypeList.map(item => item.id).indexOf(this.props.brandInfo.Type)] : props.brandTypeList.map(item => item.name)[0],
-      //originIdx: props.brandInfo ? props.originList.map(item => item.short_name).indexOf(props.brandInfo.origin_name) + 1 : 1,
-      //origin: props.brandInfo ? props.originList.map(item => item.short_name)[props.originList.map(item => item.short_name).indexOf(this.props.brandInfo.origin_name)] : props.originList.map(item => item.short_name)[0],
       description: props.brandInfo ? props.brandInfo.description : '',
       high_res_image_err: false,
       low_res_image_err: false,
-      // high_res_brand_logo_err: false,
-      // low_res_brand_logo_err: false,
 
       brandNameErr: {
         value: '',
@@ -71,12 +65,10 @@ class BrandForm extends React.Component {
       'tagName': 'Tag'
     }
 
-    //console.log("type id",props.brandTypeList,  props.brandInfo ? props.brandTypeList.map(item => item.id).indexOf(parseInt(props.brandInfo.type)) + 1 : 1)
     this.state = Object.assign({}, this.intitialState)
     this.handleTextFields = this.handleTextFields.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleTypeChange = this.handleTypeChange.bind(this)
-    //this.handleOriginChange = this.handleOriginChange.bind(this)
     this.handleUploadChange = this.handleUploadChange.bind(this)
     this.resetUploadImage = this.resetUploadImage.bind(this)
     this.submitUploadedImage = this.submitUploadedImage.bind(this)
@@ -86,13 +78,9 @@ class BrandForm extends React.Component {
   }
  
   componentDidUpdate (prevProps) {
-    //if((this.props.originList !== prevProps.originList || this.props.brandTypeList !== prevProps.brandTypeList)) {
     if((this.props.brandTypeList !== prevProps.brandTypeList)) {
       this.setState({
-        //originIdx: this.props.brandInfo ? this.props.originList.map(item => item.short_name).indexOf(this.props.brandInfo.origin_name) + 1 : 1,
         typeIdx: this.props.brandInfo ? this.props.brandTypeList.map(item => parseInt(item.id)).indexOf(parseInt(this.props.brandInfo.type)) + 1 : 1,
-        //origin: this.props.brandInfo ? this.props.originList.map(item => item.short_name)[this.props.originList.map(item => item.short_name).indexOf(this.props.brandInfo.origin_name)] : this.props.originList.map(item => item.short_name)[0],
-        //brandType: this.props.brandInfo ? this.props.brandTypeList.map(item => item.name)[this.props.brandTypeList.map(item => item.id).indexOf(this.props.brandInfo.Type)] : this.props.brandTypeList.map(item => item.name)[0]
       })
     } 
     if(this.props.genreList !== prevProps.genreList) {
@@ -118,32 +106,7 @@ class BrandForm extends React.Component {
     })
   }
 
-  // handleOriginChange(e, k) {
-  //   const originIdx = k + 1
-  //   this.setState({
-  //     originIdx,
-  //     origin: this.props.originList[k].short_name
-  //   })
-  // }
-
   handleTextFields(e) {
-    // let value = e.target.value
-    // if (this.state.shouldTrim) {
-    //   value = value.trim()
-    // }
-
-    // if (value.trim().length) {
-    //   this.setState({ shouldTrim: false })
-    // } else {
-    //   this.setState({ shouldTrim: true })
-    // }
-    // this.setState({ [e.target.name]: value })
-    // if(!/^(https:\/\/)(.*)/.test(value)) {
-    //   this.setState({ [`${e.target.name}_err`]: true })
-    // } else {
-    //   this.setState({ [`${e.target.name}_err`]: false })
-    // }
-
     const errName = `${e.target.name}Err`
     this.setState({
         [e.target.name]: e.target.value,
@@ -153,14 +116,6 @@ class BrandForm extends React.Component {
 
   handleChange(e) {
     const errName = `${e.target.name}Err`
-    // if(validateNumType(e.keyCode) || checkCtrlA(e)) {
-    //   this.setState({ 
-    //     [e.target.name]: e.target.value
-    //   })
-    // } else {
-    //   e.preventDefault()
-    // }
-
     if(validateNumType(e.keyCode) || checkCtrlA(e) || checkCtrlV(e)) {
       this.setState({ 
           [e.target.name]: e.target.value,

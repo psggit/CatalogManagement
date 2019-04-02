@@ -447,20 +447,6 @@ class SkuDetailsForm extends React.Component {
           onClick={this.handleSave}
           style={{ marginTop: '40px' }}
         />
-
-        {/* {
-          this.props.action === "edit" && this.state.status === 2 &&
-          <div className="form-group">
-            <Checkbox
-              disabled={this.props.isDisabled}
-              checked={this.state.cancelOpenReservation}
-              onCheck={this.handleCheckboxes}
-              name="cancelOpenReservation"
-              label="is_closed_for_reservation"
-            />
-          </div>
-        } */}
-
       </Fragment>
     )
   }

@@ -26,7 +26,6 @@ const TableHeaderItems = [
 ]
 
 const styles = [
-  // { width: '38px', textAlign: 'center' },
   { width: '100px', textAlign: 'center' },
   { width: '120px', textAlign: 'center' },
   { width: '70px', textAlign: 'center' },
@@ -44,21 +43,16 @@ class ViewUnmappedStates extends React.Component {
     }
     
     this.handleAddState = this.handleAddState.bind(this)
-    //this.handleCheckboxes = this.handleCheckboxes.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleTagChange = this.handleTagChange.bind(this)
-    //this.successCallback = this.successCallback.bind(this)
-    //this.mapStates = this.mapStates.bind(this)
   }
 
   componentDidMount() {
-    //this.props.actions.fetchStates({}, this.successCallback)
     this.overrideTableStyle()
     this.mapStates()
   }
 
   overrideTableStyle() {
-    // document.querySelectorAll(".bordered--table")[1].parentElement.style.overflow = "auto"
     overrideTableStyle()
   }
 
@@ -67,21 +61,14 @@ class ViewUnmappedStates extends React.Component {
       this.mapStates()
     }
   }
-  // successCallback() {
-  //   this.props.actions.fetchStatesMappedToSku({
-  //     sku_id: parseInt(this.props.skuId)
-  //   }, this.mapStates)
-  // }
-
+  
   mapStates() {
     let stateMap = {}
     const {
       skuMappedData,
       loadingStatesMappedToSku
     } = this.props
-    //console.log("loadin", loadingStatesMappedToSku, skuMappedData.length)
     if(skuMappedData && skuMappedData.length === 0 && !loadingStatesMappedToSku) {
-      //console.log("if")
       this.props.statesList.map((item) => {
         stateMap[item.state_short_name] = {
           state_id: parseInt(item.state_id),
@@ -94,7 +81,6 @@ class ViewUnmappedStates extends React.Component {
         }
       })
     } else {
-      //console.log("else")
       const statesMap = {}
       this.props.statesList.map((item) => {
         return statesMap[item.state_id] = {
@@ -105,9 +91,6 @@ class ViewUnmappedStates extends React.Component {
       })
 
       this.props.statesList.map((stateDetails) => {
-        // console.log("1", this.props.skuMappedData)
-        // console.log("2", stateDetails.state_id)
-        // console.log("res", this.props.skuMappedData.map(item => parseInt(item.state_id)).indexOf((parseInt(stateDetails.state_id))))
         if(this.props.skuMappedData.map(item => parseInt(item.state_id)).indexOf((parseInt(stateDetails.state_id))) === -1) {
           stateMap[statesMap[stateDetails.state_id].state_short_name] = {
             state_id: parseInt(stateDetails.state_id),
@@ -121,7 +104,6 @@ class ViewUnmappedStates extends React.Component {
         } 
       })
     }
-    //console.log("state map", stateMap)
     this.setState({
       stateMap, 
       unmappedStatesList: Object.values(stateMap), 
@@ -145,11 +127,6 @@ class ViewUnmappedStates extends React.Component {
     updatedMap[stateShortName].tag = (e.target.value)
     this.setState({stateMap: updatedMap, unmappedStatesList: Object.values(updatedMap)})
   }
-  // handleCheckboxes(e, stateShortName) {
-  //   let updatedMap = Object.assign({}, this.state.stateMap)
-  //   updatedMap[stateShortName].is_active = (e.target.checked)
-  //   this.setState({stateMap: updatedMap, mappedStatesList: Object.values(updatedMap)})
-  // }
 
   render() {
     const {
@@ -157,10 +134,6 @@ class ViewUnmappedStates extends React.Component {
       unmappedStatesList
     } = this.state
 
-    // const {
-    //   loadingStatesMappedToSku
-    // } = this.props
-    //console.log("state ", unmappedStatesList)
     const notificationStyle = {
       boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.08)',
       display: 'flex',
@@ -198,43 +171,38 @@ class ViewUnmappedStates extends React.Component {
               !loadingUnmappedStates && this.state.stateMap && Object.keys(this.state.stateMap).length > 0
               &&
               this.state.unmappedStatesList.map((item, i) => {
-                return <TableRow key={item.state_short_name}>
-                  {/* <TableRowColumn style={styles[0]}>
-                    <Checkbox
-                      onCheck={(e) => this.handleCheckboxes(e, item.state_short_name)}
-                      checked={this.state.stateMap[item.state_short_name].is_active}
-                      name="is_active"
-                    />
-                  </TableRowColumn> */}
-                  <TableRowColumn style={styles[0]}>{item.state_name}</TableRowColumn>
-                  <TableRowColumn style={styles[1]}>{item.state_short_name}</TableRowColumn>
-                  <TableRowColumn style={styles[2]}>
-                    <input 
-                      type="number" 
-                      value={this.state.stateMap[item.state_short_name].price} 
-                      onChange={(e) => this.handleChange(e, item.state_short_name)} 
-                      style = {{ width: '60px', padding: '0 10px'}}
-                    />
-                  </TableRowColumn>
-                  <TableRowColumn style={styles[3]}>
-                    <input 
-                      type="text" 
-                      value={this.state.stateMap[item.state_short_name].tag} 
-                      onChange={(e) => this.handleTagChange(e, item.state_short_name)} 
-                      style = {{ width: '120px', padding: '0 10px'}}
-                    />
-                  </TableRowColumn>
-                  <TableRowColumn style={styles[4]}>
-                    <FlatButton
-                      disabled={this.state.stateMap[item.state_short_name].price==0}
-                      label="add"
-                      primary
-                      onClick={() => {
-                        this.handleAddState(item.state_short_name)
-                      }}
-                    />
-                  </TableRowColumn>
-                </TableRow>
+                return (
+                  <TableRow key={item.state_short_name}>
+                    <TableRowColumn style={styles[0]}>{item.state_name}</TableRowColumn>
+                    <TableRowColumn style={styles[1]}>{item.state_short_name}</TableRowColumn>
+                    <TableRowColumn style={styles[2]}>
+                      <input 
+                        type="number" 
+                        value={this.state.stateMap[item.state_short_name].price} 
+                        onChange={(e) => this.handleChange(e, item.state_short_name)} 
+                        style = {{ width: '60px', padding: '0 10px'}}
+                      />
+                    </TableRowColumn>
+                    <TableRowColumn style={styles[3]}>
+                      <input 
+                        type="text" 
+                        value={this.state.stateMap[item.state_short_name].tag} 
+                        onChange={(e) => this.handleTagChange(e, item.state_short_name)} 
+                        style = {{ width: '120px', padding: '0 10px'}}
+                      />
+                    </TableRowColumn>
+                    <TableRowColumn style={styles[4]}>
+                      <FlatButton
+                        disabled={this.state.stateMap[item.state_short_name].price==0}
+                        label="add"
+                        primary
+                        onClick={() => {
+                          this.handleAddState(item.state_short_name)
+                        }}
+                      />
+                    </TableRowColumn>
+                  </TableRow>
+                )
               })
             }
             {

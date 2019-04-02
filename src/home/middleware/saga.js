@@ -12,7 +12,6 @@ import {skuList, brandList, originList, brandTypes, createdSku, volumeList, skuD
 function* fetchSKUs(action) {
   try {
     const data = yield call(Api.fetchSKUs, action)
-    //const data = skuList
     yield put({ type: ActionTypes.SUCCESS_FETCH_SKUS, data })
   } catch(err) {
     console.log(err)
@@ -22,7 +21,6 @@ function* fetchSKUs(action) {
 function* fetchGenres(action) {
   try {
     const data = yield call(Api.fetchGenres, action)
-    //const data = brandList
     yield put({ type: ActionTypes.SUCCESS_FETCH_GENRES, data })
   } catch(err) {
     console.log(err)
@@ -32,7 +30,6 @@ function* fetchGenres(action) {
 function* fetchBrands(action) {
   try {
     const data = yield call(Api.fetchBrands, action)
-    //const data = brandList
     yield put({ type: ActionTypes.SUCCESS_FETCH_BRANDS, data })
   } catch(err) {
     console.log(err)
@@ -71,9 +68,6 @@ function* updateSKUStatus(action) {
     const data = yield call(Api.updateSKUStatus, action)
     yield put({ type: ActionTypes.SUCCESS_UPDATE_SKU_STATUS, data })
     Notify('Successfully updated the sku status', 'success')
-    // setTimeout(() => {
-    //   window.location.href = `/admin/manage-brand`
-    // }, 1000)
     action.CB()
   } catch(err) {
     console.log(err)
@@ -86,9 +80,6 @@ function* updateGenreStatus(action) {
     const data = yield call(Api.updateGenreStatus, action)
     yield put({ type: ActionTypes.SUCCESS_UPDATE_GENRE_STATUS, data })
     Notify('Successfully updated the genre status', 'success')
-    // setTimeout(() => {
-    //   window.location.href = `/admin/manage-brand`
-    // }, 1000)
     action.CB()
   } catch(err) {
     console.log(err)
@@ -99,7 +90,6 @@ function* updateGenreStatus(action) {
 function* fetchStates(action) {
   try {
     const data = yield call(Api.fetchStates, action)
-    //const data = mappedState
     yield put({ type: ActionTypes.SUCCESS_FETCH_STATES, data })
     action.CB()
   } catch(err) {
@@ -110,7 +100,6 @@ function* fetchStates(action) {
 function* fetchSkuMappedStates(action) {
   try {
     const data = yield call(Api.fetchSkuMappedStates, action)
-    //const data = mappedState
     yield put({ type: ActionTypes.SUCCESS_FETCH_STATES_MAPPED_TO_SKU, data })
     action.CB()
   } catch(err) {
@@ -134,8 +123,6 @@ function* updateSkuStateMap(action) {
 function* mapStateToSku(action) {
   try {
     const data = yield call(Api.mapStateToSku, action)
-    //const data = createdSku
-    //yield put({ type: ActionTypes.SUCCESS_MAP_STATE_TO_SKU, data })
     Notify('Successfully mapped the state', 'success')
     action.CB(data)
   } catch(err) {
@@ -147,8 +134,6 @@ function* mapStateToSku(action) {
 function* fetchBrandTypes(action) {
   try {
     const data = yield call(Api.fetchBrandTypes, action)
-    //console.log("data", data)
-    //const data = brandTypes
     yield put({ type: ActionTypes.SUCCESS_FETCH_BRAND_TYPE_LIST, data })
   } catch(err) {
     console.log(err)
@@ -160,9 +145,6 @@ function* createBrand(action) {
     const data = yield call(Api.createBrand, action)
     yield put({ type: ActionTypes.SUCCESS_CREATE_BRAND, data })
     Notify('Successfully created the brand', 'success')
-    // setTimeout(() => {
-    //   window.location.href = `/admin/manage-brand`
-    // }, 1000)
     action.CB(data)
   } catch(err) {
     console.log(err)
@@ -220,9 +202,6 @@ function* updateBrandStatus(action) {
     const data = yield call(Api.updateBrandStatus, action)
     yield put({ type: ActionTypes.SUCCESS_UPDATE_BRAND_STATUS, data })
     Notify('Successfully updated the brand status', 'success')
-    // setTimeout(() => {
-    //   window.location.href = `/admin/manage-brand`
-    // }, 1000)
     action.CB()
   } catch(err) {
     console.log(err)
@@ -371,15 +350,3 @@ export default function* rootSaga() {
     fork(watchRequestUpdateGenre)
   ]
 }
-
-// import { call, put } from 'redux-saga/effects'
-// import * as Api from './api'
-
-// export function* loadUserDetails(action) {
-//     try {
-//         const data = yield call(Api.fetchUserDetails, action);
-//         yield put({ type: 'SUCCESS_FETCH_REPOS', data }); // Yields effect to the reducer specifying the action type and user details
-//     } catch (error) {
-//         throw error;
-//     }
-// }

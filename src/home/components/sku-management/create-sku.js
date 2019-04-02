@@ -33,7 +33,6 @@ class createSKU extends React.Component {
 
   submit() {
     const data = this.skuDetailsForm.getData()
-    console.log("sku form", data)
     if (data.volume) {
       this.setState({ isDisabled: true })
       this.props.actions.createSku({
@@ -74,21 +73,11 @@ class createSKU extends React.Component {
               isDisabled={false}
               disableSave={this.state.isDisabled}
               submit={this.submit}
-              //statusData={['active', 'inactive']}
-              //status={true}
-              //brandName={this.state.brandName}
               loadingBrandList={loadingBrandDetails}
               brandList={brands}
               action="create"
             />
           </Card>
-          {/* <RaisedButton
-            primary
-            disabled={this.state.isDisabled}
-            label="Save"
-            onClick={this.submit}
-            style={{ marginTop: '40px' }}
-          /> */}
         </div>
 
       </div>

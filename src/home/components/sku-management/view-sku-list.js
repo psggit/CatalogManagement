@@ -25,7 +25,6 @@ const TableHeaderItems = [
   'VOLUME',
   'TAGS',
   'BARCODE IMAGE',
-  // 'STATUS',
   'BRAND ID',
   'SKU STATUS'
 ]
@@ -36,7 +35,6 @@ const styles = [
   { width: '120px' },
   { width: '60px' },
   { width: '100px' },
-  // { width: '60px' },
   { width: '100px' },
   { width: '60px' },
   { width: '100px' }
@@ -54,7 +52,6 @@ class ViewSKUList extends React.Component {
   }
 
   overrideTableStyle() {
-    // document.querySelectorAll(".bordered--table")[1].parentElement.style.overflow = "auto"
     overrideTableStyle()
   }
 
@@ -90,13 +87,10 @@ class ViewSKUList extends React.Component {
   }
 
   updateSKUStatus(item, isInputClicked) {
-    //console.log("item switch", item)
     this.props.showDialog({newStatus: isInputClicked, skuId: item.sku_id, brandName: item.brand_name, volume: item.sku_volume})
   }
 
   render() {
-    const NoSKUsNotification = (!this.props.loadingSkuList && !this.props.skuList) || 
-    (!this.props.loadingSkuList && this.props.skuList && this.props.skuList.length === 0)
     return (
       <React.Fragment>
         <Table
@@ -147,7 +141,6 @@ class ViewSKUList extends React.Component {
                             />
                           </a>
                         </TableRowColumn>
-                        {/* <TableRowColumn style={styles[4]}>{item.is_active ? 'ACTIVE' : 'INACTIVE'}</TableRowColumn> */}
                         <TableRowColumn style={styles[6]}>{item.brand_id}</TableRowColumn>
                         <TableRowColumn style={styles[7]}>
                             <Switch toggled={item.is_active} onToggle={this.updateSKUStatus} value={item} />

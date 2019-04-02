@@ -20,7 +20,6 @@ const styles = [
   { width: '80px', textAlign: 'left' },
   { width: '100px', textAlign: 'left' },
   { width: '200px', textAlign: 'left' },
-  // { width: '60px', textAlign: 'center' },
   { width: '38px', textAlign: 'left' }
 ]
 
@@ -55,7 +54,6 @@ class MappedStatesList extends React.Component {
   }
 
   overrideTableStyle() {
-    // document.querySelectorAll(".bordered--table")[1].parentElement.style.overflow = "auto"
     overrideTableStyle()
   }
 
@@ -84,20 +82,6 @@ class MappedStatesList extends React.Component {
       })
     }
   }
-
-  // unMapState(pricingId) {
-  //   let updatedStateMap = Object.assign({}, this.state.stateMap)
-  //   this.props.handleUnmapState({ 
-  //     state_name: updatedStateMap[pricingId].state_short_name,
-  //     is_active: false,
-  //     sku_price: updatedStateMap[pricingId].sku_price
-  //   })
-
-  //   delete updatedStateMap[pricingId]
-
-  //   this.setState({ mappedStatesList: Object.values(updatedStateMap), stateMap: updatedStateMap })
- 
-  // }
 
   handleChange(e, stateShortName) {
     let updatedMap = Object.assign({}, this.state.stateMap)
@@ -175,14 +159,6 @@ class MappedStatesList extends React.Component {
                     disabled={!this.state.stateMap[item.state_short_name].is_modified}
                   />
                 </TableRowColumn>
-                {/* <TableRowColumn style={styles[0]}>
-                  <button
-                    onClick={() => this.unMapState(item.sku_pricing_id)}
-                    //style={this.props.disableSave ? { opacity: '0.55', pointerEvents: 'none', fontSize: '13px', textTransform: 'none', width: '50px' } : { fontSize: '13px', textTransform: 'none', width: '50px' }}
-                  >
-                    Delete
-                  </button>
-                </TableRowColumn> */}
                 <TableRowColumn style={styles[1]}>{item.state_short_name}</TableRowColumn>
                 <TableRowColumn style={styles[2]}>{item.state_name}</TableRowColumn>
                 <TableRowColumn style={styles[3]}>
@@ -223,8 +199,6 @@ class MappedStatesList extends React.Component {
           }
         </TableBody>
       </Table>
-
-
     )
   }
 }

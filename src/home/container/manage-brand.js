@@ -25,7 +25,6 @@ class ManageBrand extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      //shouldMountCreateSKU: false,
       shouldMountFilterDialog: false,
       activePage: 1,
       pageOffset: 0,
@@ -58,20 +57,16 @@ class ManageBrand extends React.Component {
   }
 
   componentDidMount() {
-    //console.log("history", this.props.history)
     this.fetchBrands()
   }
 
   fetchBrands() {
-    //console.log("fetch brands")
     if (location.search.length) {
-      //console.log("if")
       this.setQueryParamas()
     } else {
       this.props.actions.fetchBrands({
         limit: this.pagesLimit,
-        offset: 0,
-        //filter: {}
+        offset: 0
       })
     }
   }
@@ -161,7 +156,6 @@ class ManageBrand extends React.Component {
   }
 
   showDialog(brandObj) {
-    //console.log("brand status", brandObj.newStatus)
     this.setState({
       brandStatus: !brandObj.newStatus, 
       mountDialog: true, 
@@ -175,10 +169,8 @@ class ManageBrand extends React.Component {
     this.setState({mountDialog: false})
     this.props.actions.updateBrandStatus({
       brand_id: parseInt(this.state.brandId),
-      //type: parseInt(this.state.brandType),
       is_active: !this.state.brandStatus
     }, this.callbackUpdate)
-    //console.log("update")
   }
 
   callbackUpdate() {
@@ -218,11 +210,8 @@ class ManageBrand extends React.Component {
 
   resetFilter() {
     this.setState({
-        // column: '',
-        // operator: 'EQUAL',
-        // value: '',
-        isFilterApplied: false,
-        filterObj: {}
+      isFilterApplied: false,
+      filterObj: {}
     })
     this.props.history.push(`/admin/manage-brand`)
     this.fetchBrands()
