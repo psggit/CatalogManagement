@@ -32,7 +32,7 @@ class BrandForm extends React.Component {
       high_res_brand_logo: props.brandInfo ? props.brandInfo.brand_logo_high_res_image : '',
       low_res_brand_logo: props.brandInfo ? props.brandInfo.brand_logo_low_res_image : '',
       typeIdx: props.brandInfo ? props.brandTypeList.map(item => parseInt(item.id)).indexOf(parseInt(props.brandInfo.type)) + 1 : 1,
-      genreIdx: props.brandInfo ? props.genreList.map(item => parseInt(item.id)).indexOf(parseInt(props.brandInfo.genre_name)) + 1 : 1,
+      genreIdx: props.brandInfo ? parseInt(props.brandInfo.genre_id) : "",
       genreName: "",
       description: props.brandInfo ? props.brandInfo.description : '',
       high_res_image_err: false,
@@ -84,9 +84,11 @@ class BrandForm extends React.Component {
       })
     } 
     if(this.props.genreList !== prevProps.genreList) {
-      this.setState({
-        genreIdx: this.props.brandInfo ? this.props.genreList.map(item => (item.genre_name)).indexOf((this.props.brandInfo.genre_name)) + 1 : 1
-      })
+      if(this.state.genreIdx.toString().length === 0) {
+        this.setState({
+          genreIdx: parseInt(this.props.genreList[0].id)
+        })
+      }
     }
   }
 
@@ -99,9 +101,8 @@ class BrandForm extends React.Component {
   }
 
   handleGenreChange(e, k) {
-    const genreIdx = k + 1
     this.setState({
-      genreIdx,
+      genreIdx: parseInt(this.props.genreList[k].id),
       genreName: this.props.genreList[k].genre_name
     })
   }
@@ -190,7 +191,7 @@ class BrandForm extends React.Component {
 
   render() {
     const { brandNameErr, highResBrandLogoErr, lowResBrandLogoErr, tagNameErr } = this.state
-    //console.log("state", this.state)
+    console.log("props", this.props)
     return (
       <Fragment>
         
@@ -309,8 +310,8 @@ class BrandForm extends React.Component {
             {
               !this.props.loadingGenreList && this.props.genreList.map((item, i) => (
                 <MenuItem
-                  value={i + 1}
-                  key={i}
+                  value={parseInt(item.id)}
+                  key={parseInt(item.id)}
                   primaryText={item.genre_name}
                 />
               ))

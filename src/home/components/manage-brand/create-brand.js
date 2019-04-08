@@ -43,6 +43,7 @@ class CreateBrand extends React.Component {
         type: data.typeIdx,
         alcohol_per: (data.alcoholPercentage),
         genre_name: data.genreName,
+        genre_id: data.genreIdx,
         temperature: (data.temperature),
         cal_per: (data.caloriesPercentage),
         cal_total: (data.caloriesTotal),

@@ -22,6 +22,7 @@ function* fetchGenres(action) {
   try {
     const data = yield call(Api.fetchGenres, action)
     yield put({ type: ActionTypes.SUCCESS_FETCH_GENRES, data })
+    //action.CB()
   } catch(err) {
     console.log(err)
   }
