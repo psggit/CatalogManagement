@@ -153,13 +153,13 @@ class BrandForm extends React.Component {
     const highResBrandLogoErr = validateTextField(this.inputNameMap['highResBrandLogo'], this.state.high_res_brand_logo)
     this.setState({ highResBrandLogoErr: validateTextField(this.inputNameMap['highResBrandLogo'], this.state.high_res_brand_logo) })
      
-    const tagNameErr = validateTextField(this.inputNameMap['tagName'], this.state.tag)
-    this.setState({ tagNameErr: validateTextField(this.inputNameMap['tagName'], this.state.tag) })
+    // const tagNameErr = validateTextField(this.inputNameMap['tagName'], this.state.tag)
+    // this.setState({ tagNameErr: validateTextField(this.inputNameMap['tagName'], this.state.tag) })
 
     if(!brandNameErr.status && 
       !highResBrandLogoErr.status && 
-      !lowResBrandLogoErr.status &&
-      !tagNameErr.status
+      !lowResBrandLogoErr.status
+      // !tagNameErr.status
     ) {
       return true;
     }

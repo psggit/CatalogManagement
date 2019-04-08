@@ -160,10 +160,10 @@ class SkuDetailsForm extends React.Component {
     const barcodeImageErr = validateTextField(this.inputNameMap['barcodeImage'], this.state.barcode_image)
     this.setState({ barcodeImageErr: validateTextField(this.inputNameMap['barcodeImage'], this.state.barcode_image) })
 
-    const tagNameErr = validateTextField(this.inputNameMap['tagName'], this.state.tag)
-    this.setState({ tagNameErr: validateTextField(this.inputNameMap['tagName'], this.state.tag) })
+    // const tagNameErr = validateTextField(this.inputNameMap['tagName'], this.state.tag)
+    // this.setState({ tagNameErr: validateTextField(this.inputNameMap['tagName'], this.state.tag) })
 
-    if(!volumeErr.status && !gs1BarcodeErr.status && !barcodeImageErr.status && !tagNameErr.status) {
+    if(!volumeErr.status && !gs1BarcodeErr.status && !barcodeImageErr.status) {
       return true;
     }
     return false
