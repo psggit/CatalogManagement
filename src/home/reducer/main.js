@@ -11,6 +11,8 @@ const initialState = {
   loadingBrandTypeList: true,
   loadingStates: true,
   loadingGenreList: true,
+  loadingGenreBasedBrandList: true,
+  loadingGenres: true,
   originList: [],
   brandTypeList: [],
   statesList: [],
@@ -18,13 +20,16 @@ const initialState = {
   brands: [],
   brandList: [],
   genreList: [],
+  genres: [],
+  genreBasedBrandList: [],
   liveOrdersData: [],
   mappedStatesToSkuData: [],
   mappedRetailersData: [],
   skuUnmappedStates: [],
   totalSkuCount: 0,
   totalBrandCount: 0,
-  totalBrandListCount: 0
+  totalBrandListCount: 0,
+  genreCount: 0
 }
 
 const actionsMap = {
@@ -52,6 +57,13 @@ const actionsMap = {
     })
   },
 
+  [ActionTypes.SUCCESS_GENRE_BASED_BRAND_LIST]: (state, action) => {
+    return Object.assign({}, state, {
+      genreBasedBrandList: action.data.brand_list,
+      loadingGenreBasedBrandList: false,
+    })
+  },
+
   [ActionTypes.SUCCESS_FETCH_LIVE_ORDERS]: (state, action) => {
     return Object.assign({}, state, {
       liveOrdersData: action.data.orders,
@@ -73,6 +85,14 @@ const actionsMap = {
     })
   },
   
+  [ActionTypes.SUCCESS_FETCH_GENRE_LIST]: (state, action) => {
+    return Object.assign({}, state, {
+      loadingGenres: false,
+      genres:  action.data.genreDetail,
+      //genreCount: action.data.count
+    })
+  },
+
   [ActionTypes.SUCCESS_FETCH_STATES]: (state, action) => {
     return Object.assign({}, state, {
       loadingStates: false,

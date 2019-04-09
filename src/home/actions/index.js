@@ -15,6 +15,11 @@ export const fetchGenres = (data) => ({
   data
 })
 
+export const fetchGenreList = (data) => ({
+  type: ActionTypes.REQUEST_FETCH_GENRE_LIST,
+  data
+})
+
 export const fetchBrandList = (data) => ({
   type: ActionTypes.REQUEST_FETCH_BRAND_LIST,
   data
@@ -110,6 +115,12 @@ export const fetchSkuUnmappedRetailers = (data, CB) => ({
 
 export const mapRetailerToSku = (data, CB) => ({
   type: ActionTypes.REQUEST_MAP_RETAILER_TO_SKU,
+  data,
+  CB
+})
+
+export const fetchGenreBasedBrandList = (data, CB) => ({
+  type: ActionTypes.REQUEST_GENRE_BASED_BRAND_LIST,
   data,
   CB
 })

@@ -37,13 +37,34 @@ class NavigationBar extends  React.Component {
           { name: 'SKU Mapping', path: '/admin/sku-mapping', id: 1 },
         ]
       },
+      // {
+      //   name: 'Catalog Management',
+      //   nestedItems: [
+      //     { name: 'Manage Brand', path: '/admin/manage-brand', id: 2 },
+      //     { name: 'Manage SKU', path: '/admin/manage-sku', id: 3 },
+      //     { name: 'Manage Genre', path: '/admin/manage-genre', id:4 }
+      //   ]
+      // },
       {
-        name: 'Catalog Management',
+        name: 'Manage Brand',
+        //path: '/admin/manage-brand',
+        //id: 2,
         nestedItems: [
-          { name: 'Manage Brand', path: '/admin/manage-brand', id: 2 },
-          { name: 'Manage SKU', path: '/admin/manage-sku', id: 3 },
-          { name: 'Manage Genre', path: '/admin/manage-genre', id:4 }
+          { name: 'Create Brand', path: '/admin/manage-brand', id: 2 },
+          { name: 'Manage Listing Order', path: '/admin/manage-brand/listing-order', id: 5 },
         ]
+      },
+      {
+        name: 'Manage SKU',
+        path: '/admin/manage-sku',
+        id: 3,
+        nestedItems: []
+      },
+      {
+        name: 'Manage Genre',
+        path: '/admin/manage-genre',
+        id: 4,
+        nestedItems: []
       },
     ]
     return (

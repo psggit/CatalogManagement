@@ -28,10 +28,30 @@ function* fetchGenres(action) {
   }
 }
 
+function* fetchGenreList(action) {
+  try {
+    const data = yield call(Api.fetchGenreList, action)
+    yield put({ type: ActionTypes.SUCCESS_FETCH_GENRE_LIST, data })
+    //action.CB()
+  } catch(err) {
+    console.log(err)
+  }
+}
+
 function* fetchBrands(action) {
   try {
     const data = yield call(Api.fetchBrands, action)
     yield put({ type: ActionTypes.SUCCESS_FETCH_BRANDS, data })
+  } catch(err) {
+    console.log(err)
+  }
+}
+
+function* fetchGenreBasedBrandList(action) {
+  try {
+    const data = yield call(Api.fetchGenreBasedBrandList, action)
+    yield put({ type: ActionTypes.SUCCESS_GENRE_BASED_BRAND_LIST, data })
+    action.CB()
   } catch(err) {
     console.log(err)
   }
@@ -233,9 +253,21 @@ function* watchRequestFetchBrands() {
   }
 }
 
+function* watchRequestFetchGenreBasedBrandList() {
+  while (true) {
+    yield* takeLatest(ActionTypes.REQUEST_GENRE_BASED_BRAND_LIST, fetchGenreBasedBrandList)
+  }
+}
+
 function* watchRequestFetchGenres() {
   while (true) {
     yield* takeLatest(ActionTypes.REQUEST_FETCH_GENRES, fetchGenres)
+  }
+}
+
+function* watchRequestFetchGenreList() {
+  while (true) {
+    yield* takeLatest(ActionTypes.REQUEST_FETCH_GENRE_LIST, fetchGenreList)
   }
 }
 
@@ -348,6 +380,8 @@ export default function* rootSaga() {
     fork(watchRequestFetchGenres),
     fork(watchRequestUpdateGenreStatus),
     fork(watchRequestCreateGenre),
-    fork(watchRequestUpdateGenre)
+    fork(watchRequestUpdateGenre),
+    fork(watchRequestFetchGenreList),
+    fork(watchRequestFetchGenreBasedBrandList)
   ]
 }

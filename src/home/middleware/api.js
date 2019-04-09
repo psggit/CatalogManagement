@@ -72,6 +72,15 @@ export const fetchGenres = action => (
   })
 ) 
 
+export const fetchGenreList = action => (
+  POST({
+    api: '/Api/getGenreMap',
+    apiBase: 'catalog',
+    data: action.data,
+    handleError: true
+  })
+) 
+
 export const updateGenreStatus = action => (
   POST({
     api: '/Api/changeGenreStatus',
@@ -111,6 +120,16 @@ export const updateSkuStateMap = action => (
 export const fetchBrands = action => (
   POST({
     api: '/Api/listBrandDetails',
+    apiBase: 'catalog',
+    data: action.data,
+    handleError: true
+  })
+  .then(json => json)
+)
+
+export const fetchGenreBasedBrandList = action => (
+  POST({
+    api: '/Api/getBrandforGenre',
     apiBase: 'catalog',
     data: action.data,
     handleError: true
