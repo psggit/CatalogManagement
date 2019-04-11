@@ -41,9 +41,13 @@ class ListingOrder extends React.Component {
     this.setState({
       selectedGenreIdx: parseInt(this.props.genres[k].id)
     })
-    this.props.actions.fetchGenreBasedBrandList({
-      genre_id: parseInt(this.props.genres[k].id)
-    }, this.successBrandListCallback)
+    // this.props.actions.fetchGenreBasedBrandList({
+    //   genre_id: parseInt(this.props.genres[k].id)
+    // }, this.successBrandListCallback)
+    // this.props.actions.fetchBrandListingOrder({
+    //   genre_id: parseInt(this.props.genres[k].id),
+    //   state_id: this.state.selectedStateIdx
+    // })
   }
 
   successBrandListCallback() {
@@ -72,10 +76,20 @@ class ListingOrder extends React.Component {
       this.setState({
         selectedGenreIdx: parseInt(newProps.genres[0].id)
       })
-      this.props.actions.fetchGenreBasedBrandList({
-        genre_id: parseInt(newProps.genres[0].id)
-      }, this.successBrandListCallback)
+      // this.props.actions.fetchGenreBasedBrandList({
+      //   genre_id: parseInt(newProps.genres[0].id)
+      // }, this.successBrandListCallback)
+      // this.props.actions.fetchBrandListingOrder({
+      //   genre_id: parseInt(newProps.genres[0].id),
+      //   state_id: this.state.selectedStateIdx
+      // })
     }
+  }
+
+  handleSave() {
+    this.props.actions.fetchGenreBasedBrandList({
+      genre_id: parseInt(newProps.genres[0].id)
+    }, this.successBrandListCallback)
   }
 
   render() {
@@ -133,6 +147,13 @@ class ListingOrder extends React.Component {
                 }
               </SelectField>
             </div>
+            <RaisedButton
+              primary
+              //disabled={this.props.isDisabled}
+              label="Save"
+              onClick={this.handleSave}
+              style={{ marginTop: '40px' }}
+            />
           </Card>
           {
             !this.state.loadingBrandList &&

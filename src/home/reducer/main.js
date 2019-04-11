@@ -9,6 +9,7 @@ const initialState = {
   loadingBrandDetails: true,
   loadingOriginList: true,
   loadingBrandTypeList: true,
+  loadingBrandListingOrder: true,
   loadingStates: true,
   loadingGenreList: true,
   loadingGenreBasedBrandList: true,
@@ -26,6 +27,7 @@ const initialState = {
   mappedStatesToSkuData: [],
   mappedRetailersData: [],
   skuUnmappedStates: [],
+  brandListingOrder: [],
   totalSkuCount: 0,
   totalBrandCount: 0,
   totalBrandListCount: 0,
@@ -61,6 +63,14 @@ const actionsMap = {
     return Object.assign({}, state, {
       genreBasedBrandList: action.data.brand_list,
       loadingGenreBasedBrandList: false,
+    })
+  },
+
+  [ActionTypes.SUCCESS_FETCH_BRAND_LISTING_ORDER]: (state, action) => {
+    //console.log("hell")
+    return Object.assign({}, state, {
+      brandListingOrder: action.data.brand_listing_order,
+      loadingBrandListingOrder: false,
     })
   },
 

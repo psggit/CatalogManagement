@@ -125,6 +125,12 @@ export const fetchGenreBasedBrandList = (data, CB) => ({
   CB
 })
 
+export const fetchBrandListingOrder = (data, CB) => ({
+  type: ActionTypes.REQUEST_FETCH_BRAND_LISTING_ORDER,
+  data,
+  CB
+})
+
 export const fetchOriginList = (data) => ({
   type: ActionTypes.REQUEST_FETCH_ORIGIN_LIST,
   data

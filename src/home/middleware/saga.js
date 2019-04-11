@@ -47,6 +47,16 @@ function* fetchBrands(action) {
   }
 }
 
+function* fetchBrandListingOrder(action) {
+  //console.log("hello")
+  try {
+    const data = yield call(Api.fetchBrandListingOrder, action)
+    yield put({ type: ActionTypes.SUCCESS_FETCH_BRAND_LISTING_ORDER, data })
+  } catch(err) {
+    console.log(err)
+  }
+}
+
 function* fetchGenreBasedBrandList(action) {
   try {
     const data = yield call(Api.fetchGenreBasedBrandList, action)
@@ -283,6 +293,12 @@ function* watchRequestCreateSku() {
   }
 }
 
+function* watchRequestFetchBrandListingOrder() {
+  while (true) {
+    yield* takeLatest(ActionTypes.REQUEST_FETCH_BRAND_LISTING_ORDER, fetchBrandListingOrder)
+  }
+}
+
 function* watchRequestCreateGenre() {
   while (true) {
     yield* takeLatest(ActionTypes.REQUEST_CREATE_GENRE, createGenre)
@@ -382,6 +398,7 @@ export default function* rootSaga() {
     fork(watchRequestCreateGenre),
     fork(watchRequestUpdateGenre),
     fork(watchRequestFetchGenreList),
-    fork(watchRequestFetchGenreBasedBrandList)
+    fork(watchRequestFetchGenreBasedBrandList),
+    fork(watchRequestFetchBrandListingOrder)
   ]
 }
