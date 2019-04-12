@@ -275,7 +275,7 @@ class SkuDetailsForm extends React.Component {
         </div>
 
         <div className="form-group">
-          <label className="label">Tag*</label><br />
+          <label className="label">Tag</label><br />
           <TextField
             //disabled={this.props.isDisabled}
             defaultValue={this.props.skuInfo ? this.props.skuInfo.tag : ''}

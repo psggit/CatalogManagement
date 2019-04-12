@@ -74,14 +74,15 @@ class BrandList extends React.Component {
 
   handleChange(e, brandId) {
     let updatedMap = Object.assign({}, this.state.genreBasedBrandMap)
-    updatedMap[brandId].listingOrder = parseInt(e.target.value)
+    updatedMap[brandId].listing_order = parseInt(e.target.value)
     this.setState({genreBasedBrandMap: updatedMap, genreBasedBrandList: Object.values(updatedMap)})
   }
 
   enableEdit() {
+    console.log(this.props.isSavingDetails)
     this.setState({
       buttonLabel: !this.props.isSavingDetails ? "Save" : "Edit",
-      enableEdit: !this.state.enableEdit
+      enableEdit: !this.props.isSavingDetails ? true : !this.state.enableEdit
     })
     if(this.state.enableEdit) {
       this.props.createOrUpdateBrandListingOrder()
@@ -139,7 +140,7 @@ class BrandList extends React.Component {
                       <TableRowColumn style={styles[3]}>
                         <input 
                             type="number" 
-                            value={this.state.genreBasedBrandMap[(item.brand_id)].listingOrder} 
+                            value={this.state.genreBasedBrandMap[(item.brand_id)].listing_order} 
                             onChange={(e) => this.handleChange(e, item.brand_id)} 
                             style = {{ width: '60px', padding: '0 10px'}}
                             disabled={!this.state.enableEdit}

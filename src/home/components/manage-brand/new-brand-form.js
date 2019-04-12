@@ -320,7 +320,7 @@ class BrandForm extends React.Component {
         </div>
 
         <div className="form-group">
-          <label className="label">Tag*</label><br />
+          <label className="label">Tag</label><br />
           <TextField
             //disabled={this.props.isDisabled}
             defaultValue={this.props.brandInfo ? this.props.brandInfo.tag : ''}
