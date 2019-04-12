@@ -87,6 +87,14 @@ const actionsMap = {
       liveOrdersData: action.data.orders,
     })
   },
+
+  // [ActionTypes.SUCCESS_SET_LOADING_STATE]: (state, action) => {
+  //   if (action.data) {
+  //     return Object.assign({}, state, {
+  //       [action.data]: true
+  //     })
+  //   }
+  // },
   
   [ActionTypes.SUCCESS_SET_LOADING_STATE]: (state, action) => {
     return Object.assign({}, state, {

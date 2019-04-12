@@ -41,6 +41,7 @@ class ListingOrder extends React.Component {
   }
 
   fetchGenreBasedBrandList() {
+    // this.props.actions.setLoadingState('loadingGenreBasedBrandList')
     this.props.actions.fetchGenreBasedBrandList({
       genre_id: this.state.selectedGenreIdx,
       state_id: this.state.selectedStateIdx
@@ -48,17 +49,10 @@ class ListingOrder extends React.Component {
   }
 
   handleGenreChange(e, k) {
-    console.log("props", this.props, e.target.name)
     this.setState({
-      selectedGenreIdx: parseInt(this.props.genres[k].id)
+      selectedGenreIdx: parseInt(this.props.genres[k].id),
+      loadingBrandList: true
     })
-    // this.props.actions.fetchGenreBasedBrandList({
-    //   genre_id: parseInt(this.props.genres[k].id)
-    // }, this.successBrandListCallback)
-    // this.props.actions.fetchBrandListingOrder({
-    //   genre_id: parseInt(this.props.genres[k].id),
-    //   state_id: this.state.selectedStateIdx
-    // })
   }
 
   successBrandListCallback() {
@@ -77,16 +71,18 @@ class ListingOrder extends React.Component {
           console.log("brand", brand)
           brandWithListingOrder = {
             brand_id: brand.id,
+            brand_name: brand.brand_name,
             state_id: this.state.selectedStateIdx,
-            listing_order: this.props.brandListingOrder[listingOrderIdx].listing_order
+            listingOrder: this.props.brandListingOrder[listingOrderIdx].listing_order
           }
           genreBasedBrandMap[brand.id] = Object.assign({}, brandWithListingOrder)
         } else {
           console.log("brand", brand)
           brandWithListingOrder = {
             brand_id: brand.id,
+            brand_name: brand.brand_name,
             state_id: this.state.selectedStateIdx,
-            listing_order: 0
+            listingOrder: 0
           }
           genreBasedBrandMap[brand.id] = Object.assign({}, brandWithListingOrder)
         }
@@ -189,6 +185,7 @@ class ListingOrder extends React.Component {
             <GenreBasedBrandList 
               brandList={this.state.genreBasedBrandList}
               brandMap={this.state.genreBasedBrandMap}
+              loadingData={this.state.loadingBrandList}
               createOrUpdateBrandListingOrder = {this.createOrUpdateBrandListingOrder}
             />
           }

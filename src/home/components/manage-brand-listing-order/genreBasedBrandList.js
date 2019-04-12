@@ -1,7 +1,5 @@
 import React from "react"
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-import * as Actions from '../../actions'
+import TableLoadingShell from './../table-loading-shell'
 import {
   Table,
   TableBody,
@@ -131,18 +129,18 @@ class BrandList extends React.Component {
               showRowHover
             >
               {
-                this.state.genreBasedBrandList &&
+                !this.props.loadingData && this.state.genreBasedBrandList ?
                 this.state.genreBasedBrandList.map((item, i) => {
                   return (
                     <TableRow key={item.id}>
-                      <TableRowColumn style={styles[0]}>{item.id}</TableRowColumn>
+                      <TableRowColumn style={styles[0]}>{item.brand_id}</TableRowColumn>
                       <TableRowColumn style={styles[1]}>{item.brand_name}</TableRowColumn>
                       <TableRowColumn style={styles[2]}>{item.is_active ? 'Active' : 'Inactive'}</TableRowColumn>
                       <TableRowColumn style={styles[3]}>
                         <input 
                             type="number" 
-                            value={this.state.genreBasedBrandMap[(item.id)].listingOrder} 
-                            onChange={(e) => this.handleChange(e, item.id)} 
+                            value={this.state.genreBasedBrandMap[(item.brand_id)].listingOrder} 
+                            onChange={(e) => this.handleChange(e, item.brand_id)} 
                             style = {{ width: '60px', padding: '0 10px'}}
                             disabled={!this.state.enableEdit}
                           />
@@ -150,6 +148,11 @@ class BrandList extends React.Component {
                     </TableRow>
                   )
                 })
+                : (
+                  [1, 2, 3, 4, 5].map(() => (
+                    <TableLoadingShell />
+                  ))
+                )
               }
               {
                 Object.keys(this.state.genreBasedBrandList).length === 0 &&
