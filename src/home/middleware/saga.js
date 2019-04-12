@@ -48,10 +48,24 @@ function* fetchBrands(action) {
 }
 
 function* fetchBrandListingOrder(action) {
-  //console.log("hello")
+  //console.log("hello", action)
+  //let data = action.action.data
   try {
     const data = yield call(Api.fetchBrandListingOrder, action)
-    yield put({ type: ActionTypes.SUCCESS_FETCH_BRAND_LISTING_ORDER, data })
+    console.log("data", data)
+    yield put({ type: ActionTypes.SUCCESS_FETCH_BRAND_LISTING_ORDER,  data})
+    action.CB()
+  } catch(err) {
+    console.log(err)
+  }
+}
+
+function* createOrUpdateBrandListingOrder(action) {
+  try {
+    const data = yield call(Api.createOrUpdateBrandListingOrder, action)
+    console.log("data", data)
+    yield put({ type: ActionTypes.SUCCESS_CREATE_OR_UPDATE_BRAND_LISTING_ORDER,  data})
+    action.CB()
   } catch(err) {
     console.log(err)
   }
@@ -61,7 +75,11 @@ function* fetchGenreBasedBrandList(action) {
   try {
     const data = yield call(Api.fetchGenreBasedBrandList, action)
     yield put({ type: ActionTypes.SUCCESS_GENRE_BASED_BRAND_LIST, data })
-    action.CB()
+    yield put({ 
+      type: ActionTypes.REQUEST_FETCH_BRAND_LISTING_ORDER, 
+      data: {genre_id: action.data.genre_id, state_id: action.data.state_id }, 
+      CB: action.CB 
+    })
   } catch(err) {
     console.log(err)
   }
@@ -353,6 +371,12 @@ function* watchRequestCreateBrand() {
   }
 }
 
+function* watchRequestCreateOrUpdateBrandListingOrder() {
+  while (true) {
+    yield* takeLatest(ActionTypes.REQUEST_CREATE_OR_UPDATE_BRAND_LISTING_ORDER, createOrUpdateBrandListingOrder)
+  }
+}
+
 function* watchRequestUpdateBrand() {
   while (true) {
     yield* takeLatest(ActionTypes.REQUEST_UPDATE_BRAND, updateBrand)
@@ -399,6 +423,7 @@ export default function* rootSaga() {
     fork(watchRequestUpdateGenre),
     fork(watchRequestFetchGenreList),
     fork(watchRequestFetchGenreBasedBrandList),
-    fork(watchRequestFetchBrandListingOrder)
+    fork(watchRequestFetchBrandListingOrder),
+    fork(watchRequestCreateOrUpdateBrandListingOrder)
   ]
 }

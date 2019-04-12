@@ -50,7 +50,7 @@ class NavigationBar extends  React.Component {
         //path: '/admin/manage-brand',
         //id: 2,
         nestedItems: [
-          { name: 'Create Brand', path: '/admin/manage-brand', id: 2 },
+          { name: 'Brand List', path: '/admin/manage-brand', id: 2 },
           { name: 'Manage Listing Order', path: '/admin/manage-brand/listing-order', id: 5 },
         ]
       },

@@ -81,6 +81,15 @@ export const fetchGenreList = action => (
   })
 ) 
 
+export const createOrUpdateBrandListingOrder = action => (
+  POST({
+    api: '/Api/createorupdateListingOrder',
+    apiBase: 'catalog',
+    data: action.data,
+    handleError: true
+  })
+) 
+
 export const fetchBrandListingOrder = action => (
   POST({
     api: '/Api/listListingOrderforGenreandState',

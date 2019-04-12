@@ -1,4 +1,7 @@
 import React from "react"
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import * as Actions from '../../actions'
 import {
   Table,
   TableBody,
@@ -32,7 +35,7 @@ class BrandList extends React.Component {
       genreBasedBrandList: [],
       genreBasedBrandMap: {},
       buttonLabel: "Edit",
-      isSavingDetails: false,
+      //isSavingDetails: false,
       enableEdit: false
     }
 
@@ -79,16 +82,17 @@ class BrandList extends React.Component {
 
   enableEdit() {
     this.setState({
-      buttonLabel: !this.state.isSavingDetails ? "Save" : "Edit",
+      buttonLabel: !this.props.isSavingDetails ? "Save" : "Edit",
       enableEdit: !this.state.enableEdit
     })
     if(this.state.enableEdit) {
-      this.setState({isSavingDetails: true})
-      this.props.actions.updateBrandListingOrder({
-
-      }, () => {
-        this.setState({isSavingDetails: false})
-      })
+      this.props.createOrUpdateBrandListingOrder()
+      // this.setState({isSavingDetails: true})
+      // this.props.actions.updateBrandListingOrder({
+      //   brand_listing_order: this.state.genreBasedBrandList
+      // }, () => {
+      //   this.setState({isSavingDetails: false})
+      // })
     }
   }
 
@@ -103,7 +107,7 @@ class BrandList extends React.Component {
             <RaisedButton
               onClick={this.enableEdit}
               label={this.state.buttonLabel}
-              disabled={this.state.isSavingDetails}
+              disabled={this.props.isSavingDetails}
             />
           }
         </div>
@@ -135,7 +139,6 @@ class BrandList extends React.Component {
                       <TableRowColumn style={styles[1]}>{item.brand_name}</TableRowColumn>
                       <TableRowColumn style={styles[2]}>{item.is_active ? 'Active' : 'Inactive'}</TableRowColumn>
                       <TableRowColumn style={styles[3]}>
-                       
                         <input 
                             type="number" 
                             value={this.state.genreBasedBrandMap[(item.id)].listingOrder} 
@@ -165,3 +168,13 @@ class BrandList extends React.Component {
 }
 
 export default BrandList
+// const mapStateToProps = state => state.main
+
+// const mapDispatchToProps = dispatch => ({
+//   actions: bindActionCreators(Actions, dispatch)
+// })
+
+// export default connect(
+//   mapStateToProps,
+//   mapDispatchToProps
+// )(BrandList)

@@ -6,6 +6,7 @@ import * as Actions from './../../actions'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 import GenreBasedBrandList from "./genreBasedBrandList"
+import RaisedButton from 'material-ui/RaisedButton'
 
 class ListingOrder extends React.Component {
   constructor() {
@@ -16,12 +17,15 @@ class ListingOrder extends React.Component {
       genreBasedBrandList: [],
       genreBasedBrandMap: {},
       selectedGenreIdx: "",
-      selectedStateIdx: ""
+      selectedStateIdx: "",
+      isSavingDetails: false
     }
   
     this.handleGenreChange = this.handleGenreChange.bind(this)
     this.handleStateChange = this.handleStateChange.bind(this)
+    this.fetchGenreBasedBrandList = this.fetchGenreBasedBrandList.bind(this)
     this.successBrandListCallback = this.successBrandListCallback.bind(this)
+    this.createOrUpdateBrandListingOrder = this.createOrUpdateBrandListingOrder.bind(this)
   }
 
   componentDidMount() {
@@ -34,6 +38,13 @@ class ListingOrder extends React.Component {
     this.setState({
       selectedStateIdx: parseInt(this.props.statesList[k].state_id)
     })
+  }
+
+  fetchGenreBasedBrandList() {
+    this.props.actions.fetchGenreBasedBrandList({
+      genre_id: this.state.selectedGenreIdx,
+      state_id: this.state.selectedStateIdx
+    }, this.successBrandListCallback)
   }
 
   handleGenreChange(e, k) {
@@ -51,19 +62,41 @@ class ListingOrder extends React.Component {
   }
 
   successBrandListCallback() {
-    console.log("cheage")
-    console.log("state", this.props, this.props.genreBasedBrandList)
-    let genreBasedBrandList = [], genreBasedBrandMap = {}
-    if(this.props.genreBasedBrandList) {
-      genreBasedBrandList = this.props.genreBasedBrandList.map((item) => {
-        genreBasedBrandMap[item.id] = Object.assign({}, item, {listingOrder: 0})
-        return (
-          Object.assign({}, item, {listingOrder: 0})
-        )
+    let genreBasedBrandMap = {}
+    if(this.props.genreBasedBrandList && this.props.brandListingOrder) {
+      this.props.genreBasedBrandList.map((brand) => {
+        let foundListingOrder = false, listingOrderIdx = ""
+        this.props.brandListingOrder.map((item, i) => {
+          if(item.brand_id === brand.id) {
+            foundListingOrder = true
+            listingOrderIdx = i
+          }
+        })
+        let brandWithListingOrder = {}
+        if(foundListingOrder) {
+          console.log("brand", brand)
+          brandWithListingOrder = {
+            brand_id: brand.id,
+            state_id: this.state.selectedStateIdx,
+            listing_order: this.props.brandListingOrder[listingOrderIdx].listing_order
+          }
+          genreBasedBrandMap[brand.id] = Object.assign({}, brandWithListingOrder)
+        } else {
+          console.log("brand", brand)
+          brandWithListingOrder = {
+            brand_id: brand.id,
+            state_id: this.state.selectedStateIdx,
+            listing_order: 0
+          }
+          genreBasedBrandMap[brand.id] = Object.assign({}, brandWithListingOrder)
+        }
       })
-      console.log("genre list", genreBasedBrandList, genreBasedBrandMap)
+    } else {
+      this.props.genreBasedBrandList.map((brand) => {
+        genreBasedBrandMap[brand.id] = Object.assign({}, brand, {listing_order: 0, state_id: this.state.selectedStateIdx})
+      })
     }
-    this.setState({ genreBasedBrandList, loadingBrandList: false, genreBasedBrandMap })
+    this.setState({ genreBasedBrandList: Object.values(genreBasedBrandMap), loadingBrandList: false, genreBasedBrandMap })
   }
 
   componentWillReceiveProps(newProps) {
@@ -76,20 +109,16 @@ class ListingOrder extends React.Component {
       this.setState({
         selectedGenreIdx: parseInt(newProps.genres[0].id)
       })
-      // this.props.actions.fetchGenreBasedBrandList({
-      //   genre_id: parseInt(newProps.genres[0].id)
-      // }, this.successBrandListCallback)
-      // this.props.actions.fetchBrandListingOrder({
-      //   genre_id: parseInt(newProps.genres[0].id),
-      //   state_id: this.state.selectedStateIdx
-      // })
     }
   }
 
-  handleSave() {
-    this.props.actions.fetchGenreBasedBrandList({
-      genre_id: parseInt(newProps.genres[0].id)
-    }, this.successBrandListCallback)
+  createOrUpdateBrandListingOrder() {
+    this.setState({isSavingDetails: true})
+    this.props.actions.updateBrandListingOrder({
+      brand_listing_order: this.state.genreBasedBrandList
+    }, () => {
+      this.setState({isSavingDetails: false})
+    })
   }
 
   render() {
@@ -150,8 +179,8 @@ class ListingOrder extends React.Component {
             <RaisedButton
               primary
               //disabled={this.props.isDisabled}
-              label="Save"
-              onClick={this.handleSave}
+              label="FETCH BRAND LIST"
+              onClick={this.fetchGenreBasedBrandList}
               style={{ marginTop: '40px' }}
             />
           </Card>
@@ -160,6 +189,7 @@ class ListingOrder extends React.Component {
             <GenreBasedBrandList 
               brandList={this.state.genreBasedBrandList}
               brandMap={this.state.genreBasedBrandMap}
+              createOrUpdateBrandListingOrder = {this.createOrUpdateBrandListingOrder}
             />
           }
         </div>

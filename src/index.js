@@ -18,7 +18,7 @@ import CreateGenre from './../src/home/components/manage-genre/create-genre'
 import EditGenre from './../src/home/components/manage-genre/edit-genre'
 import CreateBrand from './../src/home/components/manage-brand/create-brand'
 import EditBrand from './../src/home/components/manage-brand/edit-brand'
-import ManageListingOrder from "./../src/home/components/manage-brand/brand-listing-order"
+import ManageListingOrder from "./../src/home/components/manage-brand-listing-order/brand-listing-order"
 import ViewSKU from './../src/home/components/sku-management/manage-sku'
 import CreateSKU from './../src/home/components/sku-management/create-sku'
 import EditSKU from './../src/home/components/sku-management/edit-sku'

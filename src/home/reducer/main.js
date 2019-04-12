@@ -14,6 +14,7 @@ const initialState = {
   loadingGenreList: true,
   loadingGenreBasedBrandList: true,
   loadingGenres: true,
+  creatingBrandListingOrder: true,
   originList: [],
   brandTypeList: [],
   statesList: [],
@@ -61,16 +62,23 @@ const actionsMap = {
 
   [ActionTypes.SUCCESS_GENRE_BASED_BRAND_LIST]: (state, action) => {
     return Object.assign({}, state, {
-      genreBasedBrandList: action.data.brand_list,
+      genreBasedBrandList: Object.entries(action.data).length !== 0  ? action.data.brand_list : [],
       loadingGenreBasedBrandList: false,
     })
   },
 
   [ActionTypes.SUCCESS_FETCH_BRAND_LISTING_ORDER]: (state, action) => {
-    //console.log("hell")
+    console.log("hell", action, Object.entries(action.data).length !== 0 ? action.data.brand_listing_order : [])
     return Object.assign({}, state, {
-      brandListingOrder: action.data.brand_listing_order,
+      brandListingOrder: Object.entries(action.data).length !== 0 ? action.data.brand_listing_order : [],
       loadingBrandListingOrder: false,
+    })
+  },
+
+  [ActionTypes.SUCCESS_CREATE_OR_UPDATE_BRAND_LISTING_ORDER]: (state, action) => {
+    console.log("hell", action)
+    return Object.assign({}, state, {
+      creatingBrandListingOrder: false,
     })
   },
 
