@@ -5,7 +5,6 @@ import MenuItem from 'material-ui/MenuItem'
 import { List, ListItem } from 'material-ui/List'
 import '@sass/components/_menu-item.scss'
 import '@sass/components/_drawer.scss'
-//import  { getIcon } from '@utils/icons-utils'
 
 class NavigationBar extends  React.Component {
   constructor() {
@@ -14,9 +13,6 @@ class NavigationBar extends  React.Component {
       activeItem: 0
     }
   }
-  // handleClick(title) {
-  //   this.props.setHeaderTitle(title)
-  // }
 
   handleMenuItemClick(id, path) {
     if (path) {
@@ -32,47 +28,25 @@ class NavigationBar extends  React.Component {
     }
     const navigationItems = [
       {
-        name: 'Map Manager',
-        nestedItems: [
-          { name: 'SKU Mapping', path: '/admin/sku-mapping', id: 1 },
-        ]
+        name: 'Genre Management',
+        path: '/admin/manage-genre',
+        id: 1,
+        nestedItems: []
       },
-      // {
-      //   name: 'Catalog Management',
-      //   nestedItems: [
-      //     { name: 'Manage Brand', path: '/admin/manage-brand', id: 2 },
-      //     { name: 'Manage SKU', path: '/admin/manage-sku', id: 3 },
-      //     { name: 'Manage Genre', path: '/admin/manage-genre', id:4 }
-      //   ]
-      // },
       {
         name: 'Brand Management',
-        // path: '/admin/manage-brand',
-        // id: 2,
-        // nestedItems: [],
         nestedItems: [
           { name: 'Brand List', path: '/admin/manage-brand', id: 2 },
-          { name: 'Brand Listing Order', path: '/admin/manage-brand/listing-order', id: 5 },
+          { name: 'Brand Listing Order', path: '/admin/manage-brand/listing-order', id: 3 },
         ]
       },
-      // {
-      //   name: 'Brand Listing Order',
-      //   path: '/admin/manage-brand/listing-order',
-      //   id: 5,
-      //   nestedItems: []
-      // },
       {
-        name: 'Manage SKU',
-        path: '/admin/manage-sku',
-        id: 3,
-        nestedItems: []
-      },
-      {
-        name: 'Manage Genre',
-        path: '/admin/manage-genre',
-        id: 4,
-        nestedItems: []
-      },
+        name: 'SKU Management',
+        nestedItems: [
+          { name: 'SKU List', path: '/admin/manage-sku', id: 4 },
+          { name: 'SKU Mapping', path: '/admin/sku-mapping', id: 5 },
+        ]
+      }   
     ]
     return (
       <Drawer

@@ -28,7 +28,7 @@ class CreateGenre extends React.Component {
       this.setState({ isDisabled: true })
       this.props.actions.createGenre({
         genre_name: data.genreName,
-        oridnal_position: data.ordinalPosition,
+        ordinal_position: data.ordinalPosition,
         display_name: data.displayName,
         image: data.genreImage,
         is_active: true
