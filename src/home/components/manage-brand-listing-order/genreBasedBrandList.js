@@ -41,7 +41,6 @@ class BrandList extends React.Component {
   }
 
   componentDidMount() {
-    console.log("props", this.props)
     this.overrideTableStyle()
     this.setState({
       genreBasedBrandList: this.props.brandList,
@@ -50,16 +49,13 @@ class BrandList extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    console.log("new props", newProps)
     if (this.props.brandList !== newProps.brandList) {
-      console.log("if")
       this.setState({
         genreBasedBrandList: newProps.brandList,
         //genreBasedBrandMap: this.props.brandMap
       })
     }
     if (this.props.brandMap !== newProps.brandMap) {
-      console.log("else")
       this.setState({
         //genreBasedBrandList: this.props.brandList,
         genreBasedBrandMap: newProps.brandMap
@@ -81,7 +77,6 @@ class BrandList extends React.Component {
   }
 
   enableEdit() {
-    console.log("enable edit", this.props.isSavingDetails)
     this.setState({
       buttonLabel: "Save",
       enableEdit: true
@@ -92,7 +87,6 @@ class BrandList extends React.Component {
   }
 
   render() {
-    console.log("props", this.state, this.state.genreBasedBrandMap, this.props)
     return (
       <div>
         <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '40px'}}>
@@ -123,7 +117,7 @@ class BrandList extends React.Component {
             </TableHeader>
             <TableBody
               displayRowCheckbox={false}
-              showRowHover
+              //showRowHover
             >
               {
                 !this.props.loadingData && this.state.genreBasedBrandList ?
@@ -154,7 +148,7 @@ class BrandList extends React.Component {
               {
                 Object.keys(this.state.genreBasedBrandList).length === 0 &&
                 <tr>
-                  <td style={{ textAlign: 'center' }} colspan='4'>
+                  <td style={{ textAlign: 'center' }} colSpan='4'>
                     <p style={{ fontWeight: '16px' }}>No brands found</p>
                   </td>
                 </tr>

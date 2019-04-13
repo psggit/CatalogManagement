@@ -52,7 +52,6 @@ function* fetchBrandListingOrder(action) {
   //let data = action.action.data
   try {
     const data = yield call(Api.fetchBrandListingOrder, action)
-    console.log("data", data)
     yield put({ type: ActionTypes.SUCCESS_FETCH_BRAND_LISTING_ORDER,  data})
     action.CB()
   } catch(err) {
@@ -63,11 +62,12 @@ function* fetchBrandListingOrder(action) {
 function* createOrUpdateBrandListingOrder(action) {
   try {
     const data = yield call(Api.createOrUpdateBrandListingOrder, action)
-    console.log("data", data)
+    Notify('Successfully updated brand listing order', 'success')
     yield put({ type: ActionTypes.SUCCESS_CREATE_OR_UPDATE_BRAND_LISTING_ORDER,  data})
     action.CB()
   } catch(err) {
     console.log(err)
+    Notify('Something went wrong', 'warning')
     action.CB()
   }
 }

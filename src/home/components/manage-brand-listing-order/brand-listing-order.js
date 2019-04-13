@@ -18,7 +18,8 @@ class ListingOrder extends React.Component {
       genreBasedBrandMap: {},
       selectedGenreIdx: "",
       selectedStateIdx: "",
-      isSavingDetails: false
+      isSavingDetails: false,
+      loadingBrandAndListingOrder: false
     }
   
     this.handleGenreChange = this.handleGenreChange.bind(this)
@@ -26,6 +27,7 @@ class ListingOrder extends React.Component {
     this.fetchGenreBasedBrandList = this.fetchGenreBasedBrandList.bind(this)
     this.successBrandListCallback = this.successBrandListCallback.bind(this)
     this.createOrUpdateBrandListingOrder = this.createOrUpdateBrandListingOrder.bind(this)
+    this.mergeBrandListWithListingOrder = this.mergeBrandListWithListingOrder.bind(this)
   }
 
   componentDidMount() {
@@ -42,6 +44,7 @@ class ListingOrder extends React.Component {
 
   fetchGenreBasedBrandList() {
     // this.props.actions.setLoadingState('loadingGenreBasedBrandList')
+    this.setState({loadingBrandAndListingOrder: true})
     this.props.actions.fetchGenreBasedBrandList({
       genre_id: this.state.selectedGenreIdx,
       state_id: this.state.selectedStateIdx
@@ -55,7 +58,7 @@ class ListingOrder extends React.Component {
     })
   }
 
-  successBrandListCallback() {
+  mergeBrandListWithListingOrder() {
     let genreBasedBrandMap = {}
     if(this.props.genreBasedBrandList && this.props.brandListingOrder) {
       this.props.genreBasedBrandList.map((brand) => {
@@ -68,7 +71,6 @@ class ListingOrder extends React.Component {
         })
         let brandWithListingOrder = {}
         if(foundListingOrder) {
-          console.log("brand", brand)
           brandWithListingOrder = {
             brand_id: brand.id,
             brand_name: brand.brand_name,
@@ -77,7 +79,6 @@ class ListingOrder extends React.Component {
           }
           genreBasedBrandMap[brand.id] = Object.assign({}, brandWithListingOrder)
         } else {
-          console.log("brand", brand)
           brandWithListingOrder = {
             brand_id: brand.id,
             brand_name: brand.brand_name,
@@ -92,7 +93,18 @@ class ListingOrder extends React.Component {
         genreBasedBrandMap[brand.id] = Object.assign({}, brand, {listing_order: 0, state_id: this.state.selectedStateIdx})
       })
     }
-    this.setState({ genreBasedBrandList: Object.values(genreBasedBrandMap), loadingBrandList: false, genreBasedBrandMap })
+
+    return genreBasedBrandMap
+  }
+
+  successBrandListCallback() {
+    let genreBasedBrandMap = this.mergeBrandListWithListingOrder()
+    this.setState({ 
+      genreBasedBrandList: Object.values(genreBasedBrandMap), 
+      loadingBrandList: false, 
+      genreBasedBrandMap,
+      loadingBrandAndListingOrder: false
+    })
   }
 
   componentWillReceiveProps(newProps) {
@@ -118,7 +130,7 @@ class ListingOrder extends React.Component {
   }
 
   render() {
-    console.log("state in parent", this.state)
+    //console.log("state in parent", this.state)
     return (
       <div style={{
         width: '50%',
@@ -174,7 +186,7 @@ class ListingOrder extends React.Component {
             </div>
             <RaisedButton
               primary
-              //disabled={this.props.isDisabled}
+              disabled={this.state.loadingBrandAndListingOrder}
               label="FETCH BRAND LIST"
               onClick={this.fetchGenreBasedBrandList}
               style={{ marginTop: '40px' }}
