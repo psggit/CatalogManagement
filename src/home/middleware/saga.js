@@ -68,6 +68,7 @@ function* createOrUpdateBrandListingOrder(action) {
     action.CB()
   } catch(err) {
     console.log(err)
+    action.CB()
   }
 }
 
@@ -195,6 +196,9 @@ function* createBrand(action) {
     yield put({ type: ActionTypes.SUCCESS_CREATE_BRAND, data })
     Notify('Successfully created the brand', 'success')
     action.CB(data)
+    setTimeout(() => {
+      window.location.href = `/admin/manage-brand`
+    }, 1000)
   } catch(err) {
     console.log(err)
     action.CB()

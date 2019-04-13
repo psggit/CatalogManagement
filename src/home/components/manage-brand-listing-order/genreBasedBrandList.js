@@ -33,7 +33,6 @@ class BrandList extends React.Component {
       genreBasedBrandList: [],
       genreBasedBrandMap: {},
       buttonLabel: "Edit",
-      //isSavingDetails: false,
       enableEdit: false
     }
 
@@ -66,6 +65,9 @@ class BrandList extends React.Component {
         genreBasedBrandMap: newProps.brandMap
       })
     }
+    if(!this.props.isSavingDetails) {
+      this.setState({enableEdit: false, buttonLabel: "Edit"})
+    }
   }
 
   overrideTableStyle() {
@@ -79,24 +81,18 @@ class BrandList extends React.Component {
   }
 
   enableEdit() {
-    console.log(this.props.isSavingDetails)
+    console.log("enable edit", this.props.isSavingDetails)
     this.setState({
-      buttonLabel: !this.props.isSavingDetails ? "Save" : "Edit",
-      enableEdit: !this.props.isSavingDetails ? true : !this.state.enableEdit
+      buttonLabel: "Save",
+      enableEdit: true
     })
     if(this.state.enableEdit) {
       this.props.createOrUpdateBrandListingOrder()
-      // this.setState({isSavingDetails: true})
-      // this.props.actions.updateBrandListingOrder({
-      //   brand_listing_order: this.state.genreBasedBrandList
-      // }, () => {
-      //   this.setState({isSavingDetails: false})
-      // })
     }
   }
 
   render() {
-    console.log("props", this.state, this.state.genreBasedBrandMap)
+    console.log("props", this.state, this.state.genreBasedBrandMap, this.props)
     return (
       <div>
         <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '40px'}}>

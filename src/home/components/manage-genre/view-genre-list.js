@@ -18,9 +18,9 @@ const TableHeaderItems = [
   '',
   'ID',
   'GENRE NAME',
-  'GENRE SHORT NAME',
+  // 'GENRE SHORT NAME',
   'ORDINAL POSITION',
-  'DISPLAY NAME',
+  // 'DISPLAY NAME',
   'IMAGE',
   'STATUS',
 ]
@@ -29,9 +29,9 @@ const styles = [
   { width: '60px' },
   { width: '30px' },
   { width: '130px' },
-  { width: '100px' },
+  // { width: '100px' },
   { width: '100px' }, 
-  { width: '130px' }, 
+  // { width: '130px' }, 
   { width: '90px' },
   { width: '60px' },
 ]
@@ -88,10 +88,10 @@ class ViewGenreList extends React.Component {
                       </TableRowColumn>
                       <TableRowColumn style={styles[1]}>{item.id}</TableRowColumn>
                       <TableRowColumn style={styles[2]}>{item.genre_name}</TableRowColumn>
-                      <TableRowColumn style={styles[3]}>{item.short_name}</TableRowColumn>
-                      <TableRowColumn style={styles[4]}>{item.ordinal_position}</TableRowColumn>
-                      <TableRowColumn style={styles[5]}>{item.display_name}</TableRowColumn>
-                      <TableRowColumn style={styles[6]}>
+                      {/* <TableRowColumn style={styles[3]}>{item.short_name}</TableRowColumn> */}
+                      <TableRowColumn style={styles[3]}>{item.ordinal_position}</TableRowColumn>
+                      {/* <TableRowColumn style={styles[5]}>{item.display_name}</TableRowColumn> */}
+                      <TableRowColumn style={styles[4]}>
                         <a target="_blank" href={item.image}>
                           <img
                             alt="_logo"
@@ -104,7 +104,7 @@ class ViewGenreList extends React.Component {
                           />
                         </a>
                       </TableRowColumn>
-                      <TableRowColumn style={styles[7]}>
+                      <TableRowColumn style={styles[5]}>
                         <Switch toggled={item.is_active} onToggle={this.updateGenreStatus} value={item} />
                       </TableRowColumn>
                     </TableRow>
@@ -119,7 +119,7 @@ class ViewGenreList extends React.Component {
             {
               !this.props.loadingGenreList && !this.props.genreList && 
               <tr>
-                <td style={{ textAlign: 'center' }} colSpan='7'>
+                <td style={{ textAlign: 'center' }} colSpan='6'>
                   <p style={{fontWeight: '16px'}}>No genres found</p>
                 </td>
               </tr>

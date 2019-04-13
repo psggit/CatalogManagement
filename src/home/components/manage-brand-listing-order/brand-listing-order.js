@@ -121,7 +121,7 @@ class ListingOrder extends React.Component {
     console.log("state in parent", this.state)
     return (
       <div style={{
-        width: '40%',
+        width: '50%',
         position: 'relative',
         display: 'block',
         verticalAlign: 'top',
@@ -186,6 +186,7 @@ class ListingOrder extends React.Component {
               brandList={this.state.genreBasedBrandList}
               brandMap={this.state.genreBasedBrandMap}
               loadingData={this.state.loadingBrandList}
+              isSavingDetails={this.state.isSavingDetails}
               createOrUpdateBrandListingOrder = {this.createOrUpdateBrandListingOrder}
             />
           }

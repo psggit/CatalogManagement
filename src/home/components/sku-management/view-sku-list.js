@@ -158,7 +158,7 @@ class ViewSKUList extends React.Component {
             {
               !this.props.loadingSkuList && !this.props.skuList && 
               <tr>
-                <td style={{ textAlign: 'center' }} colSpan='7'>
+                <td style={{ textAlign: 'center' }} colSpan='8'>
                   <p style={{fontWeight: '16px'}}>No SKUs found</p>
                 </td>
               </tr>
