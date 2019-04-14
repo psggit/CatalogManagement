@@ -33,7 +33,7 @@ class createSKU extends React.Component {
 
   submit() {
     const data = this.skuDetailsForm.getData()
-    if (data.volume) {
+    //if (data.volume) {
       this.setState({ isDisabled: true })
       this.props.actions.createSku({
         brand_id: parseInt(data.brandId),
@@ -46,7 +46,7 @@ class createSKU extends React.Component {
         tag: data.tag,
         is_active: data.statusIdx === 1 ? true : false
       }, this.callbackUpdate)
-    }
+    //}
   }
 
   render() {

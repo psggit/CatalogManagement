@@ -98,7 +98,7 @@ class SkuDetailsForm extends React.Component {
   }
 
   handleBrandChange(e, k) {
-    const brandIdx = k + 1
+    const brandIdx = k
     console.log("id", brandIdx, "name", this.props.brandList[k].id, this.props.brandList[k])
     this.setState({
       brandIdx,
@@ -154,16 +154,16 @@ class SkuDetailsForm extends React.Component {
     const volumeErr = validateNumberField(this.inputNameMap['volume'], this.state.volume)
     this.setState({ volumeErr: validateNumberField(this.inputNameMap['volume'], this.state.volume) })
 
-    const gs1BarcodeErr = validateTextField(this.inputNameMap['gs1Barcode'], this.state.gs1_barcode)
-    this.setState({ gs1BarcodeErr: validateTextField(this.inputNameMap['gs1Barcode'], this.state.gs1_barcode) })
+    // const gs1BarcodeErr = validateTextField(this.inputNameMap['gs1Barcode'], this.state.gs1_barcode)
+    // this.setState({ gs1BarcodeErr: validateTextField(this.inputNameMap['gs1Barcode'], this.state.gs1_barcode) })
 
-    const barcodeImageErr = validateTextField(this.inputNameMap['barcodeImage'], this.state.barcode_image)
-    this.setState({ barcodeImageErr: validateTextField(this.inputNameMap['barcodeImage'], this.state.barcode_image) })
+    // const barcodeImageErr = validateTextField(this.inputNameMap['barcodeImage'], this.state.barcode_image)
+    // this.setState({ barcodeImageErr: validateTextField(this.inputNameMap['barcodeImage'], this.state.barcode_image) })
 
     // const tagNameErr = validateTextField(this.inputNameMap['tagName'], this.state.tag)
     // this.setState({ tagNameErr: validateTextField(this.inputNameMap['tagName'], this.state.tag) })
 
-    if(!volumeErr.status && !gs1BarcodeErr.status && !barcodeImageErr.status) {
+    if(!volumeErr.status) {
       return true;
     }
     return false
@@ -218,7 +218,7 @@ class SkuDetailsForm extends React.Component {
       <Fragment>
 
         <div className="form-group">
-          <label className="label">Brand name</label><br />
+          <label className="label">Brand name*</label><br />
           {
             this.props.action !== "edit" ?
               <SelectField
@@ -237,7 +237,7 @@ class SkuDetailsForm extends React.Component {
                   !this.props.loadingBrandList &&
                   this.props.brandList && this.props.brandList.map((item, i) => {
                     return <MenuItem
-                      value={i+1}
+                      value={i}
                       key={i}
                       primaryText={item.brand_name}
                     />
@@ -409,7 +409,7 @@ class SkuDetailsForm extends React.Component {
         </div>
 
         <div className="form-group">
-          <label className="label">Gs1 barcode*</label><br />
+          <label className="label">Gs1 barcode</label><br />
           <TextField
             onChange={this.handleTextFields}
             name="gs1_barcode"
@@ -425,7 +425,7 @@ class SkuDetailsForm extends React.Component {
         </div>
 
         <div className="form-group">
-          <label className="label">Barcode image*</label><br />
+          <label className="label">Barcode image</label><br />
           <TextField
             onChange={this.handleTextFields}
             name="barcode_image"
