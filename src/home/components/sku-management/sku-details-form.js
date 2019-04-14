@@ -87,6 +87,13 @@ class SkuDetailsForm extends React.Component {
   // componentDidMount() {
   //   this.props.actions.setLoadingState()
   // }
+  componentWillReceiveProps(newProps) {
+    console.log("props", this.props.brandList, newProps.brandList)
+    if(newProps.brandList !== this.props.brandList && !newProps.loadingBrandList) {
+      console.log("new props", newProps)
+      this.setState({brandId: newProps.brandList[0].id})
+    }
+  }
 
   handleStatusChange(e, k) {
     //const { statusData } = this.props
@@ -222,7 +229,7 @@ class SkuDetailsForm extends React.Component {
           {
             this.props.action !== "edit" ?
               <SelectField
-                value={this.state.brandIdx}
+                value={this.state.brandId}
                 onChange={this.handleBrandChange}
                 iconStyle={{ fill: '#9b9b9b' }}
                 style={{ width: '100%' }}
@@ -237,8 +244,8 @@ class SkuDetailsForm extends React.Component {
                   !this.props.loadingBrandList &&
                   this.props.brandList && this.props.brandList.map((item, i) => {
                     return <MenuItem
-                      value={i}
-                      key={i}
+                      value={item.id}
+                      key={item.id}
                       primaryText={item.brand_name}
                     />
                   })

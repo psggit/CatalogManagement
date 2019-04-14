@@ -53,7 +53,7 @@ class createSKU extends React.Component {
     const {loadingBrandDetails, brands} = this.props
     return (
       <div style={{
-        width: '40%',
+        width: '400px',
         position: 'relative',
         display: 'block',
         verticalAlign: 'top',

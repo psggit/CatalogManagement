@@ -40,7 +40,7 @@ class editGenre extends React.Component {
   render() {
     return ( 
       <div style={{
-        width: '40%',
+        width: '400px',
         position: 'relative',
         display: 'block',
         verticalAlign: 'top',

@@ -131,7 +131,7 @@ class ViewSKUMapDetails extends React.Component {
         <Card
           style={{
             padding: '0px 20px',
-            width: '40%',
+            width: '400px',
             marginTop: '0',
             position: 'relative',
             display: 'inline-block',
