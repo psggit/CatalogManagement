@@ -74,6 +74,7 @@ class ListingOrder extends React.Component {
           brandWithListingOrder = {
             brand_id: brand.id,
             brand_name: brand.brand_name,
+            is_active: brand.is_active,
             state_id: this.state.selectedStateIdx,
             listing_order: this.props.brandListingOrder[listingOrderIdx].listing_order
           }
@@ -82,6 +83,7 @@ class ListingOrder extends React.Component {
           brandWithListingOrder = {
             brand_id: brand.id,
             brand_name: brand.brand_name,
+            is_active: brand.is_active,
             state_id: this.state.selectedStateIdx,
             listing_order: 0
           }
@@ -90,7 +92,7 @@ class ListingOrder extends React.Component {
       })
     } else {
       this.props.genreBasedBrandList.map((brand) => {
-        genreBasedBrandMap[brand.id] = Object.assign({}, brand, {listing_order: 0, state_id: this.state.selectedStateIdx})
+        genreBasedBrandMap[brand.id] = Object.assign({}, brand, {listing_order: 0, state_id: this.state.selectedStateIdx, is_active: brand.is_active})
       })
     }
 
