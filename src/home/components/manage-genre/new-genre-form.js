@@ -46,6 +46,7 @@ class GenreForm extends React.Component {
     this.handleStatusChange = this.handleStatusChange.bind(this)
     this.handleTextFields = this.handleTextFields.bind(this)
     this.getData = this.getData.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
 
   getData() {
@@ -99,16 +100,32 @@ class GenreForm extends React.Component {
     })
   }
 
+  // handleChange(e) {
+  //   const errName = `${e.target.name}Err`
+  //   if(validateNumType(e.keyCode) || checkCtrlA(e) || checkCtrlV(e)) {
+  //     this.setState({ 
+  //         [e.target.name]: e.target.value,
+  //         [errName]: validateNumberField(this.inputNameMap[e.target.name], e.target.value)
+  //     })
+  //   } else {
+  //       e.preventDefault()
+  //   }   
+  // }
+
   handleChange(e) {
-    const errName = `${e.target.name}Err`
-    if(validateNumType(e.keyCode) || checkCtrlA(e) || checkCtrlV(e)) {
-      this.setState({ 
-          [e.target.name]: e.target.value,
-          [errName]: validateNumberField(this.inputNameMap[e.target.name], e.target.value)
-      })
+    this.setState({
+      ordinalPositionErr: {
+        value: "",
+        status: false
+      }
+    })
+    const re = /^[0-9\b]*$/;
+    console.log("ddd", re.test(e.target.value))
+    if ((re.test(e.target.value))) {
+       this.setState({[e.target.name]: e.target.value})
     } else {
-        e.preventDefault()
-    }   
+      e.preventDefault()
+    }
   }
 
   render() {
@@ -132,12 +149,14 @@ class GenreForm extends React.Component {
         <div className="form-group">
           <label className="label">Ordinal position*</label><br />
            <TextField
-            defaultValue={this.props.genreData ? this.props.genreData.ordinal_position : ''}
+            //defaultValue={this.props.genreData ? this.props.genreData.ordinal_position : ''}
             name="ordinalPosition"
             autoComplete='off'
             style={{ width: '100%' }}
-            onKeyDown={(e) => { this.handleChange(e) }} 
-            onKeyUp={(e) => { this.handleChange(e) }} 
+            onChange={this.handleChange}
+            value={this.state.ordinalPosition}
+            // onKeyDown={(e) => { this.handleChange(e) }} 
+            // onKeyUp={(e) => { this.handleChange(e) }} 
           />
           {
             ordinalPositionErr.status &&

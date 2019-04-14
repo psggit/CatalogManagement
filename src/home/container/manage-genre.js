@@ -171,7 +171,7 @@ class ManageGenre extends React.Component {
           </ModalBox>
         }
         {
-          !loadingGenreList && genreList && genreList.length >= this.pagesLimit
+          !loadingGenreList && genreList
           ? 
             <React.Fragment>
               <Pagination
