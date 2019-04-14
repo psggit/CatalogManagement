@@ -49,16 +49,13 @@ class BrandList extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    console.log("newProps", newProps)
     if (this.props.brandList !== newProps.brandList) {
       this.setState({
         genreBasedBrandList: newProps.brandList,
-        //genreBasedBrandMap: this.props.brandMap
       })
     }
     if (this.props.brandMap !== newProps.brandMap) {
       this.setState({
-        //genreBasedBrandList: this.props.brandList,
         genreBasedBrandMap: newProps.brandMap
       })
     }
