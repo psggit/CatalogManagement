@@ -49,6 +49,7 @@ class BrandList extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
+    console.log("newProps", newProps)
     if (this.props.brandList !== newProps.brandList) {
       this.setState({
         genreBasedBrandList: newProps.brandList,
@@ -61,8 +62,10 @@ class BrandList extends React.Component {
         genreBasedBrandMap: newProps.brandMap
       })
     }
-    if(!this.props.isSavingDetails) {
+    if(!newProps.isSavingDetails) {
       this.setState({enableEdit: false, buttonLabel: "Edit"})
+    } else {
+      this.setState({buttonLabel: "Save"})
     }
   }
 

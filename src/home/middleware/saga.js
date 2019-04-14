@@ -201,6 +201,7 @@ function* createBrand(action) {
     }, 1000)
   } catch(err) {
     console.log(err)
+    Notify('Something went wrong', 'warning')
     action.CB()
   }
 }
@@ -216,6 +217,7 @@ function* createGenre(action) {
     action.CB(data)
   } catch(err) {
     console.log(err)
+    Notify('Something went wrong', 'warning')
     action.CB()
   }
 }
@@ -231,6 +233,7 @@ function* updateGenre(action) {
     action.CB(data)
   } catch(err) {
     console.log(err)
+    Notify('Something went wrong', 'warning')
     action.CB()
   }
 }
@@ -246,6 +249,7 @@ function* updateBrand(action) {
     action.CB(data)
   } catch(err) {
     console.log(err)
+    Notify('Something went wrong', 'warning')
     action.CB()
   }
 }

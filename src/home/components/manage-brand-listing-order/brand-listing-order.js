@@ -125,6 +125,7 @@ class ListingOrder extends React.Component {
     this.props.actions.updateBrandListingOrder({
       brand_listing_order: this.state.genreBasedBrandList
     }, () => {
+      console.log("hjkk")
       this.setState({isSavingDetails: false})
     })
   }

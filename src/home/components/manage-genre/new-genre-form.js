@@ -59,6 +59,7 @@ class GenreForm extends React.Component {
   }
 
   isFormValid() {
+    console.log("genre state", this.state)
     const genreNameErr = validateTextField(this.inputNameMap['genreName'], this.state.genreName)
     this.setState({ genreNameErr: validateTextField(this.inputNameMap['genreName'], this.state.genreName) })
 
@@ -67,6 +68,7 @@ class GenreForm extends React.Component {
 
     const ordinalPositionErr = validateTextField(this.inputNameMap['ordinalPosition'], this.state.ordinalPosition)
     this.setState({ordinalPositionErr : validateTextField(this.inputNameMap['ordinalPosition'], this.state.ordinalPosition) })
+    console.log("ordinal pos", ordinalPositionErr)
 
     const genreImageErr = validateTextField(this.inputNameMap['genreImage'], this.state.genreImage)
     this.setState({ genreImageErr: validateTextField(this.inputNameMap['genreImage'], this.state.genreImage) })

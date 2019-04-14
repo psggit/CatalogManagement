@@ -2,7 +2,7 @@ import { emailRegex } from './regex'
 
 export function validateTextField(fieldName, fieldValue) {
   console.log("value", fieldValue, fieldValue.length, !fieldValue.length)
-  if (!fieldValue.length) {
+  if (!fieldValue.toString().length) {
     return {
       status: true,
       value: `${fieldName} is required`

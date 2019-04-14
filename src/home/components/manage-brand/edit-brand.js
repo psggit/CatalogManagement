@@ -42,6 +42,7 @@ class EditBrand extends React.Component {
       brand_id: parseInt(this.props.history.location.state.id),
       brand_name: data.brandName,
       genre_name: data.genreName,
+      genre_id: data.genreIdx,
       type: data.typeIdx,    
       alcohol_per: (data.alcoholPercentage),
       temperature: (data.temperature),
