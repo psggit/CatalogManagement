@@ -2,13 +2,11 @@ import React, { Fragment } from 'react'
 import TextField from 'material-ui/TextField'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
-import Checkbox from 'material-ui/Checkbox'
 import '@sass/components/_form.scss'
 import { POST } from '@utils/fetch'
 import { Api } from '@utils/config'
 import {getIcon} from '@utils/icon-utils'
-import { validateNumType, checkCtrlA, checkCtrlV } from './../../../utils'
-import { validateTextField, validateEmail, validateNumberField } from './../../../utils/validators'
+import { validateTextField } from './../../../utils/validators'
 import RaisedButton from 'material-ui/RaisedButton'
 
 class BrandForm extends React.Component {
@@ -116,16 +114,32 @@ class BrandForm extends React.Component {
     })
   }
 
+  // handleChange(e) {
+  //   const errName = `${e.target.name}Err`
+  //   if(validateNumType(e.keyCode) || checkCtrlA(e) || checkCtrlV(e)) {
+  //     this.setState({ 
+  //         [e.target.name]: e.target.value,
+  //         [errName]: validateNumberField(this.inputNameMap[e.target.name], e.target.value)
+  //     })
+  //   } else {
+  //       e.preventDefault()
+  //   }   
+  // }
+
   handleChange(e) {
     const errName = `${e.target.name}Err`
-    if(validateNumType(e.keyCode) || checkCtrlA(e) || checkCtrlV(e)) {
-      this.setState({ 
-          [e.target.name]: e.target.value,
-          [errName]: validateNumberField(this.inputNameMap[e.target.name], e.target.value)
-      })
+    this.setState({
+      [errName]: {
+        value: "",
+        status: false
+      }
+    })
+    const re = /^[0-9\b]*$/;
+    if ((re.test(e.target.value))) {
+       this.setState({[e.target.name]: e.target.value})
     } else {
-        e.preventDefault()
-    }   
+      e.preventDefault()
+    }
   }
 
   getData() {
@@ -217,74 +231,46 @@ class BrandForm extends React.Component {
           }
         </div>
 
-        {/* <div className="form-group">
-          <label className="label">Origin</label><br />
-          <SelectField
-            value={this.state.originIdx}
-            onChange={this.handleOriginChange}
-            style={{ width: '100%' }}
-          >
-            {
-              !this.props.loadingOriginList && this.props.originList.map((item, i) => (
-                <MenuItem
-                  value={i + 1}
-                  key={item.id}
-                  primaryText={item.name}
-                />
-              ))
-            }
-          </SelectField>
-        </div> */}
-
         <div className="form-group">
           <label className="label">Alcohol percentage</label><br />
           <TextField
-            //disabled={false}
-            defaultValue={this.props.brandInfo ? this.props.brandInfo.alcohol_per : ''}
             name="alcoholPercentage"
             autoComplete='off'
             style={{ width: '100%' }}
-            onKeyDown={(e) => { this.handleChange(e) }} 
-            onKeyUp={(e) => { this.handleChange(e) }} 
+            onChange={this.handleChange}
+            value={this.state.alcoholPercentage}
           />
         </div>
 
         <div className="form-group">
           <label className="label">Temperature</label><br />
           <TextField
-            //disabled={false}
-            defaultValue={this.props.brandInfo ? this.props.brandInfo.temperature : ''}
             name="temperature"
             autoComplete='off'
             style={{ width: '100%' }}
-            onKeyDown={(e) => { this.handleChange(e) }} 
-            onKeyUp={(e) => { this.handleChange(e) }} 
+            onChange={this.handleChange}
+            value={this.state.temperature}
           />
         </div>
 
         <div className="form-group">
           <label className="label">Calories percentage</label><br />
           <TextField
-            //disabled={false}
-            defaultValue={this.props.brandInfo ? this.props.brandInfo.cal_per : ''}
             name="caloriesPercentage"
             autoComplete='off'
             style={{ width: '100%' }}
-            onKeyDown={(e) => { this.handleChange(e) }} 
-            onKeyUp={(e) => { this.handleChange(e) }} 
+            onChange={this.handleChange}value={this.state.caloriesPercentage}
           />
         </div>
 
         <div className="form-group">
           <label className="label">Calories total</label><br />
           <TextField
-            //disabled={false}
-            defaultValue={this.props.brandInfo ? this.props.brandInfo.cal_total : ''}
             name="caloriesTotal"
             autoComplete='off'
             style={{ width: '100%' }}
-            onKeyDown={(e) => { this.handleChange(e) }} 
-            onKeyUp={(e) => { this.handleChange(e) }} 
+            onChange={this.handleChange}
+            value={this.state.caloriesTotal}
           />
         </div>
 
@@ -329,12 +315,10 @@ class BrandForm extends React.Component {
         <div className="form-group">
           <label className="label">Tag</label><br />
           <TextField
-            //disabled={this.props.isDisabled}
             defaultValue={this.props.brandInfo ? this.props.brandInfo.tag : ''}
             name="tag"
             autoComplete='off'
             hintText="tag1, tag2, tag3"
-            //disabled={this.props.isDisabled}
             style={{ width: '100%' }}
             onChange={this.handleTextFields}
           />
