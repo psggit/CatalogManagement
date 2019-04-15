@@ -14,7 +14,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 class BrandForm extends React.Component {
   constructor(props) {
     super(props)
-    this.uploadedImageUrl = ''
+    //this.uploadedImageUrl = ''
     this.intitialState = {
       shouldTrim: true,
       brandName: props.brandInfo ? props.brandInfo.brand_name : '',
@@ -22,9 +22,10 @@ class BrandForm extends React.Component {
       temperature: props.brandInfo ? this.props.brandInfo.temperature : '',
       caloriesPercentage: props.brandInfo ? this.props.brandInfo.cal_per : '',
       caloriesTotal: props.brandInfo ? props.brandInfo.cal_total : '',
-      isImageUploaded: false,
+      isImageUploaded: props.brandInfo ? true : false,
       isImageUploading: false,
       isImageSelected: false,
+      uploadedImageUrl: props.brandInfo ? 'https://api2.amebae21.hasura-app.io/get?fs_url=4304@public:///admin/158343/raw/846603e5-7c57-4116-a767-0a425f5131d4-UB_Group_Logo_White' : '',
       image_url: props.brandInfo ? props.brandInfo.image : '',
       tag: props.brandInfo ? props.brandInfo.tag : '',
       high_res_image: props.brandInfo ? props.brandInfo.high_res_image : '',
@@ -184,8 +185,14 @@ class BrandForm extends React.Component {
       handleError: true
     })
       .then((json) => {
-        this.uploadedImageUrl = `${Api.api2}/get?fs_url=${json[0]}`
-        this.setState({ isImageUploaded: true, isImageUploading: false, image_url: json[0] })
+        //this.uploadedImageUrl = `${Api.api2}/get?fs_url=${json[0]}`
+        this.setState({ 
+          isImageUploaded: true, 
+          isImageUploading: false, 
+          //image_url: json[0],
+          image_url: `${Api.api2}/get?fs_url=${json[0]}`,
+          uploadedImageUrl: `${Api.api2}/get?fs_url=${json[0]}`
+        })
       })
   }
 
@@ -375,7 +382,7 @@ class BrandForm extends React.Component {
               marginLeft: 'auto',
               marginRight: 'auto'
             }}>
-              <img src={this.uploadedImageUrl} style={{ width: '200px', height: '200px' }} />
+              <img src={this.state.uploadedImageUrl} style={{ width: '200px', height: '200px' }} />
               <div
                 onClick={this.resetUploadImage}
                 style={{

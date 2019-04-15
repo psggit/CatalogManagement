@@ -211,9 +211,9 @@ function* createGenre(action) {
     const data = yield call(Api.createGenre, action)
     yield put({ type: ActionTypes.SUCCESS_CREATE_GENRE, data })
     Notify('Successfully created the genre', 'success')
-    // setTimeout(() => {
-    //   window.location.href = `/admin/manage-genre`
-    // }, 1000)
+    setTimeout(() => {
+      window.location.href = `/admin/manage-genre`
+    }, 1000)
     action.CB(data)
   } catch(err) {
     console.log(err)
