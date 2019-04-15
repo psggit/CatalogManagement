@@ -287,7 +287,7 @@ class ManageBrand extends React.Component {
           </ModalBox>
         }
         {
-          !loadingBrandDetails && brands && brands.length >= this.pagesLimit
+          !loadingBrandDetails && brands
           ? 
             <React.Fragment>
               <Pagination

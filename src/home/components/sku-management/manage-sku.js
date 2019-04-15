@@ -297,7 +297,7 @@ class SkuList extends React.Component {
         }
 
         {
-          !loadingSkuList && skuList && skuList.length >= this.pagesLimit
+          !loadingSkuList && skuList
           ? 
             <React.Fragment>
               <Pagination
