@@ -74,12 +74,15 @@ class MappedStatesList extends React.Component {
       })
     } 
     else {
-      this.props.handleSaveStateDetails({
-        is_active: updatedStateMap[stateShortName].is_active,
-        price: updatedStateMap[stateShortName].price,
-        tag: updatedStateMap[stateShortName].tag,
-        id: this.state.stateMap[stateShortName].sku_pricing_id,
-      })
+      //If sku price is greater than 0, then update sku price
+      if(updatedStateMap[stateShortName].price > 0) {
+        this.props.handleSaveStateDetails({
+          is_active: updatedStateMap[stateShortName].is_active,
+          price: updatedStateMap[stateShortName].price,
+          tag: updatedStateMap[stateShortName].tag,
+          id: this.state.stateMap[stateShortName].sku_pricing_id,
+        })
+      }
     }
   }
 
