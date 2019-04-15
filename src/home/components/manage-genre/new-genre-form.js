@@ -74,7 +74,7 @@ class GenreForm extends React.Component {
     const genreImageErr = validateTextField(this.inputNameMap['genreImage'], this.state.genreImage)
     this.setState({ genreImageErr: validateTextField(this.inputNameMap['genreImage'], this.state.genreImage) })
 
-    if(//!displayNameErr.status && 
+    if(!displayNameErr.status && 
       !genreNameErr.status && 
       !ordinalPositionErr.status &&
       !genreImageErr.status
