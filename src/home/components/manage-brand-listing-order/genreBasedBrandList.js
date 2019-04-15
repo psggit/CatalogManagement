@@ -103,7 +103,7 @@ class BrandList extends React.Component {
         <div style={{ height: 'auto' }}>
           <Table
             wrapperStyle={{ height: 'auto' }}
-            onCellClick={this.expandColumn}
+            //onCellClick={this.expandColumn}
             className="bordered--table"
             selectable={false}
             fixedHeader
