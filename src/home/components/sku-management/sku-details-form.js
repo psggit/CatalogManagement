@@ -449,7 +449,7 @@ class SkuDetailsForm extends React.Component {
 
         <RaisedButton
           primary
-          disabled={volumeErr.status || this.props. disableSave}
+          disabled={volumeErr.status || this.props. disableSave || this.props.loadingBrandList}
           label="Save"
           onClick={this.handleSave}
           style={{ marginTop: '40px' }}
