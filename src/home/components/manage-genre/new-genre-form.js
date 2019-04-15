@@ -64,8 +64,8 @@ class GenreForm extends React.Component {
     const genreNameErr = validateTextField(this.inputNameMap['genreName'], this.state.genreName)
     this.setState({ genreNameErr: validateTextField(this.inputNameMap['genreName'], this.state.genreName) })
 
-    // const displayNameErr = validateTextField(this.inputNameMap['displayName'], this.state.displayName)
-    // this.setState({ displayNameErr: validateTextField(this.inputNameMap['displayName'], this.state.displayName) })
+    const displayNameErr = validateTextField(this.inputNameMap['displayName'], this.state.displayName)
+    this.setState({ displayNameErr: validateTextField(this.inputNameMap['displayName'], this.state.displayName) })
 
     const ordinalPositionErr = validateTextField(this.inputNameMap['ordinalPosition'], this.state.ordinalPosition)
     this.setState({ordinalPositionErr : validateTextField(this.inputNameMap['ordinalPosition'], this.state.ordinalPosition) })
@@ -163,7 +163,7 @@ class GenreForm extends React.Component {
             <p className="error">* {ordinalPositionErr.value}</p>
           }
         </div>
-        {/* <div className="form-group">
+        <div className="form-group">
           <label className="label">Display name*</label><br />
           <TextField
             onChange={this.handleTextFields}
@@ -175,7 +175,7 @@ class GenreForm extends React.Component {
             displayNameErr.status &&
             <p className="error">* {displayNameErr.value}</p>
           }
-        </div> */}
+        </div>
         <div className="form-group">
           <label className="label">Genre image*</label><br />
           <TextField
