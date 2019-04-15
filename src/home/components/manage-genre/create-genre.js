@@ -27,10 +27,10 @@ class CreateGenre extends React.Component {
     if(data.genreName.length) {
       this.setState({ isDisabled: true })
       this.props.actions.createGenre({
-        genre_name: data.genreName,
+        genre_name: data.genreName.trim(),
         ordinal_position: data.ordinalPosition,
-        display_name: data.displayName,
-        image: data.genreImage,
+        display_name: data.displayName.trim(),
+        image: data.genreImage.trim(),
         is_active: true
       }, this.callbackUpdate)
     }

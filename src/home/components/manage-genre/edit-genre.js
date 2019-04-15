@@ -29,10 +29,10 @@ class editGenre extends React.Component {
     this.setState({ isDisabled: true })
     this.props.actions.updateGenre({
       genre_id: parseInt(queryObj.id),
-      genre_name: (data.genreName),
+      genre_name: (data.genreName).trim(),
       ordinal_position: parseInt(data.ordinalPosition),
-      display_name: data.displayName,
-      image: data.genreImage,
+      display_name: data.displayName.trim(),
+      image: data.genreImage.trim(),
       is_active: data.statusIdx === 1 ? true : false,
     }, this.callbackUpdate)
   }

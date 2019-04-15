@@ -94,9 +94,10 @@ class GenreForm extends React.Component {
 
   handleTextFields(e) {
     const errName = `${e.target.name}Err`
+    //console.log("textfield", e.target.value.trim())
     this.setState({
-        [e.target.name]: e.target.value,
-        [errName]: validateTextField(this.inputNameMap[e.target.name], e.target.value),
+      [e.target.name]: e.target.value,
+      [errName]: validateTextField(this.inputNameMap[e.target.name], e.target.value),
     })
   }
 
@@ -138,7 +139,9 @@ class GenreForm extends React.Component {
           <TextField
             onChange={this.handleTextFields}
             name="genreName"
+            //pattern='^[a-zA-Z0-9 ]*$'
             value={this.state.genreName}
+            autoComplete='off'
             style={{ width: '100%' }}
           />
           {
