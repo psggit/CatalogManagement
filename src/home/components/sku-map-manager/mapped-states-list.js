@@ -84,6 +84,8 @@ class MappedStatesList extends React.Component {
   }
 
   handleChange(e, stateShortName) {
+    //console.log("e.tag", e.target.value, parseInt(e.target.value))
+    //const value =  e.target.value ?  e.target.value : 0
     let updatedMap = Object.assign({}, this.state.stateMap)
     updatedMap[stateShortName].price = parseInt(e.target.value)
     this.setState({ stateMap: updatedMap, mappedStatesList: Object.values(updatedMap) })

@@ -26,10 +26,10 @@ class SkuDetailsForm extends React.Component {
       brandIdx: 0,
       brandName: props.brandName ? props.brandName : '',
       brandId: 0,
-      isImageUploaded: false,
-      isImageUploading: false,
-      isImageSelected: false,
-      image_url: props.skuInfo ? props.skuInfo.image_url : '',
+      // isImageUploaded: false,
+      // isImageUploading: false,
+      // isImageSelected: false,
+      // image_url: props.skuInfo ? props.skuInfo.image_url : '',
       tag:  props.skuInfo ? props.skuInfo.tag : '',
       high_res_image: props.skuInfo ? props.skuInfo.high_res_image : '',
       low_res_image: props.skuInfo ? props.skuInfo.low_res_image : '',
@@ -77,9 +77,9 @@ class SkuDetailsForm extends React.Component {
     this.handleStatusChange = this.handleStatusChange.bind(this)
     this.handleBrandChange = this.handleBrandChange.bind(this)
     this.handleCheckboxes = this.handleCheckboxes.bind(this)
-    this.handleUploadChange = this.handleUploadChange.bind(this)
-    this.resetUploadImage = this.resetUploadImage.bind(this)
-    this.submitUploadedImage = this.submitUploadedImage.bind(this)
+    // this.handleUploadChange = this.handleUploadChange.bind(this)
+    // this.resetUploadImage = this.resetUploadImage.bind(this)
+    // this.submitUploadedImage = this.submitUploadedImage.bind(this)
     this.handleSave = this.handleSave.bind(this)
     this.isFormValid = this.isFormValid.bind(this)
   }
@@ -185,34 +185,34 @@ class SkuDetailsForm extends React.Component {
     return this.state
   }
 
-  handleUploadChange(e) {
-    const file = e.target.files[0]
-    this.setState({
-      data: file,
-      isImageSelected: true
-    })
-  }
+  // handleUploadChange(e) {
+  //   const file = e.target.files[0]
+  //   this.setState({
+  //     data: file,
+  //     isImageSelected: true
+  //   })
+  // }
 
-  resetUploadImage() {
-    this.setState({ isImageUploaded: false, isImageSelected: false, isImageUploading: false, image_url: '' })
-  }
+  // resetUploadImage() {
+  //   this.setState({ isImageUploaded: false, isImageSelected: false, isImageUploading: false, image_url: '' })
+  // }
 
-  submitUploadedImage() {
-    const formData = new FormData()
-    formData.append('file', this.state.data)
-    this.setState({ isImageUploading: true, isImageSelected: false })
-    POST({
-      api: '/upload',
-      type: 'FormData',
-      apiBase: 'api2',
-      data: formData,
-      handleError: true
-    })
-      .then((json) => {
-        this.uploadedImageUrl = `${Api.api2}/get?fs_url=${json[0]}`
-        this.setState({ isImageUploaded: true, isImageUploading: false, image_url: json[0] })
-      })
-  }
+  // submitUploadedImage() {
+  //   const formData = new FormData()
+  //   formData.append('file', this.state.data)
+  //   this.setState({ isImageUploading: true, isImageSelected: false })
+  //   POST({
+  //     api: '/upload',
+  //     type: 'FormData',
+  //     apiBase: 'api2',
+  //     data: formData,
+  //     handleError: true
+  //   })
+  //     .then((json) => {
+  //       this.uploadedImageUrl = `${Api.api2}/get?fs_url=${json[0]}`
+  //       this.setState({ isImageUploaded: true, isImageUploading: false, image_url: json[0] })
+  //     })
+  // }
 
   handleCheckboxes(e) {
     this.setState({ [e.target.name]: e.target.checked })
@@ -313,7 +313,7 @@ class SkuDetailsForm extends React.Component {
           </SelectField>
         </div>
 
-        <div className="form-group">
+        {/* <div className="form-group">
           <label className="label">Upload image</label><br />
           {
             !this.state.isImageUploaded &&
@@ -381,7 +381,7 @@ class SkuDetailsForm extends React.Component {
             value={this.state.image_url}
             style={{ width: '100%' }}
           />
-        </div>
+        </div> */}
 
         <div className="form-group">
           <label className="label">High res image</label><br />

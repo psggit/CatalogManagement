@@ -117,6 +117,7 @@ class ViewUnmappedStates extends React.Component {
   }
 
   handleChange(e, stateShortName) {
+    console.log("e.tag", e.target.value, parseInt(e.target.value))
     let updatedMap = Object.assign({}, this.state.stateMap)
     updatedMap[stateShortName].price = parseInt(e.target.value)
     this.setState({stateMap: updatedMap, unmappedStatesList: Object.values(updatedMap)})

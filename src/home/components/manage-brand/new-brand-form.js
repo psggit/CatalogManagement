@@ -20,11 +20,11 @@ class BrandForm extends React.Component {
       temperature: props.brandInfo ? this.props.brandInfo.temperature : '',
       caloriesPercentage: props.brandInfo ? this.props.brandInfo.cal_per : '',
       caloriesTotal: props.brandInfo ? props.brandInfo.cal_total : '',
-      isImageUploaded: props.brandInfo ? true : false,
-      isImageUploading: false,
-      isImageSelected: false,
-      uploadedImageUrl: props.brandInfo ? 'https://api2.amebae21.hasura-app.io/get?fs_url=4304@public:///admin/158343/raw/846603e5-7c57-4116-a767-0a425f5131d4-UB_Group_Logo_White' : '',
-      image_url: props.brandInfo ? props.brandInfo.image : '',
+      // isImageUploaded: props.brandInfo ? true : false,
+      // isImageUploading: false,
+      // isImageSelected: false,
+      // uploadedImageUrl: props.brandInfo ? 'https://api2.amebae21.hasura-app.io/get?fs_url=4304@public:///admin/158343/raw/846603e5-7c57-4116-a767-0a425f5131d4-UB_Group_Logo_White' : '',
+      // image_url: props.brandInfo ? props.brandInfo.image : '',
       tag: props.brandInfo ? props.brandInfo.tag : '',
       high_res_image: props.brandInfo ? props.brandInfo.high_res_image : '',
       low_res_image: props.brandInfo ? props.brandInfo.low_res_image : '',
@@ -68,9 +68,9 @@ class BrandForm extends React.Component {
     this.handleTextFields = this.handleTextFields.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleTypeChange = this.handleTypeChange.bind(this)
-    this.handleUploadChange = this.handleUploadChange.bind(this)
-    this.resetUploadImage = this.resetUploadImage.bind(this)
-    this.submitUploadedImage = this.submitUploadedImage.bind(this)
+    // this.handleUploadChange = this.handleUploadChange.bind(this)
+    // this.resetUploadImage = this.resetUploadImage.bind(this)
+    // this.submitUploadedImage = this.submitUploadedImage.bind(this)
     this.handleSave = this.handleSave.bind(this)
     this.isFormValid = this.isFormValid.bind(this)
     this.handleGenreChange = this.handleGenreChange.bind(this)
@@ -146,17 +146,17 @@ class BrandForm extends React.Component {
     return this.state
   }
 
-  handleUploadChange(e) {
-    const file = e.target.files[0]
-    this.setState({
-      data: file,
-      isImageSelected: true
-    })
-  }
+  // handleUploadChange(e) {
+  //   const file = e.target.files[0]
+  //   this.setState({
+  //     data: file,
+  //     isImageSelected: true
+  //   })
+  // }
 
-  resetUploadImage() {
-    this.setState({ isImageUploaded: false, isImageSelected: false, isImageUploading: false, image_url: '' })
-  }
+  // resetUploadImage() {
+  //   this.setState({ isImageUploaded: false, isImageSelected: false, isImageUploading: false, image_url: '' })
+  // }
 
   isFormValid() {
     const brandNameErr = validateTextField(this.inputNameMap['brandName'], this.state.brandName)
@@ -187,28 +187,28 @@ class BrandForm extends React.Component {
     }
   }
 
-  submitUploadedImage() {
-    const formData = new FormData()
-    formData.append('file', this.state.data)
-    this.setState({ isImageUploading: true, isImageSelected: false })
-    POST({
-      api: '/upload',
-      type: 'FormData',
-      apiBase: 'api2',
-      data: formData,
-      handleError: true
-    })
-      .then((json) => {
-        //this.uploadedImageUrl = `${Api.api2}/get?fs_url=${json[0]}`
-        this.setState({ 
-          isImageUploaded: true, 
-          isImageUploading: false, 
-          //image_url: json[0],
-          image_url: `${Api.api2}/get?fs_url=${json[0]}`,
-          uploadedImageUrl: `${Api.api2}/get?fs_url=${json[0]}`
-        })
-      })
-  }
+  // submitUploadedImage() {
+  //   const formData = new FormData()
+  //   formData.append('file', this.state.data)
+  //   this.setState({ isImageUploading: true, isImageSelected: false })
+  //   POST({
+  //     api: '/upload',
+  //     type: 'FormData',
+  //     apiBase: 'api2',
+  //     data: formData,
+  //     handleError: true
+  //   })
+  //     .then((json) => {
+  //       //this.uploadedImageUrl = `${Api.api2}/get?fs_url=${json[0]}`
+  //       this.setState({ 
+  //         isImageUploaded: true, 
+  //         isImageUploading: false, 
+  //         //image_url: json[0],
+  //         image_url: `${Api.api2}/get?fs_url=${json[0]}`,
+  //         uploadedImageUrl: `${Api.api2}/get?fs_url=${json[0]}`
+  //       })
+  //     })
+  // }
 
   render() {
     const { brandNameErr, highResBrandLogoErr, lowResBrandLogoErr, tagNameErr } = this.state
@@ -328,7 +328,7 @@ class BrandForm extends React.Component {
           }
         </div>
 
-        <div className="form-group">
+        {/* <div className="form-group">
           <label className="label">Upload image</label><br />
           {
             !this.state.isImageUploaded &&
@@ -396,7 +396,7 @@ class BrandForm extends React.Component {
             value={this.state.image_url}
             style={{ width: '100%' }}
           />
-        </div>
+        </div> */}
 
         <div className="form-group">
           <label className="label">High res bottle image</label><br />
