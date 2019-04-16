@@ -156,7 +156,7 @@ class BrandList extends React.Component {
                           value={this.state.genreBasedBrandMap[(item.brand_id)].listing_order} 
                           onChange={(e) => this.handleChange(e, item.brand_id)} 
                           style = {{ width: '60px', padding: '0 10px'}}
-                          disabled={!this.state.enableEdit}
+                          disabled={!this.state.genreBasedBrandMap[item.brand_id].is_modified}
                         />
                       </TableRowColumn>
                     </TableRow>
