@@ -15,12 +15,12 @@ import {overrideTableStyle} from '@utils'
 
 const styles = [
   { width: '38px', textAlign: 'left' },
+  { width: '38px', textAlign: 'left' },
   { width: '100px', textAlign: 'left' },
   { width: '80px', textAlign: 'left' },
   { width: '80px', textAlign: 'left' },
   { width: '100px', textAlign: 'left' },
   { width: '200px', textAlign: 'left' },
-  { width: '38px', textAlign: 'left' }
 ]
 
 class MappedStatesList extends React.Component {
@@ -131,14 +131,14 @@ class MappedStatesList extends React.Component {
           adjustForCheckbox={false}
         >
           <TableRow>
-            <TableHeaderColumn style={styles[0]}>IS_ACTIVE</TableHeaderColumn>
-            <TableHeaderColumn style={styles[1]}>STATE SHORT NAME</TableHeaderColumn>
-            <TableHeaderColumn style={styles[2]}>STATE NAME</TableHeaderColumn>
-            <TableHeaderColumn style={styles[3]}>SKU PRICE</TableHeaderColumn>
-            <TableHeaderColumn style={styles[4]}>SKU PRICING ID</TableHeaderColumn>
-            <TableHeaderColumn style={styles[5]}>TAG</TableHeaderColumn>
+            <TableHeaderColumn style={styles[0]} />
+            <TableHeaderColumn style={styles[1]}>IS_ACTIVE</TableHeaderColumn>
+            <TableHeaderColumn style={styles[2]}>STATE SHORT NAME</TableHeaderColumn>
+            <TableHeaderColumn style={styles[3]}>STATE NAME</TableHeaderColumn>
+            <TableHeaderColumn style={styles[4]}>SKU PRICE</TableHeaderColumn>
+            <TableHeaderColumn style={styles[5]}>SKU PRICING ID</TableHeaderColumn>
+            <TableHeaderColumn style={styles[6]}>TAG</TableHeaderColumn>
             {/* <TableHeaderColumn style={styles[5]}>STATUS</TableHeaderColumn> */}
-            <TableHeaderColumn style={styles[6]} />
           </TableRow>
         </TableHeader>
         <TableBody
@@ -157,6 +157,14 @@ class MappedStatesList extends React.Component {
             this.state.mappedStatesList && this.state.mappedStatesList.map((item, i) => {
               return <TableRow key={i}>
                 <TableRowColumn style={styles[0]}>
+                  <button
+                    onClick={() => this.enableInputBox(item.state_short_name)}
+                    style={this.props.disableSave ? { opacity: '0.55', pointerEvents: 'none', fontSize: '13px', textTransform: 'none', width: '50px' } : { fontSize: '13px', textTransform: 'none', width: '50px' }}
+                  >
+                    {!this.state.stateMap[item.state_short_name].is_modified ? 'Edit' : 'Save'}
+                  </button>
+                </TableRowColumn>
+                <TableRowColumn style={styles[1]}>
                   <Checkbox
                     onCheck={(e) => this.handleCheckboxes(e, item.state_short_name)}
                     checked={this.state.stateMap[item.state_short_name].is_active}
@@ -164,9 +172,9 @@ class MappedStatesList extends React.Component {
                     disabled={!this.state.stateMap[item.state_short_name].is_modified}
                   />
                 </TableRowColumn>
-                <TableRowColumn style={styles[1]}>{item.state_short_name}</TableRowColumn>
-                <TableRowColumn style={styles[2]}>{item.state_name}</TableRowColumn>
-                <TableRowColumn style={styles[3]}>
+                <TableRowColumn style={styles[2]}>{item.state_short_name}</TableRowColumn>
+                <TableRowColumn style={styles[3]}>{item.state_name}</TableRowColumn>
+                <TableRowColumn style={styles[4]}>
                   <input
                     type="number"
                     value={this.state.stateMap[item.state_short_name].price}
@@ -175,9 +183,9 @@ class MappedStatesList extends React.Component {
                     disabled={!this.state.stateMap[item.state_short_name].is_modified}
                   />
                 </TableRowColumn>
-                <TableRowColumn style={styles[4]}>{item.sku_pricing_id}</TableRowColumn>
+                <TableRowColumn style={styles[5]}>{item.sku_pricing_id}</TableRowColumn>
                 {/* <TableRowColumn style={styles[5]}>{item.is_active ? 'Active' : 'Inactive'}</TableRowColumn> */}
-                <TableRowColumn style={styles[5]}>
+                <TableRowColumn style={styles[6]}>
                   <input
                     type="text"
                     value={this.state.stateMap[item.state_short_name].tag}
@@ -185,14 +193,6 @@ class MappedStatesList extends React.Component {
                     style={!this.state.stateMap[item.state_short_name].is_modified ? editInputStyle : { width: '200px', padding: '0px 10px' }}
                     disabled={!this.state.stateMap[item.state_short_name].is_modified}
                   />
-                </TableRowColumn>
-                <TableRowColumn style={styles[6]}>
-                  <button
-                    onClick={() => this.enableInputBox(item.state_short_name)}
-                    style={this.props.disableSave ? { opacity: '0.55', pointerEvents: 'none', fontSize: '13px', textTransform: 'none', width: '50px' } : { fontSize: '13px', textTransform: 'none', width: '50px' }}
-                  >
-                    {!this.state.stateMap[item.state_short_name].is_modified ? 'Edit' : 'Save'}
-                  </button>
                 </TableRowColumn>
               </TableRow>
             })
