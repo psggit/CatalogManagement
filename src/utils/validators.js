@@ -1,8 +1,11 @@
 import { emailRegex } from './regex'
 
 export function validateTextField(fieldName, fieldValue) {
-  //console.log("value", fieldValue, fieldValue.length, !fieldValue.length)
-  if (!fieldValue || !fieldValue.trim().toString().length) {
+  let textValue = ""
+  if(fieldValue >= 0 || fieldValue) {
+    textValue = fieldValue.toString()
+  }
+  if(textValue.toString().trim().length === 0) {
     return {
       status: true,
       value: `${fieldName} is required`
