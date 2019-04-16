@@ -74,6 +74,7 @@ class ListingOrder extends React.Component {
           brandWithListingOrder = {
             brand_id: brand.id,
             brand_name: brand.brand_name,
+            is_modified: false,
             is_active: brand.is_active,
             state_id: this.state.selectedStateIdx,
             listing_order: this.props.brandListingOrder[listingOrderIdx].listing_order
@@ -84,6 +85,7 @@ class ListingOrder extends React.Component {
             brand_id: brand.id,
             brand_name: brand.brand_name,
             is_active: brand.is_active,
+            is_modified: false,
             state_id: this.state.selectedStateIdx,
             listing_order: 0
           }
@@ -92,7 +94,11 @@ class ListingOrder extends React.Component {
       })
     } else {
       this.props.genreBasedBrandList.map((brand) => {
-        genreBasedBrandMap[brand.id] = Object.assign({}, brand, {listing_order: 0, state_id: this.state.selectedStateIdx, is_active: brand.is_active})
+        genreBasedBrandMap[brand.id] = Object.assign(
+                                        {}, 
+                                        brand, 
+                                        {listing_order: 0, state_id: this.state.selectedStateIdx, is_active: brand.is_active, is_modified: false}
+                                      )
       })
     }
 
@@ -122,12 +128,14 @@ class ListingOrder extends React.Component {
     }
   }
 
-  createOrUpdateBrandListingOrder() {
+  createOrUpdateBrandListingOrder(brandList) {
+    //console.log("is state", this.state, brandList)
     this.setState({isSavingDetails: true})
     this.props.actions.updateBrandListingOrder({
       brand_listing_order: this.state.genreBasedBrandList
     }, () => {
       this.setState({isSavingDetails: false})
+      this.fetchGenreBasedBrandList()
     })
   }
 

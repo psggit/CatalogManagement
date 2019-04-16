@@ -10,8 +10,10 @@ import {
 } from 'material-ui/Table'
 import { overrideTableStyle } from '@utils'
 import RaisedButton from 'material-ui/RaisedButton'
+import Checkbox from "material-ui/Checkbox"
 
 const TableHeaderItems = [
+  '',
   'ID',
   'BRAND NAME',
   'STATUS',
@@ -19,6 +21,7 @@ const TableHeaderItems = [
 ]
 
 const styles = [
+  { width: '30px' },
   { width: '30px' },
   { width: '100px' },
   { width: '60px' },
@@ -38,6 +41,7 @@ class BrandList extends React.Component {
 
     this.handleChange = this.handleChange.bind(this)
     this.enableEdit = this.enableEdit.bind(this)
+    this.handleCheckboxes = this.handleCheckboxes.bind(this)
   }
 
   componentDidMount() {
@@ -82,8 +86,19 @@ class BrandList extends React.Component {
       enableEdit: true
     })
     if(this.state.enableEdit) {
-      this.props.createOrUpdateBrandListingOrder()
+      const selectedBrandList = this.state.genreBasedBrandList.filter((item) => {
+        if(item.is_modified) {
+          return item
+        }
+      })
+      this.props.createOrUpdateBrandListingOrder(selectedBrandList)
     }
+  }
+
+  handleCheckboxes(e, brandId) {
+    let updatedMap = Object.assign({}, this.state.genreBasedBrandMap)
+    updatedMap[brandId].is_modified = (e.target.checked)
+    this.setState({ genreBasedBrandMap: updatedMap, genreBasedBrandList: Object.values(updatedMap) })
   }
 
   render() {
@@ -124,17 +139,25 @@ class BrandList extends React.Component {
                 this.state.genreBasedBrandList.map((item, i) => {
                   return (
                     <TableRow key={item.id}>
-                      <TableRowColumn style={styles[0]}>{item.brand_id}</TableRowColumn>
-                      <TableRowColumn style={styles[1]}>{item.brand_name}</TableRowColumn>
-                      <TableRowColumn style={styles[2]}>{item.is_active ? 'Active' : 'Inactive'}</TableRowColumn>
-                      <TableRowColumn style={styles[3]}>
+                      <TableRowColumn style={styles[0]}>
+                        <Checkbox
+                          onCheck={(e) => this.handleCheckboxes(e, item.brand_id)}
+                          checked={this.state.genreBasedBrandMap[item.brand_id].is_modified}
+                          name="isModified"
+                          disabled={!this.state.enableEdit}
+                        />
+                      </TableRowColumn>
+                      <TableRowColumn style={styles[1]}>{item.brand_id}</TableRowColumn>
+                      <TableRowColumn style={styles[2]}>{item.brand_name}</TableRowColumn>
+                      <TableRowColumn style={styles[3]}>{item.is_active ? 'Active' : 'Inactive'}</TableRowColumn>
+                      <TableRowColumn style={styles[4]}>
                         <input 
-                            type="number" 
-                            value={this.state.genreBasedBrandMap[(item.brand_id)].listing_order} 
-                            onChange={(e) => this.handleChange(e, item.brand_id)} 
-                            style = {{ width: '60px', padding: '0 10px'}}
-                            disabled={!this.state.enableEdit}
-                          />
+                          type="number" 
+                          value={this.state.genreBasedBrandMap[(item.brand_id)].listing_order} 
+                          onChange={(e) => this.handleChange(e, item.brand_id)} 
+                          style = {{ width: '60px', padding: '0 10px'}}
+                          disabled={!this.state.enableEdit}
+                        />
                       </TableRowColumn>
                     </TableRow>
                   )
