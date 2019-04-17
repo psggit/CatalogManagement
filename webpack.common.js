@@ -54,10 +54,10 @@ module.exports = {
   output: {
     filename: '[name].[chunkhash].js',
     path: path.resolve(__dirname, 'dist'),
-    publicPath: '/'
+    //publicPath: '/'
     // filename: '[name].[chunkhash].js',
     // path: path.resolve(__dirname, 'dist'),
-    // publicPath: '/admin'
+    publicPath: '/admin'
   },
   optimization: {
     splitChunks: {

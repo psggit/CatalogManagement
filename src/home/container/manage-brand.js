@@ -43,7 +43,7 @@ class ManageBrand extends React.Component {
       operator: '',
       value: ''
     }
-    this.pagesLimit = 5
+    this.pagesLimit = 15
     this.handlePageChange = this.handlePageChange.bind(this)
     this.mountFilterDialog = this.mountFilterDialog.bind(this)
     this.unmountFilterModal = this.unmountFilterModal.bind(this)
