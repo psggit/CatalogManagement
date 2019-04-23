@@ -25,15 +25,15 @@ if (env === 'production') {
   app.get('*.js', function (req, res, next) {
     console.log("req", req.url)
     const runtimeUrlRegex = /runtime.*.js/
-    // if(!runtimeUrlRegex.test(req.url)) {
-    //   req.url = req.url + '.gz';
-    //   res.set('Content-Encoding', 'gzip');
-    // }
+    if(!runtimeUrlRegex.test(req.url)) {
+      req.url = req.url + '.gz';
+      res.set('Content-Encoding', 'gzip');
+    }
     next();
   });
 }
 
-app.use(express.static(path.join(__dirname, 'dist')))
+app.use('/admin', express.static(path.join(__dirname, 'dist')))
 
 app.get('/*', (req, res)=>{
   console.log(req.query);
