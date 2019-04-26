@@ -29,6 +29,10 @@ class EditBrand extends React.Component {
       limit: 10000,
       offset: 0
     })
+    this.props.actions.fetchBrands({
+      limit: 1000,
+      offset: 0
+    })
   }
 
   callbackUpdate() {
@@ -38,6 +42,7 @@ class EditBrand extends React.Component {
   submit() {
     const data = this.brandForm.getData()
     this.setState({ isDisabled: true })
+    console.log("data", data)
     this.props.actions.updateBrand({
       brand_id: parseInt(this.props.history.location.state.id),
       brand_name: data.brandName,
@@ -80,13 +85,15 @@ class EditBrand extends React.Component {
             <BrandForm
               ref={(node) => { this.brandForm = node }}
               brandInfo={this.props.history.location.state}
-              disableNameField={true}
+              // disableNameField={true}
               isDisabled={this.state.isDisabled}
               brandTypeList={this.props.brandTypeList}
               submit={this.submit}
               genreList={this.props.genreList}
               loadingGenreList={this.props.loadingGenreList}
               loadingBrandTypeList={this.props.loadingBrandTypeList}
+              loadingBrandList={this.props.loadingBrandDetails}
+              brandList={this.props.brands}
             />
           </Card>
         </div>
