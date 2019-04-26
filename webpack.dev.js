@@ -9,7 +9,10 @@ module.exports = merge(common, {
     contentBase: './dist',
     port: 8001,
     compress: true,
-    publicPath: '/'
+    publicPath: '/admin',
+    historyApiFallback: {
+      index: "/admin"
+    }
   },
   plugins: [
     new MiniCssExtractPlugin({
