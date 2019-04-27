@@ -143,7 +143,7 @@ class ListingOrder extends React.Component {
     //console.log("state in parent", this.state)
     return (
       <div style={{
-        width: '500px',
+        width: '600px',
         position: 'relative',
         display: 'block',
         verticalAlign: 'top',
