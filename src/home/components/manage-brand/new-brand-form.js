@@ -93,7 +93,6 @@ class BrandForm extends React.Component {
       }
     }
     if(this.props.brandList !== prevProps.brandList) {
-      console.log("brand idx", this.state.brandIdx, this.props.brandList[0].id)
       if(this.state.brandIdx.toString().length === 0) {
         this.setState({
           brandIdx: parseInt(this.props.brandList[0].id)
