@@ -31,7 +31,7 @@ class EditBrand extends React.Component {
       offset: 0
     })
     this.props.actions.fetchBrands({
-      limit: 1000,
+      limit: 10000,
       offset: 0
     })
   }
