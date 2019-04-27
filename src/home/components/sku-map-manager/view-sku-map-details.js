@@ -188,13 +188,6 @@ const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(Actions, dispatch)
 })
 
-// ViewLocalityMapDetails.propTypes = {
-//   mappedRetailersToLocality: PropTypes.arrayOf(PropTypes.object).isRequired,
-//   loadingMappedRetailersToLocality: PropTypes.bool.isRequired,
-//   mappedDpToLocality: PropTypes.arrayOf(PropTypes.object).isRequired,
-//   loadingMappedDpToLocality: PropTypes.bool.isRequired
-// }
-
 export default connect(
   mapStateToProps,
   mapDispatchToProps

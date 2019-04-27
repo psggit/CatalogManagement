@@ -138,7 +138,6 @@ class MappedStatesList extends React.Component {
             <TableHeaderColumn style={styles[4]}>SKU PRICE</TableHeaderColumn>
             <TableHeaderColumn style={styles[5]}>SKU PRICING ID</TableHeaderColumn>
             <TableHeaderColumn style={styles[6]}>TAG</TableHeaderColumn>
-            {/* <TableHeaderColumn style={styles[5]}>STATUS</TableHeaderColumn> */}
           </TableRow>
         </TableHeader>
         <TableBody
@@ -184,7 +183,6 @@ class MappedStatesList extends React.Component {
                   />
                 </TableRowColumn>
                 <TableRowColumn style={styles[5]}>{item.sku_pricing_id}</TableRowColumn>
-                {/* <TableRowColumn style={styles[5]}>{item.is_active ? 'Active' : 'Inactive'}</TableRowColumn> */}
                 <TableRowColumn style={styles[6]}>
                   <input
                     type="text"

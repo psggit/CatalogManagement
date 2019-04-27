@@ -6,7 +6,6 @@ import RaisedButton from 'material-ui/RaisedButton'
 import '@sass/components/_form.scss'
 import BrandForm from './new-brand-form'
 import { Card } from 'material-ui/Card'
-import { getQueryObj } from '@utils/url-utils'
 
 class CreateBrand extends React.Component {
 

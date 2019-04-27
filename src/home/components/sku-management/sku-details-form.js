@@ -26,10 +26,6 @@ class SkuDetailsForm extends React.Component {
       brandIdx: 0,
       brandName: props.brandName ? props.brandName : '',
       brandId: 0,
-      // isImageUploaded: false,
-      // isImageUploading: false,
-      // isImageSelected: false,
-      // image_url: props.skuInfo ? props.skuInfo.image_url : '',
       tag:  props.skuInfo ? props.skuInfo.tag : '',
       high_res_image: props.skuInfo ? props.skuInfo.high_res_image : '',
       low_res_image: props.skuInfo ? props.skuInfo.low_res_image : '',
@@ -37,8 +33,6 @@ class SkuDetailsForm extends React.Component {
       gs1_barcode: props.skuInfo ? props.skuInfo.gs1_barcode : '', 
       high_res_image_err: false,
       low_res_image_err: false,
-      //gs1_barcode_err: false,
-      //barcode_image_err: false,
       volumeErr: {
         value: '',
         status: false
@@ -77,20 +71,12 @@ class SkuDetailsForm extends React.Component {
     this.handleStatusChange = this.handleStatusChange.bind(this)
     this.handleBrandChange = this.handleBrandChange.bind(this)
     this.handleCheckboxes = this.handleCheckboxes.bind(this)
-    // this.handleUploadChange = this.handleUploadChange.bind(this)
-    // this.resetUploadImage = this.resetUploadImage.bind(this)
-    // this.submitUploadedImage = this.submitUploadedImage.bind(this)
     this.handleSave = this.handleSave.bind(this)
     this.isFormValid = this.isFormValid.bind(this)
   }
 
-  // componentDidMount() {
-  //   this.props.actions.setLoadingState()
-  // }
   componentWillReceiveProps(newProps) {
-    console.log("props", this.props.brandList, newProps.brandList)
     if(newProps.brandList !== this.props.brandList && !newProps.loadingBrandList) {
-      console.log("new props", newProps)
       this.setState({brandId: newProps.brandList[0].id})
     }
   }
@@ -115,13 +101,6 @@ class SkuDetailsForm extends React.Component {
   }
 
   handleChange(e) {
-    // if(validateNumType(e.keyCode) || checkCtrlA(e)) {
-    //   this.setState({ 
-    //     [e.target.name]: e.target.value
-    //   })
-    // } else {
-    //   e.preventDefault()
-    // }
     const errName = `${e.target.name}Err`
     if(validateNumType(e.keyCode) || checkCtrlA(e) || checkCtrlV(e)) {
       this.setState({ 
@@ -134,22 +113,6 @@ class SkuDetailsForm extends React.Component {
   }
 
   handleTextFields(e) {
-    // let value = e.target.value
-    // if (this.state.shouldTrim) {
-    //   value = value.trim()
-    // }
-
-    // if (value.trim().length) {
-    //   this.setState({ shouldTrim: false })
-    // } else {
-    //   this.setState({ shouldTrim: true })
-    // }
-    // this.setState({ [e.target.name]: value })
-    // if (!/^(https:\/\/)(.*)/.test(value)) {
-    //   this.setState({ [`${e.target.name}_err`]: true })
-    // } else {
-    //   this.setState({ [`${e.target.name}_err`]: false })
-    // }
     const errName = `${e.target.name}Err`
     this.setState({
         [e.target.name]: e.target.value,
@@ -184,35 +147,6 @@ class SkuDetailsForm extends React.Component {
   getData() {
     return this.state
   }
-
-  // handleUploadChange(e) {
-  //   const file = e.target.files[0]
-  //   this.setState({
-  //     data: file,
-  //     isImageSelected: true
-  //   })
-  // }
-
-  // resetUploadImage() {
-  //   this.setState({ isImageUploaded: false, isImageSelected: false, isImageUploading: false, image_url: '' })
-  // }
-
-  // submitUploadedImage() {
-  //   const formData = new FormData()
-  //   formData.append('file', this.state.data)
-  //   this.setState({ isImageUploading: true, isImageSelected: false })
-  //   POST({
-  //     api: '/upload',
-  //     type: 'FormData',
-  //     apiBase: 'api2',
-  //     data: formData,
-  //     handleError: true
-  //   })
-  //     .then((json) => {
-  //       this.uploadedImageUrl = `${Api.api2}/get?fs_url=${json[0]}`
-  //       this.setState({ isImageUploaded: true, isImageUploading: false, image_url: json[0] })
-  //     })
-  // }
 
   handleCheckboxes(e) {
     this.setState({ [e.target.name]: e.target.checked })
@@ -312,76 +246,6 @@ class SkuDetailsForm extends React.Component {
             <MenuItem value={2} primaryText="Inactive" />
           </SelectField>
         </div>
-
-        {/* <div className="form-group">
-          <label className="label">Upload image</label><br />
-          {
-            !this.state.isImageUploaded &&
-            <div>
-              <input
-                onChange={this.handleUploadChange}
-                type="file"
-                style={{
-                  marginTop: '15px',
-                  padding: '0',
-                  border: '0'
-                }}
-              />
-
-              <button
-                disabled={!this.state.isImageSelected || this.state.isImageUploading}
-                onClick={this.submitUploadedImage}
-                style={{
-                  width: '100%',
-                  padding: '10px',
-                  borderRadius: '4px',
-                  cursor: this.state.isImageUploading ? 'progress' : 'pointer'
-                }}
-              >
-                Upload
-              </button>
-            </div>
-          }
-          {
-            this.state.isImageUploaded &&
-            <div style={{
-              width: '200px',
-              marginTop: '15px',
-              position: 'relative',
-              marginLeft: 'auto',
-              marginRight: 'auto'
-            }}>
-              <img src={this.uploadedImageUrl} style={{ width: '200px', height: '200px' }} />
-              <div
-                onClick={this.resetUploadImage}
-                style={{
-                  position: 'absolute',
-                  top: '-10px',
-                  right: '-10px',
-                  zIndex: '1',
-                  width: '24px',
-                  height: '24px',
-                  borderRadius: '50%',
-                  background: '#fff',
-                  cursor: 'pointer'
-                }}>
-                {getIcon('cross-circle')}
-              </div>
-            </div>
-          }
-        </div>
-
-        <div className="form-group">
-          <label className="label">Image url</label><br />
-          <TextField
-            readOnly
-            onChange={this.handleTextFields}
-            name="high_res_image"
-            hintText="https://cloudfront.ads.johnny_walker.jpg"
-            value={this.state.image_url}
-            style={{ width: '100%' }}
-          />
-        </div> */}
 
         <div className="form-group">
           <label className="label">High res image</label><br />

@@ -43,7 +43,6 @@ class EditBrand extends React.Component {
   submit() {
     const data = this.brandForm.getData()
     this.setState({ isDisabled: true })
-    console.log("data", data)
     this.props.actions.updateBrand({
       brand_id: parseInt(this.props.history.location.state.id),
       brand_name: data.brandName,

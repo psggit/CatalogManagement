@@ -20,11 +20,6 @@ class BrandForm extends React.Component {
       temperature: props.brandInfo ? this.props.brandInfo.temperature : '',
       caloriesPercentage: props.brandInfo ? this.props.brandInfo.cal_per : '',
       caloriesTotal: props.brandInfo ? props.brandInfo.cal_total : '',
-      // isImageUploaded: props.brandInfo ? true : false,
-      // isImageUploading: false,
-      // isImageSelected: false,
-      // uploadedImageUrl: props.brandInfo ? 'https://api2.amebae21.hasura-app.io/get?fs_url=4304@public:///admin/158343/raw/846603e5-7c57-4116-a767-0a425f5131d4-UB_Group_Logo_White' : '',
-      // image_url: props.brandInfo ? props.brandInfo.image : '',
       tag: props.brandInfo ? props.brandInfo.tag : '',
       high_res_image: props.brandInfo ? props.brandInfo.high_res_image : '',
       low_res_image: props.brandInfo ? props.brandInfo.low_res_image : '',
@@ -70,8 +65,6 @@ class BrandForm extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleTypeChange = this.handleTypeChange.bind(this)
     this.handleBrandChange = this.handleBrandChange.bind(this)
-    // this.resetUploadImage = this.resetUploadImage.bind(this)
-    // this.submitUploadedImage = this.submitUploadedImage.bind(this)
     this.handleSave = this.handleSave.bind(this)
     this.isFormValid = this.isFormValid.bind(this)
     this.handleGenreChange = this.handleGenreChange.bind(this)
@@ -132,18 +125,6 @@ class BrandForm extends React.Component {
     })
   }
 
-  // handleChange(e) {
-  //   const errName = `${e.target.name}Err`
-  //   if(validateNumType(e.keyCode) || checkCtrlA(e) || checkCtrlV(e)) {
-  //     this.setState({ 
-  //         [e.target.name]: e.target.value,
-  //         [errName]: validateNumberField(this.inputNameMap[e.target.name], e.target.value)
-  //     })
-  //   } else {
-  //       e.preventDefault()
-  //   }   
-  // }
-
   handleChange(e) {
     const errName = `${e.target.name}Err`
     this.setState({
@@ -163,18 +144,6 @@ class BrandForm extends React.Component {
   getData() {
     return this.state
   }
-
-  // handleUploadChange(e) {
-  //   const file = e.target.files[0]
-  //   this.setState({
-  //     data: file,
-  //     isImageSelected: true
-  //   })
-  // }
-
-  // resetUploadImage() {
-  //   this.setState({ isImageUploaded: false, isImageSelected: false, isImageUploading: false, image_url: '' })
-  // }
 
   isFormValid() {
     const brandNameErr = validateTextField(this.inputNameMap['brandName'], this.state.brandName)
@@ -204,29 +173,6 @@ class BrandForm extends React.Component {
       this.props.submit()
     }
   }
-
-  // submitUploadedImage() {
-  //   const formData = new FormData()
-  //   formData.append('file', this.state.data)
-  //   this.setState({ isImageUploading: true, isImageSelected: false })
-  //   POST({
-  //     api: '/upload',
-  //     type: 'FormData',
-  //     apiBase: 'api2',
-  //     data: formData,
-  //     handleError: true
-  //   })
-  //     .then((json) => {
-  //       //this.uploadedImageUrl = `${Api.api2}/get?fs_url=${json[0]}`
-  //       this.setState({ 
-  //         isImageUploaded: true, 
-  //         isImageUploading: false, 
-  //         //image_url: json[0],
-  //         image_url: `${Api.api2}/get?fs_url=${json[0]}`,
-  //         uploadedImageUrl: `${Api.api2}/get?fs_url=${json[0]}`
-  //       })
-  //     })
-  // }
 
   render() {
     const { brandNameErr, highResBrandLogoErr, lowResBrandLogoErr, tagNameErr } = this.state
@@ -373,76 +319,6 @@ class BrandForm extends React.Component {
             <p className="error">* {tagNameErr.value}</p>
           }
         </div>
-
-        {/* <div className="form-group">
-          <label className="label">Upload image</label><br />
-          {
-            !this.state.isImageUploaded &&
-            <div>
-              <input
-                onChange={this.handleUploadChange}
-                type="file"
-                style={{
-                  marginTop: '15px',
-                  padding: '0',
-                  border: '0'
-                }}
-              />
-
-              <button
-                disabled={!this.state.isImageSelected || this.state.isImageUploading}
-                onClick={this.submitUploadedImage}
-                style={{      
-                  width: '100%',
-                  padding: '10px',
-                  borderRadius: '4px',
-                  cursor: this.state.isImageUploading ? 'progress' : 'pointer'        
-                }}
-              >
-                Upload
-              </button>
-            </div>
-          }
-          {
-            this.state.isImageUploaded &&
-            <div style={{
-              width: '200px',
-              marginTop: '15px',
-              position: 'relative',
-              marginLeft: 'auto',
-              marginRight: 'auto'
-            }}>
-              <img src={this.state.uploadedImageUrl} style={{ width: '200px', height: '200px' }} />
-              <div
-                onClick={this.resetUploadImage}
-                style={{
-                position: 'absolute',
-                top: '-10px',
-                right: '-10px',
-                zIndex: '1',
-                width: '24px',
-                height: '24px',
-                borderRadius: '50%',
-                background: '#fff',
-                cursor: 'pointer'
-              }}>
-                { getIcon('cross-circle') }
-              </div>
-            </div>
-          }
-        </div>
-
-        <div className="form-group">
-          <label className="label">Image url</label><br />
-          <TextField
-            readOnly
-            onChange={this.handleTextFields}
-            name="high_res_image"
-            hintText="https://cloudfront.ads.johnny_walker.jpg"
-            value={this.state.image_url}
-            style={{ width: '100%' }}
-          />
-        </div> */}
 
         <div className="form-group">
           <label className="label">High res bottle image</label><br />
