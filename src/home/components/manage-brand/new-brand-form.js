@@ -133,7 +133,7 @@ class BrandForm extends React.Component {
         status: false
       }
     })
-    const re = /^[0-9\b]*$/;
+    const re = /^[0-9.\b]*$/;
     if ((re.test(e.target.value))) {
        this.setState({[e.target.name]: e.target.value})
     } else {
@@ -230,7 +230,7 @@ class BrandForm extends React.Component {
         </div>
 
         <div className="form-group">
-          <label className="label">Calories percentage</label><br />
+          <label className="label">Calories per</label><br />
           <TextField
             name="caloriesPercentage"
             autoComplete='off'
