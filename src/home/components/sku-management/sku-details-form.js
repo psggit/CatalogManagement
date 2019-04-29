@@ -7,6 +7,7 @@ import '@sass/components/_form.scss'
 import { POST } from '@utils/fetch'
 import { Api } from '@utils/config'
 import {getIcon} from '@utils/icon-utils'
+import AutoComplete from 'material-ui/AutoComplete'
 // import { validateNumType, checkCtrlA } from './../../../utils'
 import RaisedButton from 'material-ui/RaisedButton'
 import { validateNumType, checkCtrlA, checkCtrlV } from './../../../utils'
@@ -63,7 +64,8 @@ class SkuDetailsForm extends React.Component {
       'volume': 'Volume',
       'gs1Barcode': 'Gs1 barcode',
       'barcodeImage': 'Barcode image',
-      'tagName': 'Tag'
+      'tagName': 'Tag',
+      'brandName': 'Brand name'
     }
     
     this.state = Object.assign({}, this.intitialState)
@@ -73,12 +75,14 @@ class SkuDetailsForm extends React.Component {
     this.handleCheckboxes = this.handleCheckboxes.bind(this)
     this.handleSave = this.handleSave.bind(this)
     this.isFormValid = this.isFormValid.bind(this)
+    this.selectedBrandName = this.selectedBrandName.bind(this)
   }
 
   componentWillReceiveProps(newProps) {
     if(newProps.brandList !== this.props.brandList && !newProps.loadingBrandList) {
       this.setState({brandId: newProps.brandList[0].id})
     }
+    document.getElementsByClassName("auto-complete")[0].style.width = '100%'
   }
 
   handleStatusChange(e, k) {
@@ -124,6 +128,9 @@ class SkuDetailsForm extends React.Component {
     const volumeErr = validateNumberField(this.inputNameMap['volume'], this.state.volume)
     this.setState({ volumeErr: validateNumberField(this.inputNameMap['volume'], this.state.volume) })
 
+    const brandNameErr = validateTextField(this.inputNameMap['brandName'], this.state.brandName)
+    this.setState({ brandNameErr: validateTextField(this.inputNameMap['brandName'], this.state.brandName) })
+
     // const gs1BarcodeErr = validateTextField(this.inputNameMap['gs1Barcode'], this.state.gs1_barcode)
     // this.setState({ gs1BarcodeErr: validateTextField(this.inputNameMap['gs1Barcode'], this.state.gs1_barcode) })
 
@@ -135,6 +142,8 @@ class SkuDetailsForm extends React.Component {
 
     if(!volumeErr.status) {
       return true;
+    } else if(!brandNameErr.status) {
+      return true
     }
     return false
   }
@@ -152,9 +161,22 @@ class SkuDetailsForm extends React.Component {
     this.setState({ [e.target.name]: e.target.checked })
   }
 
+  selectedBrandName(brand, index) {
+    //console.log("brand", brand, "index", index)
+    this.setState({
+      brandIdx: index,
+      brandName: brand.brand_name,
+      brandId: brand.id
+    })
+  }
+
   render() {
     //console.log("props", this.props)
-    const {volumeErr, tagNameErr, gs1BarcodeErr, barcodeImageErr} = this.state
+    const {volumeErr, brandNameErr, tagNameErr, gs1BarcodeErr, barcodeImageErr} = this.state
+    const dataSourceConfig = {
+      text: 'brand_name',
+      value: 'id',
+    };
     return (
       <Fragment>
 
@@ -162,29 +184,39 @@ class SkuDetailsForm extends React.Component {
           <label className="label">Brand name*</label><br />
           {
             this.props.action !== "edit" ?
-              <SelectField
-                value={this.state.brandId}
-                onChange={this.handleBrandChange}
-                iconStyle={{ fill: '#9b9b9b' }}
+              // <SelectField
+              //   value={this.state.brandId}
+              //   onChange={this.handleBrandChange}
+              //   iconStyle={{ fill: '#9b9b9b' }}
+              //   style={{ width: '100%' }}
+              //   autoComplete='off'
+              //   //floatingLabelText="Select brand"
+              //   //hintText="Hint text"
+              // >
+              //   {/* <MenuItem disabled value="">
+              //     <em>Select brand</em>
+              //   </MenuItem> */}
+              //   {
+              //     !this.props.loadingBrandList &&
+              //     this.props.brandList && this.props.brandList.map((item, i) => {
+              //       return <MenuItem
+              //         value={item.id}
+              //         key={item.id}
+              //         primaryText={item.brand_name}
+              //       />
+              //     })
+              //   }
+              // </SelectField>
+               
+              <AutoComplete
+                floatingLabelText="Search for brand name"
+                filter={AutoComplete.caseInsensitiveFilter}
+                dataSource={this.props.brandList ? this.props.brandList : []}
+                dataSourceConfig={dataSourceConfig}
+                onNewRequest={this.selectedBrandName}
+                className="auto-complete"
                 style={{ width: '100%' }}
-                autoComplete='off'
-                //floatingLabelText="Select brand"
-                //hintText="Hint text"
-              >
-                {/* <MenuItem disabled value="">
-                  <em>Select brand</em>
-                </MenuItem> */}
-                {
-                  !this.props.loadingBrandList &&
-                  this.props.brandList && this.props.brandList.map((item, i) => {
-                    return <MenuItem
-                      value={item.id}
-                      key={item.id}
-                      primaryText={item.brand_name}
-                    />
-                  })
-                }
-              </SelectField>
+              />
               :
               <TextField
                 disabled={this.props.isDisabled}
@@ -193,6 +225,10 @@ class SkuDetailsForm extends React.Component {
                 value={this.props.brandName}
                 style={{ width: '100%' }}
               />
+          }
+          {
+            brandNameErr.status &&
+            <p className="error">* {brandNameErr.value}</p>
           }
         </div>
 
