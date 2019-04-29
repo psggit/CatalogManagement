@@ -78,7 +78,6 @@ class ViewSKUList extends React.Component {
       queryObj = {
         brand_id: item.brand_id,
         brand_name: item.brand_name,
-        //sku_pricing_id: item.sku_pricing_id,
         is_active: item.is_active,
         volume: item.sku_volume
       }
@@ -120,7 +119,6 @@ class ViewSKUList extends React.Component {
                           {
                             <FlatButton primary label={`${this.props.navigateTo === "editSKU" ? "EDIT" : "VIEW"}`}
                               onClick={(e) => this.handleClick(e, item)} 
-                              // style={ data.navigateTo !== 'editSKU' && !item.is_active ? {opacity: 0.55} : {}}  
                             /> 
                           }
                         </TableRowColumn>

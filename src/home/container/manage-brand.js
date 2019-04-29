@@ -247,8 +247,6 @@ class ManageBrand extends React.Component {
               onClick={this.resetFilter}
               label="Reset Filter"
               disabled={!this.state.isFilterApplied}
-              //style={{marginRight: '10px'}}
-              //icon={getIcon('filter')}
             />
           </div>
         </div>

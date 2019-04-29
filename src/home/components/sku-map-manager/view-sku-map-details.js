@@ -29,7 +29,6 @@ class ViewSKUMapDetails extends React.Component {
     this.mapStateToSku = this.mapStateToSku.bind(this)
     this.successFetchStatesCallback = this.successFetchStatesCallback.bind(this)
     this.mapStates = this.mapStates.bind(this)
-    //this.failureCallback = this.failureCallback.bind(this)
   }
 
   componentDidMount() {
@@ -46,15 +45,10 @@ class ViewSKUMapDetails extends React.Component {
   }
 
   successFetchStatesCallback() {
-    //console.log("success fetch states", this.props.statesList)
     this.props.actions.fetchStatesMappedToSku({
       sku_id: parseInt(this.props.match.params.skuId)
     }, this.mapStates)
   }
-
-  // failureCallback() {
-  //   this.setState({loadingData: false})
-  // }
 
   mapStates() {
     if(!this.props.mappedStatesToSkuData) {
@@ -70,7 +64,6 @@ class ViewSKUMapDetails extends React.Component {
       })
       const mappedStatesToSku = {}
       this.props.mappedStatesToSkuData.map((item) => {
-        //console.log("item price", item)
         mappedStatesToSku[statesMap[item.state_id].state_short_name] = {
           sku_pricing_id: parseInt(item.id),
           state_id: parseInt(item.state_id),
@@ -102,11 +95,6 @@ class ViewSKUMapDetails extends React.Component {
       }, this.mapStates)
     })
   }
-
-  // handleUnmapState(stateDetailObj) {
-  //   stateDetailObj['sku_id'] = this.state.skuId
-  //   this.props.actions.updateSkuStateMap(stateDetailObj,() => {})
-  // }
 
   mountAddStateToSkuDialog() {
     this.setState({ shouldMountAddStateToSkuDialog: true })

@@ -21,9 +21,7 @@ class SkuDetailsForm extends React.Component {
       volume: props.skuInfo ? props.skuInfo.volume : '',
       skuId: props.skuInfo ? props.skuInfo.sku_id : '',
       statusIdx: props.skuInfo ? props.skuInfo.is_active ? 1 : 2 : 1,
-      //status: props.skuInfo ? props.skuInfo.is_active : '',
       shouldTrim: true,
-      //cancelOpenReservation: false,
       brandIdx: 0,
       brandName: props.brandName ? props.brandName : '',
       brandId: 0,
@@ -86,7 +84,6 @@ class SkuDetailsForm extends React.Component {
   }
 
   handleStatusChange(e, k) {
-    //const { statusData } = this.props
     const statusIdx = k + 1
     console.log(statusIdx)
     this.setState({

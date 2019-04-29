@@ -8,10 +8,7 @@ import {
   TableRowColumn
 } from 'material-ui/Table'
 
-import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
-import CircularProgress from 'material-ui/CircularProgress'
-import { NavLink } from 'react-router-dom'
 import TableLoadingShell from './../table-loading-shell'
 import '@sass/components/_table.scss'
 import Switch from '@components/switch'
@@ -42,14 +39,6 @@ const styles = [
   { width: '60px' },
   { width: '100px' }
 ]
-
-// function editBrand(brandDetails, data) {
-//   data.history.push(`/admin/manage-brand/edit/${brandDetails.brand_name}`, brandDetails)
-// }
-
-// function updateBrandStatus(item, isInputClicked) {
-//   data.showDialog({newStatus: isInputClicked, brandName: item.brand_name, volume: item.volume})
-// }
 
 class ViewBrandList extends React.Component {
   constructor() {

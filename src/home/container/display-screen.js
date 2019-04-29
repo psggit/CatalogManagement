@@ -7,9 +7,7 @@ class DisplayScreen extends React.Component {
       marginTop: '64px',
       marginLeft: '256px',
       height: 'calc(100vh - 224px)',
-      overflow: 'auto',
-      //background: '#757575'
-      //background: 'rgba(246, 246, 246, 0.4)'
+      overflow: 'auto'
     }
     return (
       <div id="display-screen" style={displayScreenStyle}>

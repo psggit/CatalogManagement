@@ -12,7 +12,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 class BrandForm extends React.Component {
   constructor(props) {
     super(props)
-    //this.uploadedImageUrl = ''
+    
     this.intitialState = {
       shouldTrim: true,
       brandName: props.brandInfo ? props.brandInfo.brand_name : '',
@@ -179,22 +179,6 @@ class BrandForm extends React.Component {
     console.log("props", this.props)
     return (
       <Fragment>
-        
-        {/* <div className="form-group">
-          <label className="label">Brand name*</label><br />
-          <TextField
-            disabled={this.props.disableNameField}
-            onChange={this.handleTextFields}
-            name="brandName"
-            value={this.state.brandName}
-            style={{ width: '100%' }}
-          />
-          {
-            brandNameErr.status &&
-            <p className="error">* {brandNameErr.value}</p>
-          }
-        </div> */}
-
         <div className="form-group">
           <label className="label">Brand name*</label><br />
           {

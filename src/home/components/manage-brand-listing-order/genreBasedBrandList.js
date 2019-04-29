@@ -185,13 +185,3 @@ class BrandList extends React.Component {
 }
 
 export default BrandList
-// const mapStateToProps = state => state.main
-
-// const mapDispatchToProps = dispatch => ({
-//   actions: bindActionCreators(Actions, dispatch)
-// })
-
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(BrandList)

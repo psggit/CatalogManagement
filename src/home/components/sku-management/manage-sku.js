@@ -96,9 +96,6 @@ class SkuList extends React.Component {
 
   resetFilter() {
     this.setState({
-        // column: '',
-        // operator: 'EQUAL',
-        // value: '',
         isFilterApplied: false,
         filterObj: {}
     })
@@ -191,7 +188,6 @@ class SkuList extends React.Component {
   }
 
   showDialog(skuDetailsObj) {
-    //if(skuDetailsObj.newStatus) {
     this.setState({
       skuStatus: !skuDetailsObj.newStatus, 
       mountDialog: true, 
@@ -199,15 +195,12 @@ class SkuList extends React.Component {
       volume: skuDetailsObj.volume,
       brandName: skuDetailsObj.brandName
     })
-    //}
   }
 
   updateSKUStatus() {
     this.setState({mountDialog: false})
-    //this.setState({mountDialog: false})
     this.props.actions.updateSKUStatus({
       sku_id: parseInt(this.state.skuId),
-      //type: parseInt(this.state.brandType),
       is_active: !this.state.skuStatus
     }, this.callbackUpdate)
   }
@@ -253,8 +246,6 @@ class SkuList extends React.Component {
               onClick={this.resetFilter}
               label="Reset Filter"
               disabled={!this.state.isFilterApplied}
-              //style={{marginRight: '10px'}}
-              //icon={getIcon('filter')}
             />
           </div>
         </div>

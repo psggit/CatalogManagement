@@ -10,7 +10,7 @@ import TextField from 'material-ui/TextField'
 class FilterModal extends React.Component {
   constructor() {
     super()
-    //console.log("props", this.props)
+  
     this.state = {
       open: true,
       isLocalityAvailable: false,
@@ -37,7 +37,6 @@ class FilterModal extends React.Component {
   }
 
   componentDidMount() {
-    //console.log("update", this.props.filterObj)
     this.setState({
       searchField: this.props && this.props.filterObj.column && this.props.filterObj.column.length ? this.props.filterObj.column : 'ID',
       searchFieldIdx: this.props && this.props.filterObj.column && this.props.filterObj.column === "BrandName" ? 2 : 1,
@@ -110,7 +109,6 @@ class FilterModal extends React.Component {
   }
 
   handleOperatorChange(e, index) {
-    //console.log("index", index)
     let operator = ''
     if(index === 0) {
       operator = 'EQUAL'
@@ -134,7 +132,6 @@ class FilterModal extends React.Component {
   }
 
   handleClick(e) {
-    //console.log("state", this.state)
     switch(this.props.filter) {
       case 'brandFilter':
         const filter = {
@@ -149,12 +146,6 @@ class FilterModal extends React.Component {
   }
 
   render() {
-    // const muiTheme = getMuiTheme({
-    //   palette: {
-    //     primary1Color: '#5E35B1'
-    //   },
-    // });
-    //console.log("filter", this.props)
     const actions = [
       <FlatButton
         label="Cancel"

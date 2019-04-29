@@ -43,7 +43,6 @@ class ListingOrder extends React.Component {
   }
 
   fetchGenreBasedBrandList() {
-    // this.props.actions.setLoadingState('loadingGenreBasedBrandList')
     this.setState({loadingBrandAndListingOrder: true})
     this.props.actions.fetchGenreBasedBrandList({
       genre_id: this.state.selectedGenreIdx,
@@ -129,7 +128,6 @@ class ListingOrder extends React.Component {
   }
 
   createOrUpdateBrandListingOrder(brandList) {
-    //console.log("is state", this.state, brandList)
     this.setState({isSavingDetails: true})
     this.props.actions.updateBrandListingOrder({
       brand_listing_order: this.state.genreBasedBrandList
@@ -140,7 +138,6 @@ class ListingOrder extends React.Component {
   }
 
   render() {
-    //console.log("state in parent", this.state)
     return (
       <div style={{
         width: '600px',

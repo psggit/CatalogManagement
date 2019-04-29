@@ -46,7 +46,6 @@ class CreateBrand extends React.Component {
         temperature: (data.temperature),
         cal_per: (data.caloriesPercentage),
         cal_total: (data.caloriesTotal),
-        //image: data.image_url,
         high_res_image: data.high_res_image,
         low_res_image: data.low_res_image,
         brand_logo_high_res_image: data.high_res_brand_logo,

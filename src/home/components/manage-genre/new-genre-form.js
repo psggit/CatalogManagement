@@ -152,14 +152,11 @@ class GenreForm extends React.Component {
         <div className="form-group">
           <label className="label">Ordinal position*</label><br />
            <TextField
-            //defaultValue={this.props.genreData ? this.props.genreData.ordinal_position : ''}
             name="ordinalPosition"
             autoComplete='off'
             style={{ width: '100%' }}
             onChange={this.handleChange}
             value={this.state.ordinalPosition}
-            // onKeyDown={(e) => { this.handleChange(e) }} 
-            // onKeyUp={(e) => { this.handleChange(e) }} 
           />
           {
             ordinalPositionErr.status &&
