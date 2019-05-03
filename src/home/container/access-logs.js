@@ -118,6 +118,7 @@ class AccessLogs extends React.Component {
   }
 
   applyFilter(filterObj) {
+    console.log("filtre", filterObj)
     const queryObj = {
       activePage: 1,
       filter: JSON.stringify(filterObj)

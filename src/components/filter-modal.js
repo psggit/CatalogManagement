@@ -16,7 +16,7 @@ class FilterModal extends React.Component {
       isLocalityAvailable: false,
       isCityAvailable: false,
       fromDate: "",
-      toDate: new Date().toISOString(),
+      toDate: "",
       stateIdx: null,
       cityIdx: null,
       searchField: this.props && this.props.filterObj ? this.props.filterObj.column : 'ID',
@@ -53,7 +53,7 @@ class FilterModal extends React.Component {
         toDate: this.props && this.props.filterObj !== undefined 
                 ? JSON.parse(this.props.filterObj).to.toString().substr(0, 10) 
                 : "",
-        fromDate: this.props && this.props.filterObj !== undefined 
+        fromDate: this.props && this.props.filterObj !== undefined && JSON.parse(this.props.filterObj).from
                   ? JSON.parse(this.props.filterObj).from.toString().substr(0, 10) 
                   : ""
       })
@@ -168,11 +168,11 @@ class FilterModal extends React.Component {
         if(this.state.fromDate) {
           filterObj = {
             from: new Date(this.state.fromDate),
-            to: new Date(this.state.toDate)
+            to: (this.state.toDate) ? new Date(this.state.toDate) : new Date().toISOString()
           }
         } else {
           filterObj = {
-            to: new Date(this.state.toDate)
+            to: (this.state.toDate)
           }
         }
         this.props.applyFilter(filterObj)
