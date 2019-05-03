@@ -32,6 +32,7 @@ import Header from './../src/home/components/header'
 import NavigationBar from './../src/home/components/navigation-bar'
 import DisplayScreen from './../src/home/container/display-screen'
 import WelcomeScreen from './../src/home/container/welcome-screen'
+import AccessLogs from "./../src/home/container/access-logs"
 import { getBreadCrumbPath, getUriFromBreadCrumb } from '@utils/url-utils'
 import { Provider } from 'react-redux'
 
@@ -174,6 +175,8 @@ class App extends React.Component {
 															<Route exact path="/admin/manage-sku" component={ViewSKU} />
 															<Route exact path="/admin/manage-sku/create" component={CreateSKU} />
 															<Route exact path="/admin/manage-sku/edit/:brandName" component={EditSKU} />
+
+                              <Route exact path="/admin/access-logs" component={AccessLogs} />
 													</Switch>
 											</DisplayScreen> 
 											</div>

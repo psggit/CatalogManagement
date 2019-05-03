@@ -243,9 +243,9 @@ function* updateBrand(action) {
     const data = yield call(Api.updateBrand, action)
     yield put({ type: ActionTypes.SUCCESS_UPDATE_BRAND, data })
     Notify('Successfully updated the brand', 'success')
-    setTimeout(() => {
-      window.location.href = `/admin/manage-brand`
-    }, 1000)
+    // setTimeout(() => {
+    //   window.location.href = `/admin/manage-brand`
+    // }, 1000)
     action.CB(data)
   } catch(err) {
     console.log(err)

@@ -46,7 +46,13 @@ class NavigationBar extends  React.Component {
           { name: 'SKU List', path: '/admin/manage-sku', id: 4 },
           { name: 'SKU Mapping', path: '/admin/sku-mapping', id: 5 },
         ]
-      }   
+      },   
+      {
+        name: 'Access Logs',
+        path: '/admin/access-logs',
+        id: 6,
+        nestedItems: []
+      }
     ]
     return (
       <Drawer

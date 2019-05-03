@@ -31,7 +31,7 @@ class BrandForm extends React.Component {
       description: props.brandInfo ? props.brandInfo.description : '',
       high_res_image_err: false,
       low_res_image_err: false,
-      brandIdx: props.brandInfo ? parseInt(props.brandInfo.id) : '',
+      //brandIdx: props.brandInfo ? parseInt(props.brandInfo.id) : '',
 
       brandNameErr: {
         value: '',
@@ -64,7 +64,7 @@ class BrandForm extends React.Component {
     this.handleTextFields = this.handleTextFields.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleTypeChange = this.handleTypeChange.bind(this)
-    this.handleBrandChange = this.handleBrandChange.bind(this)
+    //this.handleBrandChange = this.handleBrandChange.bind(this)
     this.handleSave = this.handleSave.bind(this)
     this.isFormValid = this.isFormValid.bind(this)
     this.handleGenreChange = this.handleGenreChange.bind(this)
@@ -102,13 +102,12 @@ class BrandForm extends React.Component {
     })
   }
 
-  handleBrandChange(e, k) {
-    //const brandIdx = k + 1
-    this.setState({
-      brandIdx: parseInt(this.props.brandList[k].id),
-      brandName: this.props.brandList[k].brand_name
-    })
-  }
+  // handleBrandChange(e, k) {
+  //   this.setState({
+  //     brandIdx: parseInt(this.props.brandList[k].id),
+  //     brandName: this.props.brandList[k].brand_name
+  //   })
+  // }
 
   handleGenreChange(e, k) {
     this.setState({
@@ -181,29 +180,15 @@ class BrandForm extends React.Component {
       <Fragment>
         <div className="form-group">
           <label className="label">Brand name*</label><br />
+          <TextField
+            onChange={this.handleTextFields}
+            name="brandName"
+            value={this.state.brandName}
+            style={{ width: '100%' }}
+          />
           {
-             location.pathname.includes("edit")
-             ? <SelectField
-               value={this.state.brandIdx}
-               onChange={this.handleBrandChange}
-               style={{ width: '100%' }}
-             >
-               {
-                 !this.props.loadingBrandList && this.props.brandList.map((item, i) => (
-                   <MenuItem
-                     value={item.id}
-                     key={item.id}
-                     primaryText={item.brand_name}
-                   />
-                 ))
-               }
-             </SelectField>
-             : <TextField
-               onChange={this.handleTextFields}
-               name="brandName"
-               value={this.state.brandName}
-               style={{ width: '100%' }}
-             />
+            brandNameErr.status &&
+            <p className="error">* {brandNameErr.value}</p>
           }
         </div>
 
@@ -390,7 +375,7 @@ class BrandForm extends React.Component {
 
         <RaisedButton
           primary
-          disabled={brandNameErr.status || this.props.isDisabled}
+          disabled={this.props.isDisabled}
           label="Save"
           onClick={this.handleSave}
           style={{ marginTop: '40px' }}
