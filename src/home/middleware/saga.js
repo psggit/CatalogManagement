@@ -190,6 +190,15 @@ function* fetchBrandTypes(action) {
   }
 }
 
+function* fetchAccessLogs(action) {
+  try {
+    const data = yield call(Api.fetchAccessLogs, action)
+    yield put({ type: ActionTypes.SUCCESS_FETCH_ACCESS_LOGS, data })
+  } catch(err) {
+    console.log(err)
+  }
+}
+
 function* createBrand(action) {
   try {
     const data = yield call(Api.createBrand, action)
@@ -243,9 +252,9 @@ function* updateBrand(action) {
     const data = yield call(Api.updateBrand, action)
     yield put({ type: ActionTypes.SUCCESS_UPDATE_BRAND, data })
     Notify('Successfully updated the brand', 'success')
-    // setTimeout(() => {
-    //   window.location.href = `/admin/manage-brand`
-    // }, 1000)
+    setTimeout(() => {
+      window.location.href = `/admin/manage-brand`
+    }, 1000)
     action.CB(data)
   } catch(err) {
     console.log(err)
@@ -334,6 +343,12 @@ function* watchRequestCreateGenre() {
 function* watchRequestUpdateGenre() {
   while (true) {
     yield* takeLatest(ActionTypes.REQUEST_UPDATE_GENRE, updateGenre)
+  }
+}
+
+function* watchRequestFetchAccessLogs() {
+  while (true) {
+    yield* takeLatest(ActionTypes.REQUEST_FETCH_ACCESS_LOGS, fetchAccessLogs)
   }
 }
 
@@ -432,6 +447,7 @@ export default function* rootSaga() {
     fork(watchRequestFetchGenreList),
     fork(watchRequestFetchGenreBasedBrandList),
     fork(watchRequestFetchBrandListingOrder),
+    fork(watchRequestFetchAccessLogs),
     fork(watchRequestCreateOrUpdateBrandListingOrder)
   ]
 }

@@ -15,6 +15,8 @@ class FilterModal extends React.Component {
       open: true,
       isLocalityAvailable: false,
       isCityAvailable: false,
+      fromDate: "",
+      toDate: new Date().toISOString(),
       stateIdx: null,
       cityIdx: null,
       searchField: this.props && this.props.filterObj ? this.props.filterObj.column : 'ID',
@@ -34,16 +36,28 @@ class FilterModal extends React.Component {
     this.handleOperatorChange = this.handleOperatorChange.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleClick = this.handleClick.bind(this)
+    this.handleDateChange = this.handleDateChange.bind(this)
   }
 
   componentDidMount() {
-    this.setState({
-      searchField: this.props && this.props.filterObj.column && this.props.filterObj.column.length ? this.props.filterObj.column : 'ID',
-      searchFieldIdx: this.props && this.props.filterObj.column && this.props.filterObj.column === "BrandName" ? 2 : 1,
-      searchOperator: this.props && this.props.filterObj.operator && this.props.filterObj.operator.length ? this.props.filterObj.operator : 'EQUAL',
-      searchOperatorIdx: this.props && this.props.filterObj.operator && this.props.filterObj.operator ? this.getOperatorIdx() : 1,
-      searchText: this.props && this.props.filterObj ? this.props.filterObj.value : ''
-    })
+    if(this.props.filter === "brandFilter") {
+      this.setState({
+        searchField: this.props && this.props.filterObj.column && this.props.filterObj.column.length ? this.props.filterObj.column : 'ID',
+        searchFieldIdx: this.props && this.props.filterObj.column && this.props.filterObj.column === "BrandName" ? 2 : 1,
+        searchOperator: this.props && this.props.filterObj.operator && this.props.filterObj.operator.length ? this.props.filterObj.operator : 'EQUAL',
+        searchOperatorIdx: this.props && this.props.filterObj.operator && this.props.filterObj.operator ? this.getOperatorIdx() : 1,
+        searchText: this.props && this.props.filterObj ? this.props.filterObj.value : ''
+      })
+    } else {
+      this.setState({
+        toDate: this.props && this.props.filterObj !== undefined 
+                ? JSON.parse(this.props.filterObj).to.toString().substr(0, 10) 
+                : "",
+        fromDate: this.props && this.props.filterObj !== undefined 
+                  ? JSON.parse(this.props.filterObj).from.toString().substr(0, 10) 
+                  : ""
+      })
+    }
   }
   
   getOperatorIdx() {
@@ -84,6 +98,12 @@ class FilterModal extends React.Component {
     const stateIdx = k + 1
     this.setState({ stateIdx, cityIdx: null })
     this.props.handleStateChange(k)
+  }
+
+  handleDateChange(e) {
+    this.setState({
+      [e.target.name]: (e.target.value)
+    })
   }
 
   handleCityChange(e, k) {
@@ -140,6 +160,22 @@ class FilterModal extends React.Component {
           value: this.state.searchText
         }
         this.props.applyFilter(filter)
+        this.unmountModal()
+      break;
+      case 'accessLogsFilter':
+        let filterObj = {}
+
+        if(this.state.fromDate) {
+          filterObj = {
+            from: new Date(this.state.fromDate),
+            to: new Date(this.state.toDate)
+          }
+        } else {
+          filterObj = {
+            to: new Date(this.state.toDate)
+          }
+        }
+        this.props.applyFilter(filterObj)
         this.unmountModal()
       break;
     }
@@ -205,6 +241,33 @@ class FilterModal extends React.Component {
                   onChange={this.handleChange}
                   name="searchText"
                   value={this.state.searchText}
+                  style={{ width: '100%' }}
+                />
+              </div>
+            </div>
+          }
+          {
+            this.props.filter === "accessLogsFilter" &&
+            <div>
+              <div className="form-group">
+                <label>From</label><br />
+                <TextField
+                  onChange={this.handleDateChange}
+                  name="fromDate"
+                  max="9999-12-31" 
+                  type="date"
+                  value={this.state.fromDate}
+                  style={{ width: '100%' }}
+                />
+              </div>
+              <div className="form-group">
+                <label>To</label><br />
+                <TextField
+                  onChange={this.handleDateChange}
+                  name="toDate"
+                  type="date"
+                  max="9999-12-31" 
+                  value={this.state.toDate}
                   style={{ width: '100%' }}
                 />
               </div>

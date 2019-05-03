@@ -145,6 +145,16 @@ export const fetchBrands = action => (
   .then(json => json)
 )
 
+export const fetchAccessLogs = action => (
+  POST({
+    api: '/Api/catalog/accesslog',
+    apiBase: 'catalog',
+    data: action.data,
+    handleError: true
+  })
+  .then(json => json)
+)
+
 export const fetchGenreBasedBrandList = action => (
   POST({
     api: '/Api/getBrandforGenre',

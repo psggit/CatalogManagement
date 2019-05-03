@@ -14,10 +14,12 @@ const initialState = {
   loadingGenreList: true,
   loadingGenreBasedBrandList: true,
   loadingGenres: true,
+  loadingAccessLogs: true,
   creatingBrandListingOrder: true,
   originList: [],
   brandTypeList: [],
   statesList: [],
+  accessLogs: [],
   skuList: [],
   brands: [],
   brandList: [],
@@ -32,6 +34,7 @@ const initialState = {
   totalSkuCount: 0,
   totalBrandCount: 0,
   totalBrandListCount: 0,
+  accessLogCount: 0,
   genreCount: 0
 }
 
@@ -72,6 +75,14 @@ const actionsMap = {
     return Object.assign({}, state, {
       brandListingOrder: Object.entries(action.data).length !== 0 ? action.data.brand_listing_order : [],
       loadingBrandListingOrder: false,
+    })
+  },
+
+  [ActionTypes.SUCCESS_FETCH_ACCESS_LOGS]: (state, action) => {
+    return Object.assign({}, state, {
+      accessLogs: action.data.access_logs,
+      loadingAccessLogs: false,
+      accessLogCount: action.data.count
     })
   },
 

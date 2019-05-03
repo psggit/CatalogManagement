@@ -78,6 +78,11 @@ export const fetchStatesMappedToSku = (data, CB) => ({
   CB
 })
 
+export const fetchAccessLogs = (data) => ({
+  type: ActionTypes.REQUEST_FETCH_ACCESS_LOGS,
+  data
+})
+
 export const updateSkuStateMap = (data, CB) => ({
   type: ActionTypes.REQUEST_UPDATE_SKU_STATE_MAP,
   data,
