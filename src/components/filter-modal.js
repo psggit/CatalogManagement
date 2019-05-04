@@ -51,10 +51,10 @@ class FilterModal extends React.Component {
     } else {
       this.setState({
         toDate: this.props && this.props.filterObj !== undefined 
-                ? JSON.parse(this.props.filterObj).to.toString().substr(0, 10) 
+                ? JSON.parse(this.props.filterObj).to_date.toString().substr(0, 10) 
                 : "",
-        fromDate: this.props && this.props.filterObj !== undefined && JSON.parse(this.props.filterObj).from
-                  ? JSON.parse(this.props.filterObj).from.toString().substr(0, 10) 
+        fromDate: this.props && this.props.filterObj !== undefined && JSON.parse(this.props.filterObj).from_date
+                  ? JSON.parse(this.props.filterObj).from_date.toString().substr(0, 10) 
                   : ""
       })
     }
@@ -137,7 +137,6 @@ class FilterModal extends React.Component {
     } else {
       operator = 'CASEIGNORE'
     }
-    console.log("operator", operator)
     this.setState({searchOperator: operator, searchOperatorIdx: index + 1})
   }
 
@@ -164,15 +163,16 @@ class FilterModal extends React.Component {
       break;
       case 'accessLogsFilter':
         let filterObj = {}
-
         if(this.state.fromDate) {
           filterObj = {
-            from: new Date(this.state.fromDate),
-            to: (this.state.toDate) ? new Date(this.state.toDate) : new Date().toISOString()
+            from_date: new Date(this.state.fromDate).toISOString(),
+            to_date: (this.state.toDate) 
+                      ?  new Date(new Date(this.state.toDate).setHours(23, 59, 0)).toISOString() 
+                      : new Date().toISOString()
           }
         } else {
           filterObj = {
-            to: (this.state.toDate)
+            to_date: new Date(new Date(this.state.toDate).setHours(23, 59, 0)).toISOString()
           }
         }
         this.props.applyFilter(filterObj)

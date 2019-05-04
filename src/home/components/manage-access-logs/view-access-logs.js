@@ -68,8 +68,8 @@ class ViewAccessLogs extends React.Component {
                   this.props.accessLogs && this.props.accessLogs.map(item => (
                     <TableRow key={item.id}>
                       <TableRowColumn style={styles[0]}>{item.user_id}</TableRowColumn>
-                      <TableRowColumn style={styles[1]}>{Moment(item.created_at).format('DD-MM-YYYY h:mm:s A')}</TableRowColumn>
-                      <TableRowColumn style={styles[2]}>{Moment(item.updated_at).format('DD-MM-YYYY h:mm:s A')}</TableRowColumn>
+                      <TableRowColumn style={styles[1]}>{Moment(item.created_at).format('DD-MM-YYYY h:mm:ss A')}</TableRowColumn>
+                      <TableRowColumn style={styles[2]}>{Moment(item.updated_at).format('DD-MM-YYYY h:mm:ss A')}</TableRowColumn>
                       <TableRowColumn style={styles[3]}>{item.request_type}</TableRowColumn>
                       <TableRowColumn style={styles[4]}>{item.request_params}</TableRowColumn>
                     </TableRow>

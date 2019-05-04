@@ -97,8 +97,8 @@ class AccessLogs extends React.Component {
 
     if(queryObj.filter) {
       let filterObj = {
-        to: JSON.parse(decodeURI(queryObj.filter)).to,
-        from: JSON.parse(decodeURI(queryObj.filter)).from
+        to_date: JSON.parse(decodeURI(queryObj.filter)).to_date,
+        from_date: JSON.parse(decodeURI(queryObj.filter)).from_date
       }
 
       this.props.actions.fetchAccessLogs({
