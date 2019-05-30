@@ -80,7 +80,7 @@ class SkuDetailsForm extends React.Component {
     if(newProps.brandList !== this.props.brandList && !newProps.loadingBrandList) {
       this.setState({brandId: newProps.brandList[0].id})
     }
-    document.getElementsByClassName("auto-complete")[0].style.width = '100%'
+    //document.getElementsByClassName("auto-complete")[0].style.width = '100%'
   }
 
   handleStatusChange(e, k) {
@@ -96,7 +96,7 @@ class SkuDetailsForm extends React.Component {
     console.log("id", brandIdx, "name", this.props.brandList[k].id, this.props.brandList[k])
     this.setState({
       brandIdx,
-      //brandName: this.props.brandList[k].brand_name,
+      brandName: this.props.brandList[k].brand_name,
       brandId: this.props.brandList[k].id
     })
   }
@@ -181,39 +181,39 @@ class SkuDetailsForm extends React.Component {
           <label className="label">Brand name*</label><br />
           {
             this.props.action !== "edit" ?
-              // <SelectField
-              //   value={this.state.brandId}
-              //   onChange={this.handleBrandChange}
-              //   iconStyle={{ fill: '#9b9b9b' }}
-              //   style={{ width: '100%' }}
-              //   autoComplete='off'
-              //   //floatingLabelText="Select brand"
-              //   //hintText="Hint text"
-              // >
-              //   {/* <MenuItem disabled value="">
-              //     <em>Select brand</em>
-              //   </MenuItem> */}
-              //   {
-              //     !this.props.loadingBrandList &&
-              //     this.props.brandList && this.props.brandList.map((item, i) => {
-              //       return <MenuItem
-              //         value={item.id}
-              //         key={item.id}
-              //         primaryText={item.brand_name}
-              //       />
-              //     })
-              //   }
-              // </SelectField>
-               
-              <AutoComplete
-                floatingLabelText="Search for brand name"
-                filter={AutoComplete.caseInsensitiveFilter}
-                dataSource={this.props.brandList ? this.props.brandList : []}
-                dataSourceConfig={dataSourceConfig}
-                onNewRequest={this.selectedBrandName}
-                className="auto-complete"
+              <SelectField
+                value={this.state.brandId}
+                onChange={this.handleBrandChange}
+                iconStyle={{ fill: '#9b9b9b' }}
                 style={{ width: '100%' }}
-              />
+                autoComplete='off'
+                //floatingLabelText="Select brand"
+                //hintText="Hint text"
+              >
+                {/* <MenuItem disabled value="">
+                  <em>Select brand</em>
+                </MenuItem> */}
+                {
+                  !this.props.loadingBrandList &&
+                  this.props.brandList && this.props.brandList.map((item, i) => {
+                    return <MenuItem
+                      value={item.id}
+                      key={item.id}
+                      primaryText={item.brand_name}
+                    />
+                  })
+                }
+              </SelectField>
+               
+              // <AutoComplete
+              //   floatingLabelText="Search for brand name"
+              //   filter={AutoComplete.caseInsensitiveFilter}
+              //   dataSource={this.props.brandList ? this.props.brandList : []}
+              //   dataSourceConfig={dataSourceConfig}
+              //   onNewRequest={this.selectedBrandName}
+              //   className="auto-complete"
+              //   style={{ width: '100%' }}
+              // />
               :
               <TextField
                 disabled={this.props.isDisabled}
