@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react'
 import { createSession } from './utils'
-import {  Api } from '@utils/config'
+import { Api } from '@utils/config'
 //import "whatwg-fetch"
 import '@sass/components/_input.scss'
 import '@sass/components/_form.scss'
 import '@sass/components/_button.scss'
-import {getIcon} from '@utils/icon-utils'
+import { getIcon } from '@utils/icon-utils'
 
 class Form extends React.Component {
   constructor() {
@@ -54,9 +54,9 @@ class Form extends React.Component {
       body: JSON.stringify(formData)
     }
 
-    this.setState({isSubmitting: true})
+    this.setState({ isSubmitting: true })
 
-    fetch(`${Api.authUrl}/login`, fetchOptions)
+    fetch(`${Api.gremlinUrl}/auth/login`, fetchOptions)
       .then((response) => {
         if (response.status !== 200) {
           console.log(`Looks like there was a problem. Status Code: ${response.status}`)
@@ -84,7 +84,7 @@ class Form extends React.Component {
     return (
       <div className="form">
         <div className="login-header">
-          <div className="logo"> <span style={{ width:'40px', height: '40px'}}> {getIcon('logo')} </span> </div>
+          <div className="logo"> <span style={{ width: '40px', height: '40px' }}> {getIcon('logo')} </span> </div>
           <span> HIPBAR CATALOG SYSTEM </span>
         </div>
         <div className="form-wrapper">
@@ -114,7 +114,7 @@ class Form extends React.Component {
           >
             Login
           </button>
-          { this.state.error ? <p style={{ color: '#ff3b30' }}>Wrong username or password</p> : ''}
+          {this.state.error ? <p style={{ color: '#ff3b30' }}>Wrong username or password</p> : ''}
         </div>
       </div>
     )
