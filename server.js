@@ -5,7 +5,7 @@ const app = express();
 // const exec = require('child_process').exec;
 
 // const cmd = "npm run build"
- 
+
 // const watcher = chokidar.watch(path.join(__dirname, 'src'), {
 //   ignored: /(^|[\/\\])\../,
 //   persistent: true
@@ -25,9 +25,10 @@ if (env === 'production') {
   app.get('*.js', function (req, res, next) {
     console.log("req", req.url)
     const runtimeUrlRegex = /runtime.*.js/
-    if(!runtimeUrlRegex.test(req.url)) {
+    if (!runtimeUrlRegex.test(req.url)) {
       req.url = req.url + '.gz';
       res.set('Content-Encoding', 'gzip');
+      res.set('Content-Type', 'text/javascript')
     }
     next();
   });
@@ -35,7 +36,7 @@ if (env === 'production') {
 
 app.use('/admin', express.static(path.join(__dirname, 'dist')))
 
-app.get('/*', (req, res)=>{
+app.get('/*', (req, res) => {
   console.log(req.query);
   res.sendFile(path.join(__dirname, 'dist/index.html'), (err) => {
     if (err) {
