@@ -1,5 +1,5 @@
 const path = require('path');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CompressionPlugin = require("compression-webpack-plugin")
 const AbsolutePathProviderPlugin = require('abspath-webpack-plugin')
@@ -18,8 +18,8 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-                'style-loader',
-                'css-loader'
+          'style-loader',
+          'css-loader'
         ]
       },
       {
@@ -34,7 +34,7 @@ module.exports = {
     extensions: ['*', '.js', '.jsx']
   },
   plugins: [
-    new CleanWebpackPlugin(['dist']),
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       title: 'Output Management',
       template: './index.html'

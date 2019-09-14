@@ -1,9 +1,9 @@
-import { takeLatest, delay } from 'redux-saga'
+import { all, takeLatest, delay } from 'redux-saga/effects'
 import { call, fork, put, race, take } from 'redux-saga/effects'
 import * as ActionTypes from './../constants/actions'
 import Notify from '@components/Notification'
 import * as Api from './api'
-import {skuList, brandList, originList, brandTypes, createdSku, volumeList, skuDetails, unmappedStates, mappedState, retailersMappedToSku, unmappedRetailers, categoriesList, brandMappedToCategories, unmappedBrandList, companyList} from './../../mock-data'
+import { skuList, brandList, originList, brandTypes, createdSku, volumeList, skuDetails, unmappedStates, mappedState, retailersMappedToSku, unmappedRetailers, categoriesList, brandMappedToCategories, unmappedBrandList, companyList } from './../../mock-data'
 
 /**
  * Handlers
@@ -13,7 +13,7 @@ function* fetchSKUs(action) {
   try {
     const data = yield call(Api.fetchSKUs, action)
     yield put({ type: ActionTypes.SUCCESS_FETCH_SKUS, data })
-  } catch(err) {
+  } catch (err) {
     console.log(err)
   }
 }
@@ -23,7 +23,7 @@ function* fetchGenres(action) {
     const data = yield call(Api.fetchGenres, action)
     yield put({ type: ActionTypes.SUCCESS_FETCH_GENRES, data })
     //action.CB()
-  } catch(err) {
+  } catch (err) {
     console.log(err)
   }
 }
@@ -33,7 +33,7 @@ function* fetchGenreList(action) {
     const data = yield call(Api.fetchGenreList, action)
     yield put({ type: ActionTypes.SUCCESS_FETCH_GENRE_LIST, data })
     //action.CB()
-  } catch(err) {
+  } catch (err) {
     console.log(err)
   }
 }
@@ -42,7 +42,7 @@ function* fetchBrands(action) {
   try {
     const data = yield call(Api.fetchBrands, action)
     yield put({ type: ActionTypes.SUCCESS_FETCH_BRANDS, data })
-  } catch(err) {
+  } catch (err) {
     console.log(err)
   }
 }
@@ -52,9 +52,9 @@ function* fetchBrandListingOrder(action) {
   //let data = action.action.data
   try {
     const data = yield call(Api.fetchBrandListingOrder, action)
-    yield put({ type: ActionTypes.SUCCESS_FETCH_BRAND_LISTING_ORDER,  data})
+    yield put({ type: ActionTypes.SUCCESS_FETCH_BRAND_LISTING_ORDER, data })
     action.CB()
-  } catch(err) {
+  } catch (err) {
     console.log(err)
   }
 }
@@ -63,9 +63,9 @@ function* createOrUpdateBrandListingOrder(action) {
   try {
     const data = yield call(Api.createOrUpdateBrandListingOrder, action)
     Notify('Successfully updated brand listing order', 'success')
-    yield put({ type: ActionTypes.SUCCESS_CREATE_OR_UPDATE_BRAND_LISTING_ORDER,  data})
+    yield put({ type: ActionTypes.SUCCESS_CREATE_OR_UPDATE_BRAND_LISTING_ORDER, data })
     action.CB()
-  } catch(err) {
+  } catch (err) {
     console.log(err)
     Notify('Something went wrong', 'warning')
     action.CB()
@@ -76,12 +76,12 @@ function* fetchGenreBasedBrandList(action) {
   try {
     const data = yield call(Api.fetchGenreBasedBrandList, action)
     yield put({ type: ActionTypes.SUCCESS_GENRE_BASED_BRAND_LIST, data })
-    yield put({ 
-      type: ActionTypes.REQUEST_FETCH_BRAND_LISTING_ORDER, 
-      data: {genre_id: action.data.genre_id, state_id: action.data.state_id }, 
-      CB: action.CB 
+    yield put({
+      type: ActionTypes.REQUEST_FETCH_BRAND_LISTING_ORDER,
+      data: { genre_id: action.data.genre_id, state_id: action.data.state_id },
+      CB: action.CB
     })
-  } catch(err) {
+  } catch (err) {
     console.log(err)
   }
 }
@@ -94,7 +94,7 @@ function* createSku(action) {
     setTimeout(() => {
       window.location.href = `/admin/manage-sku`
     }, 1000)
-  } catch(err) {
+  } catch (err) {
     console.log(err)
     action.CB()
   }
@@ -108,7 +108,7 @@ function* updateSku(action) {
     setTimeout(() => {
       window.location.href = `/admin/manage-sku`
     }, 1000)
-  } catch(err) {
+  } catch (err) {
     console.log(err)
   }
 }
@@ -119,7 +119,7 @@ function* updateSKUStatus(action) {
     yield put({ type: ActionTypes.SUCCESS_UPDATE_SKU_STATUS, data })
     Notify('Successfully updated the sku status', 'success')
     action.CB()
-  } catch(err) {
+  } catch (err) {
     console.log(err)
     //action.CB()
   }
@@ -131,7 +131,7 @@ function* updateGenreStatus(action) {
     yield put({ type: ActionTypes.SUCCESS_UPDATE_GENRE_STATUS, data })
     Notify('Successfully updated the genre status', 'success')
     action.CB()
-  } catch(err) {
+  } catch (err) {
     console.log(err)
     //action.CB()
   }
@@ -142,7 +142,7 @@ function* fetchStates(action) {
     const data = yield call(Api.fetchStates, action)
     yield put({ type: ActionTypes.SUCCESS_FETCH_STATES, data })
     action.CB()
-  } catch(err) {
+  } catch (err) {
     console.log(err)
   }
 }
@@ -152,7 +152,7 @@ function* fetchSkuMappedStates(action) {
     const data = yield call(Api.fetchSkuMappedStates, action)
     yield put({ type: ActionTypes.SUCCESS_FETCH_STATES_MAPPED_TO_SKU, data })
     action.CB()
-  } catch(err) {
+  } catch (err) {
     console.log(err)
   }
 }
@@ -163,7 +163,7 @@ function* updateSkuStateMap(action) {
     yield put({ type: ActionTypes.SUCCESS_UPDATE_SKU_STATE_MAP, data })
     Notify('Successfully updated sku', 'success')
     action.CB()
-  } catch(err) {
+  } catch (err) {
     console.log(err)
     Notify('Error in updating sku', 'warning')
     action.CB()
@@ -175,7 +175,7 @@ function* mapStateToSku(action) {
     const data = yield call(Api.mapStateToSku, action)
     Notify('Successfully mapped the state', 'success')
     action.CB(data)
-  } catch(err) {
+  } catch (err) {
     console.log(err)
     Notify('Error in mapping the state', 'warning')
   }
@@ -185,7 +185,7 @@ function* fetchBrandTypes(action) {
   try {
     const data = yield call(Api.fetchBrandTypes, action)
     yield put({ type: ActionTypes.SUCCESS_FETCH_BRAND_TYPE_LIST, data })
-  } catch(err) {
+  } catch (err) {
     console.log(err)
   }
 }
@@ -194,7 +194,7 @@ function* fetchAccessLogs(action) {
   try {
     const data = yield call(Api.fetchAccessLogs, action)
     yield put({ type: ActionTypes.SUCCESS_FETCH_ACCESS_LOGS, data })
-  } catch(err) {
+  } catch (err) {
     console.log(err)
   }
 }
@@ -208,7 +208,7 @@ function* createBrand(action) {
     setTimeout(() => {
       window.location.href = `/admin/manage-brand`
     }, 1000)
-  } catch(err) {
+  } catch (err) {
     console.log(err)
     Notify('Something went wrong', 'warning')
     action.CB()
@@ -224,7 +224,7 @@ function* createGenre(action) {
       window.location.href = `/admin/manage-genre`
     }, 1000)
     action.CB(data)
-  } catch(err) {
+  } catch (err) {
     console.log(err)
     Notify('Something went wrong', 'warning')
     action.CB()
@@ -240,7 +240,7 @@ function* updateGenre(action) {
       window.location.href = `/admin/manage-genre`
     }, 1000)
     action.CB(data)
-  } catch(err) {
+  } catch (err) {
     console.log(err)
     Notify('Something went wrong', 'warning')
     action.CB()
@@ -256,7 +256,7 @@ function* updateBrand(action) {
       window.location.href = `/admin/manage-brand`
     }, 1000)
     action.CB(data)
-  } catch(err) {
+  } catch (err) {
     console.log(err)
     Notify('Something went wrong', 'warning')
     action.CB()
@@ -269,7 +269,7 @@ function* updateBrandStatus(action) {
     yield put({ type: ActionTypes.SUCCESS_UPDATE_BRAND_STATUS, data })
     Notify('Successfully updated the brand status', 'success')
     action.CB()
-  } catch(err) {
+  } catch (err) {
     console.log(err)
     //action.CB()
   }
@@ -287,145 +287,99 @@ function* setLoadingState(action) {
  * Watchers
  */
 function* watchRequestFetchSKUs() {
-  while (true) {
-    yield* takeLatest(ActionTypes.REQUEST_FETCH_SKUS, fetchSKUs)
-  }
+  yield takeLatest(ActionTypes.REQUEST_FETCH_SKUS, fetchSKUs)
 }
 
 function* watchRequestFetchBrands() {
-  while (true) {
-    yield* takeLatest(ActionTypes.REQUEST_FETCH_BRANDS, fetchBrands)
-  }
+  yield takeLatest(ActionTypes.REQUEST_FETCH_BRANDS, fetchBrands)
 }
 
 function* watchRequestFetchGenreBasedBrandList() {
-  while (true) {
-    yield* takeLatest(ActionTypes.REQUEST_GENRE_BASED_BRAND_LIST, fetchGenreBasedBrandList)
-  }
+  yield takeLatest(ActionTypes.REQUEST_GENRE_BASED_BRAND_LIST, fetchGenreBasedBrandList)
 }
 
 function* watchRequestFetchGenres() {
-  while (true) {
-    yield* takeLatest(ActionTypes.REQUEST_FETCH_GENRES, fetchGenres)
-  }
+  yield takeLatest(ActionTypes.REQUEST_FETCH_GENRES, fetchGenres)
 }
 
 function* watchRequestFetchGenreList() {
-  while (true) {
-    yield* takeLatest(ActionTypes.REQUEST_FETCH_GENRE_LIST, fetchGenreList)
-  }
+  yield takeLatest(ActionTypes.REQUEST_FETCH_GENRE_LIST, fetchGenreList)
 }
 
 function* watchRequestUpdateGenreStatus() {
-  while (true) {
-    yield* takeLatest(ActionTypes.REQUEST_UPDATE_GENRE_STATUS, updateGenreStatus)
-  }
+  yield takeLatest(ActionTypes.REQUEST_UPDATE_GENRE_STATUS, updateGenreStatus)
 }
 
 function* watchRequestCreateSku() {
-  while (true) {
-    yield* takeLatest(ActionTypes.REQUEST_CREATE_SKU, createSku)
-  }
+  yield takeLatest(ActionTypes.REQUEST_CREATE_SKU, createSku)
 }
 
 function* watchRequestFetchBrandListingOrder() {
-  while (true) {
-    yield* takeLatest(ActionTypes.REQUEST_FETCH_BRAND_LISTING_ORDER, fetchBrandListingOrder)
-  }
+  yield takeLatest(ActionTypes.REQUEST_FETCH_BRAND_LISTING_ORDER, fetchBrandListingOrder)
 }
 
 function* watchRequestCreateGenre() {
-  while (true) {
-    yield* takeLatest(ActionTypes.REQUEST_CREATE_GENRE, createGenre)
-  }
+  yield takeLatest(ActionTypes.REQUEST_CREATE_GENRE, createGenre)
 }
 
 function* watchRequestUpdateGenre() {
-  while (true) {
-    yield* takeLatest(ActionTypes.REQUEST_UPDATE_GENRE, updateGenre)
-  }
+  yield takeLatest(ActionTypes.REQUEST_UPDATE_GENRE, updateGenre)
 }
 
 function* watchRequestFetchAccessLogs() {
-  while (true) {
-    yield* takeLatest(ActionTypes.REQUEST_FETCH_ACCESS_LOGS, fetchAccessLogs)
-  }
+  yield takeLatest(ActionTypes.REQUEST_FETCH_ACCESS_LOGS, fetchAccessLogs)
 }
 
 function* watchRequestUpdateSku() {
-  while (true) {
-    yield* takeLatest(ActionTypes.REQUEST_UPDATE_SKU, updateSku)
-  }
+  yield takeLatest(ActionTypes.REQUEST_UPDATE_SKU, updateSku)
 }
 
 function* watchRequestFetchStates() {
-  while (true) {
-    yield* takeLatest(ActionTypes.REQUEST_FETCH_STATES, fetchStates)
-  }
+  yield takeLatest(ActionTypes.REQUEST_FETCH_STATES, fetchStates)
 }
 
 function* watchRequestFetchStatesMappedToSku() {
-  while (true) {
-    yield* takeLatest(ActionTypes.REQUEST_FETCH_STATES_MAPPED_TO_SKU, fetchSkuMappedStates)
-  }
+  yield takeLatest(ActionTypes.REQUEST_FETCH_STATES_MAPPED_TO_SKU, fetchSkuMappedStates)
 }
 
 function* watchRequestUpdateSkuStateMap() {
-  while (true) {
-    yield* takeLatest(ActionTypes.REQUEST_UPDATE_SKU_STATE_MAP, updateSkuStateMap)
-  }
+  yield takeLatest(ActionTypes.REQUEST_UPDATE_SKU_STATE_MAP, updateSkuStateMap)
 }
 
 function* watchRequestMapStateToSku() {
-  while (true) {
-    yield* takeLatest(ActionTypes.REQUEST_MAP_STATE_TO_SKU, mapStateToSku)
-  }
+  yield takeLatest(ActionTypes.REQUEST_MAP_STATE_TO_SKU, mapStateToSku)
 }
 
 function* watchRequestFetchBrandTypes() {
-  while (true) {
-    yield* takeLatest(ActionTypes.REQUEST_FETCH_BRAND_TYPE_LIST, fetchBrandTypes)
-  }
+  yield takeLatest(ActionTypes.REQUEST_FETCH_BRAND_TYPE_LIST, fetchBrandTypes)
 }
 
 function* watchRequestCreateBrand() {
-  while (true) {
-    yield* takeLatest(ActionTypes.REQUEST_CREATE_BRAND, createBrand)
-  }
+  yield takeLatest(ActionTypes.REQUEST_CREATE_BRAND, createBrand)
 }
 
 function* watchRequestCreateOrUpdateBrandListingOrder() {
-  while (true) {
-    yield* takeLatest(ActionTypes.REQUEST_CREATE_OR_UPDATE_BRAND_LISTING_ORDER, createOrUpdateBrandListingOrder)
-  }
+  yield takeLatest(ActionTypes.REQUEST_CREATE_OR_UPDATE_BRAND_LISTING_ORDER, createOrUpdateBrandListingOrder)
 }
 
 function* watchRequestUpdateBrand() {
-  while (true) {
-    yield* takeLatest(ActionTypes.REQUEST_UPDATE_BRAND, updateBrand)
-  }
+  yield takeLatest(ActionTypes.REQUEST_UPDATE_BRAND, updateBrand)
 }
 
 function* watchRequestUpdateBrandStatus() {
-  while (true) {
-    yield* takeLatest(ActionTypes.REQUEST_UPDATE_BRAND_STATUS, updateBrandStatus)
-  }
+  yield takeLatest(ActionTypes.REQUEST_UPDATE_BRAND_STATUS, updateBrandStatus)
 }
 
 function* watchRequestUpdateSKUStatus() {
-  while (true) {
-    yield* takeLatest(ActionTypes.REQUEST_UPDATE_SKU_STATUS, updateSKUStatus)
-  }
+  yield takeLatest(ActionTypes.REQUEST_UPDATE_SKU_STATUS, updateSKUStatus)
 }
 
 function* watchSetLoadingState() {
-  while (true) {
-    yield* takeLatest(ActionTypes.REQUEST_SET_LOADING_STATE, setLoadingState)
-  }
+  yield takeLatest(ActionTypes.REQUEST_SET_LOADING_STATE, setLoadingState)
 }
 
 export default function* rootSaga() {
-  yield [
+  yield all([
     fork(watchRequestFetchSKUs),
     fork(watchRequestFetchBrands),
     fork(watchRequestCreateSku),
@@ -449,5 +403,5 @@ export default function* rootSaga() {
     fork(watchRequestFetchBrandListingOrder),
     fork(watchRequestFetchAccessLogs),
     fork(watchRequestCreateOrUpdateBrandListingOrder)
-  ]
+  ])
 }

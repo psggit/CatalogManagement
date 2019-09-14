@@ -16,7 +16,7 @@ import CircularProgress from 'material-ui/CircularProgress'
 import { NavLink } from 'react-router-dom'
 import TableLoadingShell from './../table-loading-shell'
 import '@sass/components/_table.scss'
-import {overrideTableStyle} from '@utils'
+import { overrideTableStyle } from '@utils'
 
 const TableHeaderItems = [
   '',
@@ -47,9 +47,9 @@ class ViewSKUList extends React.Component {
     this.updateSKUStatus = this.updateSKUStatus.bind(this)
   }
 
-  componentDidMount() {
-    this.overrideTableStyle()
-  }
+  // componentDidMount() {
+  //   this.overrideTableStyle()
+  // }
 
   overrideTableStyle() {
     overrideTableStyle()
@@ -57,10 +57,10 @@ class ViewSKUList extends React.Component {
 
   handleClick(e, item) {
     let queryObj = {}
-    if(this.props.navigateTo !== "editSKU" && !item.is_active) {
+    if (this.props.navigateTo !== "editSKU" && !item.is_active) {
       e.preventDefault()
-    } 
-    if(this.props.navigateTo === "editSKU") {
+    }
+    if (this.props.navigateTo === "editSKU") {
       queryObj = {
         brand_id: item.brand_id,
         sku_id: item.sku_id,
@@ -73,7 +73,7 @@ class ViewSKUList extends React.Component {
         gs1_barcode: item.gs1_barcode,
         tag: item.tag
       }
-      this.props.history.push(`/admin/manage-sku/edit/${item.brand_name}?sku_id=${item.sku_id}&brand_id=${item.brand_id}`, queryObj) 
+      this.props.history.push(`/admin/manage-sku/edit/${item.brand_name}?sku_id=${item.sku_id}&brand_id=${item.brand_id}`, queryObj)
     } else {
       queryObj = {
         brand_id: item.brand_id,
@@ -86,7 +86,7 @@ class ViewSKUList extends React.Component {
   }
 
   updateSKUStatus(item, isInputClicked) {
-    this.props.showDialog({newStatus: isInputClicked, skuId: item.sku_id, brandName: item.brand_name, volume: item.sku_volume})
+    this.props.showDialog({ newStatus: isInputClicked, skuId: item.sku_id, brandName: item.brand_name, volume: item.sku_volume })
   }
 
   render() {
@@ -118,8 +118,8 @@ class ViewSKUList extends React.Component {
                         <TableRowColumn style={styles[0]}>
                           {
                             <FlatButton primary label={`${this.props.navigateTo === "editSKU" ? "EDIT" : "VIEW"}`}
-                              onClick={(e) => this.handleClick(e, item)} 
-                            /> 
+                              onClick={(e) => this.handleClick(e, item)}
+                            />
                           }
                         </TableRowColumn>
                         <TableRowColumn style={styles[1]}>{item.sku_id}</TableRowColumn>
@@ -141,7 +141,7 @@ class ViewSKUList extends React.Component {
                         </TableRowColumn>
                         <TableRowColumn style={styles[6]}>{item.brand_id}</TableRowColumn>
                         <TableRowColumn style={styles[7]}>
-                            <Switch toggled={item.is_active} onToggle={this.updateSKUStatus} value={item} />
+                          <Switch toggled={item.is_active} onToggle={this.updateSKUStatus} value={item} />
                         </TableRowColumn>
                       </TableRow>
                     )
@@ -154,10 +154,10 @@ class ViewSKUList extends React.Component {
                 )
             }
             {
-              !this.props.loadingSkuList && !this.props.skuList && 
+              !this.props.loadingSkuList && !this.props.skuList &&
               <tr>
                 <td style={{ textAlign: 'center' }} colSpan='8'>
-                  <p style={{fontWeight: '16px'}}>No SKUs found</p>
+                  <p style={{ fontWeight: '16px' }}>No SKUs found</p>
                 </td>
               </tr>
             }
@@ -166,7 +166,7 @@ class ViewSKUList extends React.Component {
       </React.Fragment>
     )
   }
-  
+
 }
 
 export default ViewSKUList

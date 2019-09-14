@@ -40,6 +40,7 @@ const initialState = {
 
 const actionsMap = {
   [ActionTypes.SUCCESS_FETCH_SKUS]: (state, action) => {
+    console.log("success fetch skus")
     return Object.assign({}, state, {
       skuList: action.data.skuList,
       totalSkuCount: action.data.count,
@@ -65,7 +66,7 @@ const actionsMap = {
 
   [ActionTypes.SUCCESS_GENRE_BASED_BRAND_LIST]: (state, action) => {
     return Object.assign({}, state, {
-      genreBasedBrandList: Object.entries(action.data).length !== 0  ? action.data.brand_list : [],
+      genreBasedBrandList: Object.entries(action.data).length !== 0 ? action.data.brand_list : [],
       loadingGenreBasedBrandList: false,
     })
   },
@@ -106,7 +107,7 @@ const actionsMap = {
   //     })
   //   }
   // },
-  
+
   [ActionTypes.SUCCESS_SET_LOADING_STATE]: (state, action) => {
     return Object.assign({}, state, {
       loadingBrandDetails: true,
@@ -117,15 +118,15 @@ const actionsMap = {
   [ActionTypes.SUCCESS_FETCH_GENRES]: (state, action) => {
     return Object.assign({}, state, {
       loadingGenreList: false,
-      genreList:  action.data.genres,
+      genreList: action.data.genres,
       genreCount: action.data.count
     })
   },
-  
+
   [ActionTypes.SUCCESS_FETCH_GENRE_LIST]: (state, action) => {
     return Object.assign({}, state, {
       loadingGenres: false,
-      genres:  action.data.genreDetail,
+      genres: action.data.genreDetail,
       //genreCount: action.data.count
     })
   },

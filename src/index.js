@@ -2,7 +2,7 @@ import 'babel-polyfill'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import asyncComponent from './asyncComponent'
-import {  Api } from '@utils/config'
+import { Api } from '@utils/config'
 import {
   BrowserRouter as Router,
   Route,
@@ -25,7 +25,7 @@ import EditSKU from './../src/home/components/sku-management/edit-sku'
 import SKUMapManager from './../src/home/container/sku-map-manager'
 import ViewSKUMapDetails from './../src/home/components/sku-map-manager/view-sku-map-details'
 
-import createHistory from 'history/createBrowserHistory'
+// import createHistory from 'history/createBrowserHistory'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import Header from './../src/home/components/header'
@@ -35,6 +35,7 @@ import WelcomeScreen from './../src/home/container/welcome-screen'
 import AccessLogs from "./../src/home/container/access-logs"
 import { getBreadCrumbPath, getUriFromBreadCrumb } from '@utils/url-utils'
 import { Provider } from 'react-redux'
+import { createBrowserHistory as createHistory } from 'history'
 
 import configureStore from './home/store/configureStore'
 import rootSaga from './home/middleware/saga'
@@ -46,53 +47,53 @@ const history = createHistory()
 
 class App extends React.Component {
 
-	constructor() {
-		super()
-		this.state = {
-				isDrawerOpen: false,
-				headerTitle: getBreadCrumbPath().length ? getBreadCrumbPath() : 'Welcome'
-		}
-	}
+  constructor() {
+    super()
+    this.state = {
+      isDrawerOpen: false,
+      headerTitle: getBreadCrumbPath().length ? getBreadCrumbPath() : 'Welcome'
+    }
+  }
 
-	componentDidMount() {
-		const breadCrumbUri = getUriFromBreadCrumb(this.state.headerTitle)
-		history.listen((location) => {
-			if (location.pathname !== breadCrumbUri) {
-				this.setState({ headerTitle: getBreadCrumbPath(breadCrumbUri) })
-			}
-		})
-	}
+  componentDidMount() {
+    const breadCrumbUri = getUriFromBreadCrumb(this.state.headerTitle)
+    history.listen((location) => {
+      if (location.pathname !== breadCrumbUri) {
+        this.setState({ headerTitle: getBreadCrumbPath(breadCrumbUri) })
+      }
+    })
+  }
 
   componentWillMount() {
     const fetchOptions = {
-        method: 'get',
-        credentials: 'include',
-        mode: 'cors',
-        'x-hasura-role': 'user'
+      method: 'get',
+      credentials: 'include',
+      mode: 'cors',
+      'x-hasura-role': 'user'
     }
 
     fetch(`${Api.authUrl}/user/account/info`, fetchOptions)
       .then((response) => {
-          if (response.status !== 200) {
-              console.log(`Looks like there was a problem. Status Code: ${response.status}`)
-              if (location.pathname !== '/admin/login') {
-              location.href = '/admin/login'
-              }
-              return
+        if (response.status !== 200) {
+          console.log(`Looks like there was a problem. Status Code: ${response.status}`)
+          if (location.pathname !== '/admin/login') {
+            location.href = '/admin/login'
           }
-          response.json().then((data) => {
-              createSession(data)
-              if(location.pathname.includes('login') || location.pathname == '/') {
-                  location.href = '/admin'
-                  //history.push('/admin')
-              }
-          })
+          return
+        }
+        response.json().then((data) => {
+          createSession(data)
+          if (location.pathname.includes('login') || location.pathname == '/') {
+            location.href = '/admin'
+            //history.push('/admin')
+          }
+        })
       })
       .catch((err) => {
-          console.log('Fetch Error :-S', err)
-          if (location.pathname !== '/admin/login') {
-              location.href = '/admin/login'
-          }
+        console.log('Fetch Error :-S', err)
+        if (location.pathname !== '/admin/login') {
+          location.href = '/admin/login'
+        }
       })
   }
 
@@ -126,66 +127,66 @@ class App extends React.Component {
 
   render() {
     const { isDrawerOpen, headerTitle } = this.state
-   
+
     const muiTheme = getMuiTheme({
       palette: {
         primary1Color: '#5E35B1'
       },
     });
     return (
-			<Provider store={config.store}>
-				<Router>
-					<div>
-						<Route path='/admin/login' component={Login} />
-							{
-								!location.pathname.includes('login') &&
-								<div>
-								<MuiThemeProvider muiTheme={muiTheme}>
-										<div>
-											<Header
-													logout={this.handleLogout}
-													isDrawerOpen={isDrawerOpen}
-													toggleDrawer={this.toggleDrawer}
-													//headerTitle={headerTitle}
-											/>
-											<NavigationBar
-													setHeaderTitle={this.setHeaderTitle}
-													isDrawerOpen={isDrawerOpen}
-													toggleDrawer={this.toggleDrawer}
-													handleCloseDrawer={this.handleCloseDrawer}
-											/>
-											{/* <DisplayScreen key={this.state.key} > */}
-											<DisplayScreen>
-													<Switch>
-															{/* <Route exact path="/" component={WelcomeScreen} /> */}
-															<Route exact path="/admin" component={WelcomeScreen} />
-					
-															<Route exact path="/admin/sku-mapping/" component={SKUMapManager} />
-															<Route exact path="/admin/sku-mapping/:skuId" component={ViewSKUMapDetails} />
-					
-															<Route exact path="/admin/manage-brand/" component={ManageBrand} />
-															<Route exact path="/admin/manage-brand/create" component={CreateBrand} />
-															<Route exact path="/admin/manage-brand/edit/:brandName" component={EditBrand} />
-                              <Route exact path="/admin/manage-brand/listing-order" component={ManageListingOrder} />
+      <Provider store={config.store}>
+        <Router>
+          <div>
+            <Route path='/admin/login' component={Login} />
+            {
+              !location.pathname.includes('login') &&
+              <div>
+                <MuiThemeProvider muiTheme={muiTheme}>
+                  <div>
+                    <Header
+                      logout={this.handleLogout}
+                      isDrawerOpen={isDrawerOpen}
+                      toggleDrawer={this.toggleDrawer}
+                    //headerTitle={headerTitle}
+                    />
+                    <NavigationBar
+                      setHeaderTitle={this.setHeaderTitle}
+                      isDrawerOpen={isDrawerOpen}
+                      toggleDrawer={this.toggleDrawer}
+                      handleCloseDrawer={this.handleCloseDrawer}
+                    />
+                    {/* <DisplayScreen key={this.state.key} > */}
+                    <DisplayScreen>
+                      <Switch>
+                        {/* <Route exact path="/" component={WelcomeScreen} /> */}
+                        <Route exact path="/admin" component={WelcomeScreen} />
 
-                              <Route exact path="/admin/manage-genre/" component={ManageGenre} />
-															<Route exact path="/admin/manage-genre/create" component={CreateGenre} />
-															<Route exact path="/admin/manage-genre/edit/:genreName" component={EditGenre} />
-					
-															<Route exact path="/admin/manage-sku" component={ViewSKU} />
-															<Route exact path="/admin/manage-sku/create" component={CreateSKU} />
-															<Route exact path="/admin/manage-sku/edit/:brandName" component={EditSKU} />
+                        <Route exact path="/admin/sku-mapping/" component={SKUMapManager} />
+                        <Route exact path="/admin/sku-mapping/:skuId" component={ViewSKUMapDetails} />
 
-                              <Route exact path="/admin/access-logs" component={AccessLogs} />
-													</Switch>
-											</DisplayScreen> 
-											</div>
-									</MuiThemeProvider>
-								</div>
-						}					
-					</div>
-				</Router>
-			</Provider>
+                        <Route exact path="/admin/manage-brand/" component={ManageBrand} />
+                        <Route exact path="/admin/manage-brand/create" component={CreateBrand} />
+                        <Route exact path="/admin/manage-brand/edit/:brandName" component={EditBrand} />
+                        <Route exact path="/admin/manage-brand/listing-order" component={ManageListingOrder} />
+
+                        <Route exact path="/admin/manage-genre/" component={ManageGenre} />
+                        <Route exact path="/admin/manage-genre/create" component={CreateGenre} />
+                        <Route exact path="/admin/manage-genre/edit/:genreName" component={EditGenre} />
+
+                        <Route exact path="/admin/manage-sku" component={ViewSKU} />
+                        <Route exact path="/admin/manage-sku/create" component={CreateSKU} />
+                        <Route exact path="/admin/manage-sku/edit/:brandName" component={EditSKU} />
+
+                        <Route exact path="/admin/access-logs" component={AccessLogs} />
+                      </Switch>
+                    </DisplayScreen>
+                  </div>
+                </MuiThemeProvider>
+              </div>
+            }
+          </div>
+        </Router>
+      </Provider>
     )
   }
 }
