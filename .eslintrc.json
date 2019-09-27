@@ -1,13 +1,48 @@
 {
-    "extends": "airbnb",
-    "rules": {
-      "semi": 0,
-      "comma-dangle": 0,
-      "indent": [2],
-      "react/prefer-stateless-function": [0, {"ignorePureComponents": true}],
-      "react/jsx-filename-extension": [1, { "extensions": [".js"] }],
-      "no-trailing-spaces": 0,
-      "react/sort-comp": 0,
-      "jsx-a11y/anchor-is-valid": 0
-    }
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "sourceType": "module"
+  },
+  "plugins": [
+    "react",
+    "react-hooks"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
+  "rules": {
+    "no-const-assign": "warn",
+    "no-this-before-super": "warn",
+    "no-undef": "warn",
+    "no-unreachable": "warn",
+    "no-unused-vars": "warn",
+    "constructor-super": "warn",
+    "valid-typeof": "warn",
+    "no-extra-semi": "error",
+    "no-multi-spaces": "warn",
+    "no-useless-constructor": "error",
+    "lines-between-class-members": [
+      "error",
+      "always"
+    ],
+    "jsx-quotes": [
+      "error",
+      "prefer-double"
+    ],
+    "space-before-function-paren": [
+      "error",
+      {
+        "named": "always"
+      }
+    ]
+  }
 }
