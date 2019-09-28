@@ -8,14 +8,15 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "NODE_ENV=production webpack --config webpack.prod.js",
     "start:dev": "NODE_ENV=development webpack-dev-server --config webpack.dev.js --host 0.0.0.0",
+    "start:local": "NODE_ENV=development webpack-dev-server --config webpack.dev.js --disable-host-check",
     "start": "NODE_ENV=production node server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@babel/core": "^7.1.6",
-    "@babel/preset-env": "^7.1.6",
+    "@babel/core": "^7.6.2",
+    "@babel/preset-env": "^7.6.2",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.4",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
@@ -35,23 +36,25 @@
     "react-js-pagination": "^3.0.2",
     "react-motion": "^0.5.2",
     "react-redux": "^7.1.1",
-    "react-router": "^5.0.1",
-    "react-router-dom": "^5.0.1",
+    "react-router": "^5.1.1",
+    "react-router-dom": "^5.1.1",
     "redux": "^4.0.1",
-    "redux-saga": "^1.0.5",
+    "redux-saga": "^1.1.1",
     "sass-loader": "^8.0.0",
     "style-loader": "^1.0.0",
-    "webpack-cli": "^3.1.2",
+    "webpack-cli": "^3.3.9",
     "webpack-dev-middleware": "^3.4.0",
-    "webpack-dev-server": "^3.1.10",
+    "webpack-dev-server": "^3.8.1",
     "webpack-merge": "^4.1.4"
   },
   "dependencies": {
     "abspath-webpack-plugin": "0.0.1",
     "compression-webpack-plugin": "^3.0.0",
+    "eslint": "^6.4.0",
+    "eslint-plugin-react": "^7.14.3",
     "material-ui": "^0.20.2",
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3",
-    "webpack": "^4.6.0"
+    "react": "^16.10.0",
+    "react-dom": "^16.10.0",
+    "webpack": "^4.41.0"
   }
 }

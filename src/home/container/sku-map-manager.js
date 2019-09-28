@@ -12,7 +12,7 @@ import {unMountModal} from '@components/ModalBox/utils'
 import ModalHeader from '@components/ModalBox/ModalHeader'
 import ModalBody from '@components/ModalBox/ModalBody'
 import ModalBox from '@components/ModalBox'
-import ModalFooter from '@components/ModalBox/ModalFooter';
+import ModalFooter from '@components/ModalBox/ModalFooter'
 
 class SKUMapManager extends React.Component {
 

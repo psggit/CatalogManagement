@@ -1,21 +1,21 @@
 
 function getAPIObj() {
-  if (window.location.href.split(':')[1] === '//localhost' || window.location.href.split(':')[1] === '//192.168.5.1') {
+  if ((window.location.href.split(':')[1] === '//localhost') || (window.location.hostname.split('.')[0] === "catalog-local")) {
     
     let scheme = 'https'
-    let baseHost = '.basketball38.hasura-app.io'
-    let appName = 'basketball38'
+    let baseHost = '.hipbar-dev.com'
+    let appName = 'hipbar-dev.com'
     return {
-      authUrl: 'https://auth.' + appName + '.hasura-app.io',
-      blogicUrl: 'https://api1.' + appName + '.hasura-app.io',
+      authUrl: 'https://auth.' + appName,
+      blogicUrl: 'https://api1.' + appName,
       gremlinUrl: scheme + '://gremlin' + baseHost,
       odin: scheme + '://odin' + baseHost,
       catman: scheme + '://catman' + baseHost,
       orderman: scheme + '://orderman' + baseHost,
       socketUrl: 'https://livered' + baseHost,
-      api2: 'https://api2.' + appName + '.hasura-app.io',
-      catalog: 'https://catalog.' + appName + '.hasura-app.io',
-      retailer: 'https://retailer.' + appName + '.hasura-app.io'
+      api2: 'https://api2.' + appName,
+      catalog: 'https://catalog.' + appName,
+      retailer: 'https://retailer.' + appName
     }
   } else {
     let scheme = window.location.href.split(':')[0]
