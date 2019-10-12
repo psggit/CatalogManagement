@@ -217,13 +217,4 @@ class ViewUnmappedStates extends React.Component {
   }
 }
 
-const mapStateToProps = state => state.main
-
-const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators(Actions, dispatch)
-})
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ViewUnmappedStates)
+export default ViewUnmappedStates

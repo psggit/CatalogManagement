@@ -51,9 +51,9 @@ module.exports = {
       threshold: 10240,
       minRatio: 0.8
     }),
-    new webpack.DefinePlugin({
-      "process.env.BASE_URL": JSON.stringify(process.env.BASE_URL || "hipbar-dev.com")
-    })
+    // new webpack.DefinePlugin({
+    //   "process.env.BASE_URL": JSON.stringify(process.env.BASE_URL || "hipbar-dev.com")
+    // })
   ],
   output: {
     filename: '[name].[chunkhash].js',
