@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 import TextField from 'material-ui/TextField'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
+import PropTypes from "prop-types"
 import Checkbox from 'material-ui/Checkbox'
 import '@sass/components/_form.scss'
 import { POST } from '@utils/fetch'
@@ -22,9 +23,11 @@ class SkuDetailsForm extends React.Component {
       skuId: props.skuInfo ? props.skuInfo.sku_id : '',
       statusIdx: props.skuInfo ? props.skuInfo.is_active ? 1 : 2 : 1,
       shouldTrim: true,
-      brandIdx: 0,
+      //brandIdx: 0,
       brandName: props.brandName ? props.brandName : '',
       brandId: 0,
+      genreId: 0,
+      brandList: [],
       tag:  props.skuInfo ? props.skuInfo.tag : '',
       high_res_image: props.skuInfo ? props.skuInfo.high_res_image : '',
       low_res_image: props.skuInfo ? props.skuInfo.low_res_image : '',
@@ -70,20 +73,34 @@ class SkuDetailsForm extends React.Component {
     this.handleTextFields = this.handleTextFields.bind(this)
     this.handleStatusChange = this.handleStatusChange.bind(this)
     this.handleBrandChange = this.handleBrandChange.bind(this)
+    this.handleGenreChange = this.handleGenreChange.bind(this)
     this.handleCheckboxes = this.handleCheckboxes.bind(this)
     this.handleSave = this.handleSave.bind(this)
     this.isFormValid = this.isFormValid.bind(this)
     this.selectedBrandName = this.selectedBrandName.bind(this)
   }
 
-  componentWillReceiveProps(newProps) {
+  componentWillReceiveProps (newProps) {
     if(newProps.brandList !== this.props.brandList && !newProps.loadingBrandList) {
-      this.setState({brandId: newProps.brandList[0].id})
+      const brandList = newProps.brandList.map((item) => {
+        return {
+          text: item.brand_name,
+          value: item.id
+        }
+      })
+      this.setState({
+        brandList,
+        brandName: newProps.brandList[0].brand_name,
+        brandId: newProps.brandList[0].id
+      })
     }
-    //document.getElementsByClassName("auto-complete")[0].style.width = '100%'
+    if (newProps.genres !== this.props.genres && !newProps.loadingGenres) {
+      this.setState({ genreId: newProps.genres[0].id })
+      this.props.fetchGenreBasedBrandList(newProps.genres[0].id)
+    }
   }
 
-  handleStatusChange(e, k) {
+  handleStatusChange (e, k) {
     const statusIdx = k + 1
     console.log(statusIdx)
     this.setState({
@@ -91,17 +108,23 @@ class SkuDetailsForm extends React.Component {
     })
   }
 
-  handleBrandChange(e, k) {
-    const brandIdx = k
-    console.log("id", brandIdx, "name", this.props.brandList[k].id, this.props.brandList[k])
+  handleGenreChange (e, k) {
     this.setState({
-      brandIdx,
+      genreId: this.props.genres[k].id
+    })
+    this.props.fetchGenreBasedBrandList(this.props.genres[k].id)
+  }
+
+  handleBrandChange (e, k) {
+    //const brandIdx = k
+    this.setState({
+      //brandIdx,
       brandName: this.props.brandList[k].brand_name,
       brandId: this.props.brandList[k].id
     })
   }
 
-  handleChange(e) {
+  handleChange (e) {
     const errName = `${e.target.name}Err`
     if(validateNumType(e.keyCode) || checkCtrlA(e) || checkCtrlV(e)) {
       this.setState({ 
@@ -113,7 +136,7 @@ class SkuDetailsForm extends React.Component {
     }   
   }
 
-  handleTextFields(e) {
+  handleTextFields (e) {
     const errName = `${e.target.name}Err`
     this.setState({
         [e.target.name]: e.target.value,
@@ -121,7 +144,7 @@ class SkuDetailsForm extends React.Component {
     })
   }
 
-  isFormValid() {
+  isFormValid () {
     const volumeErr = validateNumberField(this.inputNameMap['volume'], this.state.volume)
     this.setState({ volumeErr: validateNumberField(this.inputNameMap['volume'], this.state.volume) })
 
@@ -145,7 +168,7 @@ class SkuDetailsForm extends React.Component {
     return false
   }
 
-  handleSave() {
+  handleSave () {
     if(this.isFormValid()) {
       this.props.submit()
     }
@@ -154,14 +177,14 @@ class SkuDetailsForm extends React.Component {
     return this.state
   }
 
-  handleCheckboxes(e) {
+  handleCheckboxes (e) {
     this.setState({ [e.target.name]: e.target.checked })
   }
 
-  selectedBrandName(brand, index) {
+  selectedBrandName (brand) {
     //console.log("brand", brand, "index", index)
     this.setState({
-      brandIdx: index,
+      //brandIdx: index,
       brandName: brand.brand_name,
       brandId: brand.id
     })
@@ -176,7 +199,34 @@ class SkuDetailsForm extends React.Component {
     };
     return (
       <Fragment>
-
+        <div className="form-group">
+          {
+            this.props.action === "create" &&
+            <label className="label">Genre name*</label>
+          }
+         
+          {
+            this.props.action === "create" &&
+            <SelectField
+              value={this.state.genreId}
+              onChange={this.handleGenreChange}
+              iconStyle={{ fill: '#9b9b9b' }}
+              style={{ width: '100%' }}
+              autoComplete='off'
+            >
+              {
+                !this.props.loadingGenres &&
+                this.props.genres && this.props.genres.map((item) => {
+                  return <MenuItem
+                    value={item.id}
+                    key={item.id}
+                    primaryText={item.genre_name}
+                  />
+                })
+              }
+            </SelectField>
+          }
+        </div> 
         <div className="form-group">
           <label className="label">Brand name*</label><br />
           {
@@ -228,7 +278,6 @@ class SkuDetailsForm extends React.Component {
             <p className="error">* {brandNameErr.value}</p>
           }
         </div>
-
 
         <div className="form-group">
           <label className="label">Volume in ml*</label><br />
@@ -354,6 +403,13 @@ class SkuDetailsForm extends React.Component {
       </Fragment>
     )
   }
+}
+
+SkuDetailsForm.propTypes = {
+  fetchGenreBasedBrandList: PropTypes.func,
+  genres: PropTypes.number,
+  action: PropTypes.string,
+  loadingGenres: PropTypes.bool
 }
 
 export default SkuDetailsForm

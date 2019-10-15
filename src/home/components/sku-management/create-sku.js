@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import PropTypes from "prop-types"
 import * as Actions from './../../actions'
 import RaisedButton from 'material-ui/RaisedButton'
 import '@sass/components/_form.scss'
@@ -10,32 +11,36 @@ import { getQueryObj } from '@utils/url-utils'
 
 class createSKU extends React.Component {
 
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       isDisabled: false
     }
     this.submit = this.submit.bind(this)
+    this.fetchGenreBasedBrandList = this.fetchGenreBasedBrandList.bind(this)
     this.callbackUpdate = this.callbackUpdate.bind(this)
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.props.actions.setLoadingState()
-    this.props.actions.fetchBrands({
-      limit: 10000,
-      offset: 0
-    })
+    this.props.actions.fetchGenreList({})
   }
 
-  callbackUpdate() {
+  fetchGenreBasedBrandList (genreId) {
+    this.props.actions.fetchGenreBasedBrandList(
+      {genre_id: parseInt(genreId)
+    }, () => {})
+  }
+
+  callbackUpdate () {
     this.setState({ isDisabled: false })
   }
 
-  submit() {
+  submit () {
     const data = this.skuDetailsForm.getData()
     //if (data.volume) {
       this.setState({ isDisabled: true })
-      this.props.actions.createSku({
+      this.props.actions.createSku ({
         brand_id: parseInt(data.brandId),
         sku_volume: parseInt(data.volume),
         image_url: data.image_url,
@@ -49,8 +54,8 @@ class createSKU extends React.Component {
     //}
   }
 
-  render() {
-    const {loadingBrandDetails, brands} = this.props
+  render () {
+    const { loadingGenreBasedBrandList, genreBasedBrandList, genres, loadingGenres} = this.props
     return (
       <div style={{
         width: '400px',
@@ -73,8 +78,11 @@ class createSKU extends React.Component {
               isDisabled={false}
               disableSave={this.state.isDisabled}
               submit={this.submit}
-              loadingBrandList={loadingBrandDetails}
-              brandList={brands}
+              loadingBrandList={loadingGenreBasedBrandList}
+              loadingGenres={loadingGenres}
+              genres={genres}
+              brandList={genreBasedBrandList}
+              fetchGenreBasedBrandList={this.fetchGenreBasedBrandList}
               action="create"
             />
           </Card>
@@ -83,6 +91,14 @@ class createSKU extends React.Component {
       </div>
     )
   }
+}
+
+createSKU.propTypes = {
+  loadingGenres: PropTypes.bool,
+  loadingGenreBasedBrandList: PropTypes.bool,
+  genres: PropTypes.array,
+  genreBasedBrandList: PropTypes.array,
+  actions: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => state.main

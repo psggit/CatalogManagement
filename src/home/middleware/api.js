@@ -162,7 +162,6 @@ export const fetchGenreBasedBrandList = action => (
     data: action.data,
     handleError: true
   })
-  .then(json => json)
 )
 
 export const createBrand = action => (

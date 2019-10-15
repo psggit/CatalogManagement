@@ -42,20 +42,20 @@ const styles = [
 
 class ViewSKUList extends React.Component {
 
-  constructor() {
+  constructor () {
     super()
     this.updateSKUStatus = this.updateSKUStatus.bind(this)
   }
 
-  // componentDidMount() {
-  //   this.overrideTableStyle()
-  // }
+  componentDidMount () {
+    this.overrideTableStyle()
+  }
 
-  overrideTableStyle() {
+  overrideTableStyle () {
     overrideTableStyle()
   }
 
-  handleClick(e, item) {
+  handleClick (e, item) {
     let queryObj = {}
     if (this.props.navigateTo !== "editSKU" && !item.is_active) {
       e.preventDefault()
@@ -85,11 +85,11 @@ class ViewSKUList extends React.Component {
     }
   }
 
-  updateSKUStatus(item, isInputClicked) {
+  updateSKUStatus (item, isInputClicked) {
     this.props.showDialog({ newStatus: isInputClicked, skuId: item.sku_id, brandName: item.brand_name, volume: item.sku_volume })
   }
 
-  render() {
+  render () {
     return (
       <React.Fragment>
         <Table
