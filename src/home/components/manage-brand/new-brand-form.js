@@ -148,18 +148,18 @@ class BrandForm extends React.Component {
     const brandNameErr = validateTextField(this.inputNameMap['brandName'], this.state.brandName)
     this.setState({ brandNameErr: validateTextField(this.inputNameMap['brandName'], this.state.brandName) })
 
-    // const lowResBrandLogoErr = validateTextField(this.inputNameMap['lowResBrandLogo'], this.state.low_res_brand_logo)
-    // this.setState({ lowResBrandLogoErr: validateTextField(this.inputNameMap['lowResBrandLogo'], this.state.low_res_brand_logo) })
+    const lowResBrandLogoErr = validateTextField(this.inputNameMap['lowResBrandLogo'], this.state.low_res_brand_logo)
+    this.setState({ lowResBrandLogoErr: validateTextField(this.inputNameMap['lowResBrandLogo'], this.state.low_res_brand_logo) })
 
-    // const highResBrandLogoErr = validateTextField(this.inputNameMap['highResBrandLogo'], this.state.high_res_brand_logo)
-    // this.setState({ highResBrandLogoErr: validateTextField(this.inputNameMap['highResBrandLogo'], this.state.high_res_brand_logo) })
+    const highResBrandLogoErr = validateTextField(this.inputNameMap['highResBrandLogo'], this.state.high_res_brand_logo)
+    this.setState({ highResBrandLogoErr: validateTextField(this.inputNameMap['highResBrandLogo'], this.state.high_res_brand_logo) })
      
     // const tagNameErr = validateTextField(this.inputNameMap['tagName'], this.state.tag)
     // this.setState({ tagNameErr: validateTextField(this.inputNameMap['tagName'], this.state.tag) })
 
-    if(!brandNameErr.status
-      // !highResBrandLogoErr.status && 
-      // !lowResBrandLogoErr.status
+    if(!brandNameErr.status &&
+      !highResBrandLogoErr.status && 
+      !lowResBrandLogoErr.status
       // !tagNameErr.status
     ) {
       return true;
@@ -325,7 +325,7 @@ class BrandForm extends React.Component {
         </div>
 
         <div className="form-group">
-          <label className="label">High res brand logo</label><br />
+          <label className="label">High res brand logo*</label><br />
           <TextField
             disabled={this.props.isDisabled}
             onChange={this.handleTextFields}
@@ -343,7 +343,7 @@ class BrandForm extends React.Component {
         </div>
 
         <div className="form-group">
-          <label className="label">Low res brand logo</label><br />
+          <label className="label">Low res brand logo*</label><br />
           <TextField
             disabled={this.props.isDisabled}
             onChange={this.handleTextFields}
