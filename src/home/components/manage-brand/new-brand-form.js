@@ -23,8 +23,8 @@ class BrandForm extends React.Component {
       tag: props.brandInfo ? props.brandInfo.tag : '',
       high_res_image: props.brandInfo ? props.brandInfo.high_res_image : '',
       low_res_image: props.brandInfo ? props.brandInfo.low_res_image : '',
-      high_res_brand_logo: props.brandInfo ? props.brandInfo.brand_logo_high_res_image : '',
-      low_res_brand_logo: props.brandInfo ? props.brandInfo.brand_logo_low_res_image : '',
+      highResBrandLogo: props.brandInfo ? props.brandInfo.brand_logo_high_res_image : '',
+      lowResBrandLogo: props.brandInfo ? props.brandInfo.brand_logo_low_res_image : '',
       typeIdx: props.brandInfo ? parseInt(props.brandInfo.type)  : '',
       genreIdx: props.brandInfo ? parseInt(props.brandInfo.genre_id) : "",
       genreName: "",
@@ -118,10 +118,11 @@ class BrandForm extends React.Component {
 
   handleTextFields(e) {
     const errName = `${e.target.name}Err`
+    console.log("errname", errName, validateTextField(this.inputNameMap[e.target.name], e.target.value))
     this.setState({
         [e.target.name]: e.target.value,
         [errName]: validateTextField(this.inputNameMap[e.target.name], e.target.value),
-    })
+    }, () => {console.log("name", errName)})
   }
 
   handleChange(e) {
@@ -148,11 +149,11 @@ class BrandForm extends React.Component {
     const brandNameErr = validateTextField(this.inputNameMap['brandName'], this.state.brandName)
     this.setState({ brandNameErr: validateTextField(this.inputNameMap['brandName'], this.state.brandName) })
 
-    const lowResBrandLogoErr = validateTextField(this.inputNameMap['lowResBrandLogo'], this.state.low_res_brand_logo)
-    this.setState({ lowResBrandLogoErr: validateTextField(this.inputNameMap['lowResBrandLogo'], this.state.low_res_brand_logo) })
+    const lowResBrandLogoErr = validateTextField(this.inputNameMap['lowResBrandLogo'], this.state.lowResBrandLogo)
+    this.setState({ lowResBrandLogoErr: validateTextField(this.inputNameMap['lowResBrandLogo'], this.state.lowResBrandLogo) })
 
-    const highResBrandLogoErr = validateTextField(this.inputNameMap['highResBrandLogo'], this.state.high_res_brand_logo)
-    this.setState({ highResBrandLogoErr: validateTextField(this.inputNameMap['highResBrandLogo'], this.state.high_res_brand_logo) })
+    const highResBrandLogoErr = validateTextField(this.inputNameMap['highResBrandLogo'], this.state.highResBrandLogo)
+    this.setState({ highResBrandLogoErr: validateTextField(this.inputNameMap['highResBrandLogo'], this.state.highResBrandLogo) })
      
     // const tagNameErr = validateTextField(this.inputNameMap['tagName'], this.state.tag)
     // this.setState({ tagNameErr: validateTextField(this.inputNameMap['tagName'], this.state.tag) })
@@ -329,7 +330,7 @@ class BrandForm extends React.Component {
           <TextField
             disabled={this.props.isDisabled}
             onChange={this.handleTextFields}
-            name="high_res_brand_logo"
+            name="highResBrandLogo"
             autoComplete='off'
             //hintText="https://cloudfront.ads.johnny_walker.jpg"
             value={this.state.high_res_brand_logo}
@@ -347,7 +348,7 @@ class BrandForm extends React.Component {
           <TextField
             disabled={this.props.isDisabled}
             onChange={this.handleTextFields}
-            name="low_res_brand_logo"
+            name="lowResBrandLogo"
             autoComplete='off'
             //hintText="https://cloudfront.ads.johnny_walker.jpg"
             value={this.state.low_res_brand_logo}
