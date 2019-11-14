@@ -333,7 +333,7 @@ class BrandForm extends React.Component {
             name="highResBrandLogo"
             autoComplete='off'
             //hintText="https://cloudfront.ads.johnny_walker.jpg"
-            value={this.state.high_res_brand_logo}
+            value={this.state.highResBrandLogo}
             style={{ width: '100%' }}
           />
           {
@@ -351,7 +351,7 @@ class BrandForm extends React.Component {
             name="lowResBrandLogo"
             autoComplete='off'
             //hintText="https://cloudfront.ads.johnny_walker.jpg"
-            value={this.state.low_res_brand_logo}
+            value={this.state.lowResBrandLogo}
             style={{ width: '100%' }}
           />
           {
