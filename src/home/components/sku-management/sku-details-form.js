@@ -81,6 +81,7 @@ class SkuDetailsForm extends React.Component {
   }
 
   componentWillReceiveProps (newProps) {
+    console.log("new", newProps, "old", this.props, newProps.brandList !== this.props.brandList)
     if(newProps.brandList !== this.props.brandList && !newProps.loadingBrandList) {
       const brandList = newProps.brandList.map((item) => {
         return {
@@ -88,10 +89,11 @@ class SkuDetailsForm extends React.Component {
           value: item.id
         }
       })
+      console.log("inside if", newProps.brandList)
       this.setState({
         brandList,
-        brandName: newProps.brandList[0].brand_name,
-        brandId: newProps.brandList[0].id
+        brandName: newProps.brandList.length > 0 ? newProps.brandList[0].brand_name : "",
+        brandId: newProps.brandList.length > 0 ? newProps.brandList[0].id : ""
       })
     }
     if (newProps.genres !== this.props.genres && !newProps.loadingGenres) {
