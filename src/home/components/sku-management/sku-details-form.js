@@ -251,7 +251,7 @@ class SkuDetailsForm extends React.Component {
                     return <MenuItem
                       value={item.id}
                       key={item.id}
-                      primaryText={item.brand_name}
+                      primaryText={`${item.brand_name} (${item.id})`}
                     />
                   })
                 }
