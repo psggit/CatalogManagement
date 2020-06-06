@@ -93,6 +93,7 @@ class Form extends React.Component {
               placeholder="username"
               type="text"
               name="username"
+              autocomplete="off"
               onChange={this.handleChange}
               onKeyDown={this.handlePress}
             />
@@ -102,6 +103,7 @@ class Form extends React.Component {
               placeholder="password"
               type="password"
               name="password"
+              autocomplete="off"
               onChange={this.handleChange}
               onKeyDown={this.handlePress}
             />
