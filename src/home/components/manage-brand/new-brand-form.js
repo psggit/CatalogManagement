@@ -31,6 +31,7 @@ class BrandForm extends React.Component {
       description: props.brandInfo ? props.brandInfo.description : '',
       high_res_image_err: false,
       low_res_image_err: false,
+      countryOfOrigin: props.brandInfo ? props.brandInfo.country_of_origin : '',
       //brandIdx: props.brandInfo ? parseInt(props.brandInfo.id) : '',
 
       brandNameErr: {
@@ -51,13 +52,13 @@ class BrandForm extends React.Component {
       lowResBrandLogoErr: {
         value: '',
         status: false
-      }
+      },
     }
     this.inputNameMap = {
       'brandName': 'Brand name',
       'lowResBrandLogo': 'Low res brand logo',
       'highResBrandLogo': 'High res brand logo',
-      'tagName': 'Tag'
+      'tagName': 'Tag',
     }
 
     this.state = Object.assign({}, this.intitialState)
@@ -154,13 +155,13 @@ class BrandForm extends React.Component {
 
     const highResBrandLogoErr = validateTextField(this.inputNameMap['highResBrandLogo'], this.state.highResBrandLogo)
     this.setState({ highResBrandLogoErr: validateTextField(this.inputNameMap['highResBrandLogo'], this.state.highResBrandLogo) })
-     
+         
     // const tagNameErr = validateTextField(this.inputNameMap['tagName'], this.state.tag)
     // this.setState({ tagNameErr: validateTextField(this.inputNameMap['tagName'], this.state.tag) })
 
     if(!brandNameErr.status &&
       !highResBrandLogoErr.status && 
-      !lowResBrandLogoErr.status
+      !lowResBrandLogoErr.status 
       // !tagNameErr.status
     ) {
       return true;
@@ -175,7 +176,7 @@ class BrandForm extends React.Component {
   }
 
   render() {
-    const { brandNameErr, highResBrandLogoErr, lowResBrandLogoErr, tagNameErr } = this.state
+    const { brandNameErr, highResBrandLogoErr, lowResBrandLogoErr, countryOfOriginErr, tagNameErr } = this.state
     console.log("props", this.props)
     return (
       <Fragment>
@@ -233,6 +234,17 @@ class BrandForm extends React.Component {
             style={{ width: '100%' }}
             onChange={this.handleChange}
             value={this.state.caloriesTotal}
+          />
+        </div>
+
+        <div className="form-group">
+          <label className="label">Country Of Origin</label><br />
+          <TextField
+            name="countryOfOrigin"
+            autoComplete='off'
+            style={{ width: '100%' }}
+            onChange={this.handleTextFields}
+            value={this.state.countryOfOrigin}
           />
         </div>
 

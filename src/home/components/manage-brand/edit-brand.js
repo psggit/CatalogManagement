@@ -51,6 +51,7 @@ class EditBrand extends React.Component {
       genre_id: data.genreIdx,
       type: data.typeIdx,    
       alcohol_per: (data.alcoholPercentage),
+      country_of_origin : (data.countryOfOrigin),
       temperature: (data.temperature),
       cal_per: (data.caloriesPercentage),
       cal_total: (data.caloriesTotal),

@@ -20,6 +20,7 @@ const TableHeaderItems = [
   'BRAND NAME',
   'BRAND TYPE',
   'GENRE_ID',
+  'COUNTRY OF ORIGIN',
   'TAGS',
   'BRAND_LOGO_HIGH_RES',
   'ALCOHOL PERCENTAGE',
@@ -33,6 +34,7 @@ const styles = [
   { width: '130px' },
   { width: '100px' },
   { width: '100px' },
+  { width: '100px' }, 
   { width: '100px' }, 
   { width: '130px' }, 
   { width: '90px' },
@@ -94,6 +96,7 @@ class ViewBrandList extends React.Component {
                       <TableRowColumn style={styles[2]}>{item.brand_name}</TableRowColumn>
                       <TableRowColumn style={styles[3]}>{item.brand_type}</TableRowColumn>
                       <TableRowColumn style={styles[4]}>{item.genre_id}</TableRowColumn>
+                      <TableRowColumn style={styles[4]}>{item.country_of_origin}</TableRowColumn>
                       <TableRowColumn style={styles[5]}>{item.tag}</TableRowColumn>
                       {/* <TableRowColumn style={styles[5]}>{item.is_active ? 'ACTIVE' : 'INACTIVE'}</TableRowColumn> */}
                       <TableRowColumn style={styles[6]}>
