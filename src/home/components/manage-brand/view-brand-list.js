@@ -20,6 +20,7 @@ const TableHeaderItems = [
   'BRAND NAME',
   'BRAND TYPE',
   'GENRE_ID',
+  'COUNTRY OF ORIGIN',
   'TAGS',
   'BRAND_LOGO_HIGH_RES',
   'ALCOHOL PERCENTAGE',
@@ -33,6 +34,7 @@ const styles = [
   { width: '130px' },
   { width: '100px' },
   { width: '100px' },
+  { width: '100px' }, 
   { width: '100px' }, 
   { width: '130px' }, 
   { width: '90px' },
@@ -94,9 +96,10 @@ class ViewBrandList extends React.Component {
                       <TableRowColumn style={styles[2]}>{item.brand_name}</TableRowColumn>
                       <TableRowColumn style={styles[3]}>{item.brand_type}</TableRowColumn>
                       <TableRowColumn style={styles[4]}>{item.genre_id}</TableRowColumn>
-                      <TableRowColumn style={styles[5]}>{item.tag}</TableRowColumn>
+                      <TableRowColumn style={styles[5]}>{item.country_of_origin}</TableRowColumn>
+                      <TableRowColumn style={styles[6]}>{item.tag}</TableRowColumn>
                       {/* <TableRowColumn style={styles[5]}>{item.is_active ? 'ACTIVE' : 'INACTIVE'}</TableRowColumn> */}
-                      <TableRowColumn style={styles[6]}>
+                      <TableRowColumn style={styles[7]}>
                         <a target="_blank" href={item.brand_logo_high_res_image}>
                           <img
                             alt="brand_logo"
@@ -109,9 +112,9 @@ class ViewBrandList extends React.Component {
                           />
                         </a>
                       </TableRowColumn>
-                      <TableRowColumn style={styles[7]}>{item.alcohol_per}</TableRowColumn>
-                      <TableRowColumn style={styles[8]}>{item.temperature}</TableRowColumn>
-                      <TableRowColumn style={styles[9]}>
+                      <TableRowColumn style={styles[8]}>{item.alcohol_per}</TableRowColumn>
+                      <TableRowColumn style={styles[9]}>{item.temperature}</TableRowColumn>
+                      <TableRowColumn style={styles[10]}>
                         <Switch toggled={item.is_active} onToggle={this.updateBrandStatus} value={item} />
                       </TableRowColumn>
                     </TableRow>
