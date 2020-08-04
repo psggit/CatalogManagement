@@ -147,7 +147,7 @@ class MappedStatesList extends React.Component {
             <TableHeaderColumn style={styles[4]}>SKU PRICE</TableHeaderColumn>
             <TableHeaderColumn style={styles[5]}>SKU PRICING ID</TableHeaderColumn>
             <TableHeaderColumn style={styles[6]}>TAG</TableHeaderColumn>
-            <TableHeaderColumn style={styles[6]}>GTI NUMBER</TableHeaderColumn>
+            <TableHeaderColumn style={styles[7]}>GTI NUMBER</TableHeaderColumn>
           </TableRow>
         </TableHeader>
         <TableBody
