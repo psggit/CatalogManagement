@@ -19,15 +19,16 @@ const TableHeaderItems = [
   'STATE SHORT NAME',
   'SKU PRICE',
   'TAG',
-  ''
+  'GTI NUMBER',
+  '',
 ]
 
 const styles = [
-  { width: '100px', textAlign: 'center' },
-  { width: '120px', textAlign: 'center' },
-  { width: '70px', textAlign: 'center' },
-  { width: '120px', textAlign: 'center' },
+  { width: '90px', textAlign: 'center' },
+  { width: '80px', textAlign: 'center' },
   { width: '60px', textAlign: 'center' },
+  { width: '70px', textAlign: 'center' },
+  { width: '70px', textAlign: 'center' },
 ]
 
 class ViewUnmappedStates extends React.Component {
@@ -42,6 +43,7 @@ class ViewUnmappedStates extends React.Component {
     this.handleAddState = this.handleAddState.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleTagChange = this.handleTagChange.bind(this)
+    this.handleGtiNumberChange = this.handleGtiNumberChange.bind(this)
   }
 
   componentDidMount() {
@@ -73,6 +75,7 @@ class ViewUnmappedStates extends React.Component {
           sku_id: parseInt(this.props.skuId),
           price: 0,
           tag: '',
+          gti_number: '',
           is_active: true,
           state_short_name: item.state_short_name
         }
@@ -95,6 +98,7 @@ class ViewUnmappedStates extends React.Component {
             sku_id: parseInt(this.props.skuId),
             price: 0,
             tag: '',
+            gti_number: '',
             is_active: true,
             state_short_name: statesMap[stateDetails.state_id].state_short_name
           }
@@ -123,6 +127,12 @@ class ViewUnmappedStates extends React.Component {
     let updatedMap = Object.assign({}, this.state.stateMap)
     updatedMap[stateShortName].tag = (e.target.value)
     this.setState({stateMap: updatedMap, unmappedStatesList: Object.values(updatedMap)})
+  }
+
+  handleGtiNumberChange(e, stateShortName) {
+    let updatedMap = Object.assign({}, this.state.stateMap)
+    updatedMap[stateShortName].gti_number = (e.target.value)
+    this.setState({ stateMap: updatedMap, unmappedStatesList: Object.values(updatedMap) })
   }
 
   render() {
@@ -185,10 +195,18 @@ class ViewUnmappedStates extends React.Component {
                         type="text" 
                         value={this.state.stateMap[item.state_short_name].tag} 
                         onChange={(e) => this.handleTagChange(e, item.state_short_name)} 
-                        style = {{ width: '120px', padding: '0 10px'}}
+                        style = {{ width: '70px', padding: '0 10px'}}
                       />
                     </TableRowColumn>
                     <TableRowColumn style={styles[4]}>
+                      <input
+                        type="text"
+                        value={this.state.stateMap[item.state_short_name].gti_number}
+                        onChange={(e) => this.handleGtiNumberChange(e, item.state_short_name)}
+                        style={{ width: '70px', padding: '0 10px' }}
+                      />
+                    </TableRowColumn>
+                    <TableRowColumn style={styles[5]}>
                       <FlatButton
                         disabled={this.state.stateMap[item.state_short_name].price==0}
                         label="add"

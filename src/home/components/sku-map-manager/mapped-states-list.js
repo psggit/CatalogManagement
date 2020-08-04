@@ -11,7 +11,7 @@ import {
 import TableLoadingShell from './../table-loading-shell'
 import '@sass/components/_table.scss'
 import Checkbox from 'material-ui/Checkbox'
-import {overrideTableStyle} from '@utils'
+import { overrideTableStyle } from '@utils'
 
 const styles = [
   { width: '38px', textAlign: 'left' },
@@ -20,6 +20,7 @@ const styles = [
   { width: '80px', textAlign: 'left' },
   { width: '80px', textAlign: 'left' },
   { width: '100px', textAlign: 'left' },
+  { width: '200px', textAlign: 'left' },
   { width: '200px', textAlign: 'left' },
 ]
 
@@ -35,6 +36,7 @@ class MappedStatesList extends React.Component {
     this.handleCheckboxes = this.handleCheckboxes.bind(this)
     this.enableInputBox = this.enableInputBox.bind(this)
     this.handleTagChange = this.handleTagChange.bind(this)
+    this.handleGtiNumberChange = this.handleGtiNumberChange.bind(this)
   }
 
   componentDidMount() {
@@ -58,7 +60,7 @@ class MappedStatesList extends React.Component {
   }
 
   mapStates() {
-    if(this.props.skuMappedData) {
+    if (this.props.skuMappedData) {
       this.setState({ mappedStatesList: this.props.skuMappedData, stateMap: this.props.skuStateMap })
     }
   }
@@ -67,19 +69,20 @@ class MappedStatesList extends React.Component {
     let updatedStateMap = Object.assign({}, this.state.stateMap)
     if (!this.state.stateMap[stateShortName].is_modified) {
       updatedStateMap[stateShortName].is_modified = true
-      this.setState({ 
-        selectedPricingId: this.state.stateMap[stateShortName].sku_pricing_id, 
+      this.setState({
+        selectedPricingId: this.state.stateMap[stateShortName].sku_pricing_id,
         stateMap: updatedStateMap,
         selectStateShortName: stateShortName
       })
-    } 
+    }
     else {
       //If sku price is greater than 0, then update sku price
-      if(updatedStateMap[stateShortName].price > 0) {
+      if (updatedStateMap[stateShortName].price > 0) {
         this.props.handleSaveStateDetails({
           is_active: updatedStateMap[stateShortName].is_active,
           price: updatedStateMap[stateShortName].price,
           tag: updatedStateMap[stateShortName].tag,
+          gti_number: updatedStateMap[stateShortName].gti_number,
           id: this.state.stateMap[stateShortName].sku_pricing_id,
         })
       }
@@ -97,6 +100,12 @@ class MappedStatesList extends React.Component {
   handleTagChange(e, stateShortName) {
     let updatedMap = Object.assign({}, this.state.stateMap)
     updatedMap[stateShortName].tag = (e.target.value)
+    this.setState({ stateMap: updatedMap, mappedStatesList: Object.values(updatedMap) })
+  }
+
+  handleGtiNumberChange(e, stateShortName) {
+    let updatedMap = Object.assign({}, this.state.stateMap)
+    updatedMap[stateShortName].gti_number = (e.target.value)
     this.setState({ stateMap: updatedMap, mappedStatesList: Object.values(updatedMap) })
   }
 
@@ -138,6 +147,7 @@ class MappedStatesList extends React.Component {
             <TableHeaderColumn style={styles[4]}>SKU PRICE</TableHeaderColumn>
             <TableHeaderColumn style={styles[5]}>SKU PRICING ID</TableHeaderColumn>
             <TableHeaderColumn style={styles[6]}>TAG</TableHeaderColumn>
+            <TableHeaderColumn style={styles[7]}>GTI NUMBER</TableHeaderColumn>
           </TableRow>
         </TableHeader>
         <TableBody
@@ -147,7 +157,7 @@ class MappedStatesList extends React.Component {
           {
             this.props.loadingStatesMappedToSku &&
             [1, 2, 3, 4, 5].map(() => {
-              return <TableLoadingShell/>
+              return <TableLoadingShell />
             })
           }
           {
@@ -188,6 +198,15 @@ class MappedStatesList extends React.Component {
                     type="text"
                     value={this.state.stateMap[item.state_short_name].tag}
                     onChange={(e) => this.handleTagChange(e, item.state_short_name)}
+                    style={!this.state.stateMap[item.state_short_name].is_modified ? editInputStyle : { width: '200px', padding: '0px 10px' }}
+                    disabled={!this.state.stateMap[item.state_short_name].is_modified}
+                  />
+                </TableRowColumn>
+                <TableRowColumn style={styles[7]}>
+                  <input
+                    type="text"
+                    value={this.state.stateMap[item.state_short_name].gti_number}
+                    onChange={(e) => this.handleGtiNumberChange(e, item.state_short_name)}
                     style={!this.state.stateMap[item.state_short_name].is_modified ? editInputStyle : { width: '200px', padding: '0px 10px' }}
                     disabled={!this.state.stateMap[item.state_short_name].is_modified}
                   />
