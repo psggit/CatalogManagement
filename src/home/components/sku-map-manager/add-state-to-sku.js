@@ -31,6 +31,7 @@ class AddStateToSku extends React.Component {
           title="Add state"
           actions={actions}
           modal={false}
+          bodyStyle={{padding: 0}}
           open={this.state.open}
           onRequestClose={this.handleClose}
           autoScrollBodyContent
