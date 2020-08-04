@@ -27,8 +27,8 @@ const styles = [
   { width: '90px', textAlign: 'center' },
   { width: '80px', textAlign: 'center' },
   { width: '60px', textAlign: 'center' },
-  { width: '80px', textAlign: 'center' },
-  { width: '80px', textAlign: 'center' },
+  { width: '70px', textAlign: 'center' },
+  { width: '70px', textAlign: 'center' },
 ]
 
 class ViewUnmappedStates extends React.Component {
@@ -195,7 +195,7 @@ class ViewUnmappedStates extends React.Component {
                         type="text" 
                         value={this.state.stateMap[item.state_short_name].tag} 
                         onChange={(e) => this.handleTagChange(e, item.state_short_name)} 
-                        style = {{ width: '80px', padding: '0 10px'}}
+                        style = {{ width: '70px', padding: '0 10px'}}
                       />
                     </TableRowColumn>
                     <TableRowColumn style={styles[4]}>
@@ -203,7 +203,7 @@ class ViewUnmappedStates extends React.Component {
                         type="text"
                         value={this.state.stateMap[item.state_short_name].gti_number}
                         onChange={(e) => this.handleGtiNumberChange(e, item.state_short_name)}
-                        style={{ width: '80px', padding: '0 10px' }}
+                        style={{ width: '70px', padding: '0 10px' }}
                       />
                     </TableRowColumn>
                     <TableRowColumn style={styles[5]}>
