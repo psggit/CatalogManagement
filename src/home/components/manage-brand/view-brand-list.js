@@ -16,35 +16,38 @@ import {overrideTableStyle} from '@utils'
 import Checkbox from "material-ui/Checkbox"
 import RaisedButton from 'material-ui/RaisedButton'
 
-const TableHeaderItems = [
-  <Checkbox label="Enabled"/>,
-  '',
-  'ID',
-  'BRAND NAME',
-  'BRAND TYPE',
-  'GENRE_ID',
-  'COUNTRY OF ORIGIN',
-  'TAGS',
-  'BRAND_LOGO_HIGH_RES',
-  'ALCOHOL PERCENTAGE',
-  'TEMPERATURE',
-  'BRAND STATUS'
-]
+// const TableHeaderItems = [
+//   <Checkbox
+//    label="Enabled"
+//     onCheck={(e) => handleSelectAll(e)}
+//    />,
+//   '',
+//   'ID',
+//   'BRAND NAME',
+//   'BRAND TYPE',
+//   'GENRE_ID',
+//   'COUNTRY OF ORIGIN',
+//   'TAGS',
+//   'BRAND_LOGO_HIGH_RES',
+//   'ALCOHOL PERCENTAGE',
+//   'TEMPERATURE',
+//   'BRAND STATUS'
+// ]
 
-const styles = [
-  { width: '20px' },
-  { width: '40px' },
-  { width: '30px' },
-  { width: '130px' },
-  { width: '100px' },
-  { width: '100px' },
-  { width: '100px' }, 
-  { width: '100px' }, 
-  { width: '130px' }, 
-  { width: '90px' },
-  { width: '60px' },
-  { width: '100px' }
-]
+// const styles = [
+//   { width: '20px' },
+//   { width: '40px' },
+//   { width: '30px' },
+//   { width: '130px' },
+//   { width: '100px' },
+//   { width: '100px' },
+//   { width: '100px' }, 
+//   { width: '100px' }, 
+//   { width: '130px' }, 
+//   { width: '90px' },
+//   { width: '60px' },
+//   { width: '100px' }
+// ]
 
 class ViewBrandList extends React.Component {
   constructor() {
@@ -57,6 +60,7 @@ class ViewBrandList extends React.Component {
 
     this.updateBrandStatus = this.updateBrandStatus.bind(this)
     this.handleCheckboxes = this.handleCheckboxes.bind(this)
+    this.handleSelectAll = this.handleSelectAll.bind(this)
     this.handleSave = this.handleSave.bind(this)
   }
 
@@ -73,16 +77,26 @@ class ViewBrandList extends React.Component {
       this.setState({newArray: [...this.state.newArray,id]})
       console.log("checked", id);
     }
-    else {
+    else if (!e.target.checked) {
       console.log("unchecked", id);
-      newArray.remove(id)
+      const filteredArray = this.state.newArray.filter(item => item != id) 
+      this.setState({newArray:filteredArray});
+      console.log("else if",filteredArray)
     }
     this.setState({ [e.target.name]: e.target.checked })
     console.log("handleCheckboxes", this.state.newArray);
   }
 
+  handleSelectAll(e) {
+    if (e.target.checked) {
+      let newSelecteds = this.props.brandList.map((n) => n.id);
+      this.setState({newArray: newSelecteds})
+      console.log("handleSelectAll", this.state.newArray);
+    }
+  }
+
   handleSave () {
-    console.log("handleSave");
+    console.log("handleSave",this.state.newArray);
   }
 
   editBrand(brandDetails) {
@@ -94,6 +108,39 @@ class ViewBrandList extends React.Component {
   }
 
   render() {  
+    const TableHeaderItems = [
+      <Checkbox
+        label="Enabled"
+        onCheck={(e) => this.handleSelectAll(e)}
+      />,
+      '',
+      'ID',
+      'BRAND NAME',
+      'BRAND TYPE',
+      'GENRE_ID',
+      'COUNTRY OF ORIGIN',
+      'TAGS',
+      'BRAND_LOGO_HIGH_RES',
+      'ALCOHOL PERCENTAGE',
+      'TEMPERATURE',
+      'BRAND STATUS'
+    ]
+
+    const styles = [
+      { width: '20px' },
+      { width: '40px' },
+      { width: '30px' },
+      { width: '130px' },
+      { width: '100px' },
+      { width: '100px' },
+      { width: '100px' },
+      { width: '100px' },
+      { width: '130px' },
+      { width: '90px' },
+      { width: '60px' },
+      { width: '100px' }
+    ]
+
     return (
       <React.Fragment>
         <Table
@@ -121,6 +168,7 @@ class ViewBrandList extends React.Component {
                       <TableRowColumn style={styles[0]}>
                         <Checkbox
                           onCheck={(e) => this.handleCheckboxes(e, item.id)}
+                          // checked={this.state.newArray}
                           name="isModified"
                         />
                       </TableRowColumn>
