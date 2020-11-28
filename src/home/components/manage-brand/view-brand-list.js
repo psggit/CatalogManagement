@@ -16,39 +16,6 @@ import {overrideTableStyle} from '@utils'
 import Checkbox from "material-ui/Checkbox"
 import RaisedButton from 'material-ui/RaisedButton'
 
-// const TableHeaderItems = [
-//   <Checkbox
-//    label="Enabled"
-//     onCheck={(e) => handleSelectAll(e)}
-//    />,
-//   '',
-//   'ID',
-//   'BRAND NAME',
-//   'BRAND TYPE',
-//   'GENRE_ID',
-//   'COUNTRY OF ORIGIN',
-//   'TAGS',
-//   'BRAND_LOGO_HIGH_RES',
-//   'ALCOHOL PERCENTAGE',
-//   'TEMPERATURE',
-//   'BRAND STATUS'
-// ]
-
-// const styles = [
-//   { width: '20px' },
-//   { width: '40px' },
-//   { width: '30px' },
-//   { width: '130px' },
-//   { width: '100px' },
-//   { width: '100px' },
-//   { width: '100px' }, 
-//   { width: '100px' }, 
-//   { width: '130px' }, 
-//   { width: '90px' },
-//   { width: '60px' },
-//   { width: '100px' }
-// ]
-
 class ViewBrandList extends React.Component {
   constructor() {
     super()
@@ -56,6 +23,7 @@ class ViewBrandList extends React.Component {
     this.state = {
       newArray: [],
       checked: false,
+      brandList: [],
     }
 
     this.updateBrandStatus = this.updateBrandStatus.bind(this)
@@ -68,35 +36,42 @@ class ViewBrandList extends React.Component {
     this.overrideTableStyle()
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.brandList !== prevProps.brandList) {
+      this.setState({brandList: this.props.brandList});
+    }
+  }
+
   overrideTableStyle() {
     overrideTableStyle()
   }
 
-  handleCheckboxes(e, id) {
-    if(e.target.checked) {
-      this.setState({newArray: [...this.state.newArray,id]})
-      console.log("checked", id);
-    }
-    else if (!e.target.checked) {
-      console.log("unchecked", id);
-      const filteredArray = this.state.newArray.filter(item => item != id) 
-      this.setState({newArray:filteredArray});
-      console.log("else if",filteredArray)
-    }
-    this.setState({ [e.target.name]: e.target.checked })
-    console.log("handleCheckboxes", this.state.newArray);
-  }
+  handleCheckboxes (e,id) {
+    this.setState({brandList: this.state.brandList.map(b => {
+      if(b.id === id) {
+        let data = {}
+       data = b
+       data.is_checked = !b.is_checked
+       return data
+      }
+      return b;
+    })
+  })
+}
 
   handleSelectAll(e) {
     if (e.target.checked) {
-      let newSelecteds = this.props.brandList.map((n) => n.id);
-      this.setState({newArray: newSelecteds})
+      const newBrandList = this.state.brandList.map((b) => ({
+        ...b,is_checked:true
+      }))
+      this.setState({brandList: newBrandList})
       console.log("handleSelectAll", this.state.newArray);
     }
   }
 
   handleSave () {
-    console.log("handleSave",this.state.newArray);
+    let newArray = this.state.brandList.filter((b) => b.is_checked).map(b => b.id)
+    console.log("handleSave",newArray);
   }
 
   editBrand(brandDetails) {
@@ -140,8 +115,8 @@ class ViewBrandList extends React.Component {
       { width: '60px' },
       { width: '100px' }
     ]
-
     return (
+
       <React.Fragment>
         <Table
           wrapperStyle={{ height: 'auto' }}
@@ -163,12 +138,12 @@ class ViewBrandList extends React.Component {
             {
               !this.props.loadingBrandList
                 ? (
-                  this.props.brandList && this.props.brandList.map(item => (
+                  this.state.brandList && this.state.brandList.map(item => (
                     <TableRow key={item.id}>
                       <TableRowColumn style={styles[0]}>
                         <Checkbox
                           onCheck={(e) => this.handleCheckboxes(e, item.id)}
-                          // checked={this.state.newArray}
+                          checked={item.is_checked}
                           name="isModified"
                         />
                       </TableRowColumn>
@@ -210,7 +185,7 @@ class ViewBrandList extends React.Component {
                 )
             }
             {
-              !this.props.loadingBrandList && !this.props.brandList && 
+              !this.props.loadingBrandList && !this.state.brandList && 
               <tr>
                 <td style={{ textAlign: 'center' }} colSpan='10'>
                   <p style={{fontWeight: '16px'}}>No brands found</p>
