@@ -13,8 +13,11 @@ import TableLoadingShell from './../table-loading-shell'
 import '@sass/components/_table.scss'
 import Switch from '@components/switch'
 import {overrideTableStyle} from '@utils'
+import Checkbox from "material-ui/Checkbox"
+import RaisedButton from 'material-ui/RaisedButton'
 
 const TableHeaderItems = [
+  <Checkbox label="Enabled"/>,
   '',
   'ID',
   'BRAND NAME',
@@ -29,7 +32,8 @@ const TableHeaderItems = [
 ]
 
 const styles = [
-  { width: '60px' },
+  { width: '20px' },
+  { width: '40px' },
   { width: '30px' },
   { width: '130px' },
   { width: '100px' },
@@ -45,7 +49,15 @@ const styles = [
 class ViewBrandList extends React.Component {
   constructor() {
     super()
+
+    this.state = {
+      newArray: [],
+      checked: false,
+    }
+
     this.updateBrandStatus = this.updateBrandStatus.bind(this)
+    this.handleCheckboxes = this.handleCheckboxes.bind(this)
+    this.handleSave = this.handleSave.bind(this)
   }
 
   componentDidMount() {
@@ -54,6 +66,23 @@ class ViewBrandList extends React.Component {
 
   overrideTableStyle() {
     overrideTableStyle()
+  }
+
+  handleCheckboxes(e, id) {
+    if(e.target.checked) {
+      this.setState({newArray: [...this.state.newArray,id]})
+      console.log("checked", id);
+    }
+    else {
+      console.log("unchecked", id);
+      newArray.remove(id)
+    }
+    this.setState({ [e.target.name]: e.target.checked })
+    console.log("handleCheckboxes", this.state.newArray);
+  }
+
+  handleSave () {
+    console.log("handleSave");
   }
 
   editBrand(brandDetails) {
@@ -90,16 +119,22 @@ class ViewBrandList extends React.Component {
                   this.props.brandList && this.props.brandList.map(item => (
                     <TableRow key={item.id}>
                       <TableRowColumn style={styles[0]}>
+                        <Checkbox
+                          onCheck={(e) => this.handleCheckboxes(e, item.id)}
+                          name="isModified"
+                        />
+                      </TableRowColumn>
+                      <TableRowColumn style={styles[1]}>
                         <FlatButton primary label="Edit" onClick={() => this.editBrand(item)}/>
                       </TableRowColumn>
-                      <TableRowColumn style={styles[1]}>{item.id}</TableRowColumn>
-                      <TableRowColumn style={styles[2]}>{item.brand_name}</TableRowColumn>
-                      <TableRowColumn style={styles[3]}>{item.brand_type}</TableRowColumn>
-                      <TableRowColumn style={styles[4]}>{item.genre_id}</TableRowColumn>
-                      <TableRowColumn style={styles[5]}>{item.country_of_origin}</TableRowColumn>
-                      <TableRowColumn style={styles[6]}>{item.tag}</TableRowColumn>
+                      <TableRowColumn style={styles[2]}>{item.id}</TableRowColumn>
+                      <TableRowColumn style={styles[3]}>{item.brand_name}</TableRowColumn>
+                      <TableRowColumn style={styles[4]}>{item.brand_type}</TableRowColumn>
+                      <TableRowColumn style={styles[5]}>{item.genre_id}</TableRowColumn>
+                      <TableRowColumn style={styles[6]}>{item.country_of_origin}</TableRowColumn>
+                      <TableRowColumn style={styles[7]}>{item.tag}</TableRowColumn>
                       {/* <TableRowColumn style={styles[5]}>{item.is_active ? 'ACTIVE' : 'INACTIVE'}</TableRowColumn> */}
-                      <TableRowColumn style={styles[7]}>
+                      <TableRowColumn style={styles[8]}>
                         <a target="_blank" href={item.brand_logo_high_res_image}>
                           <img
                             alt="brand_logo"
@@ -112,9 +147,9 @@ class ViewBrandList extends React.Component {
                           />
                         </a>
                       </TableRowColumn>
-                      <TableRowColumn style={styles[8]}>{item.alcohol_per}</TableRowColumn>
-                      <TableRowColumn style={styles[9]}>{item.temperature}</TableRowColumn>
-                      <TableRowColumn style={styles[10]}>
+                      <TableRowColumn style={styles[9]}>{item.alcohol_per}</TableRowColumn>
+                      <TableRowColumn style={styles[10]}>{item.temperature}</TableRowColumn>
+                      <TableRowColumn style={styles[11]}>
                         <Switch toggled={item.is_active} onToggle={this.updateBrandStatus} value={item} />
                       </TableRowColumn>
                     </TableRow>
@@ -136,6 +171,12 @@ class ViewBrandList extends React.Component {
             }
           </TableBody>
         </Table>
+        <RaisedButton
+          primary
+          label="Save"
+          onClick={this.handleSave}
+          style={{ marginTop: '40px' }}
+        />
       </React.Fragment>
     )
   }

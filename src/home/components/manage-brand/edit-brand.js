@@ -61,7 +61,9 @@ class EditBrand extends React.Component {
       brand_logo_low_res_image: data.lowResBrandLogo,
       tag: data.tag,
       description: data.description,
-      is_active: true
+      is_active: true,
+      is_brand_details_enabled: data.isBrandDetailsEnabled,
+      is_presentation_enabled: data.isPresentationEnabled,
     }, this.callbackUpdate)
   }
 
