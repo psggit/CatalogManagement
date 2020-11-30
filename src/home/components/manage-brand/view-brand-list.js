@@ -67,6 +67,13 @@ class ViewBrandList extends React.Component {
       this.setState({brandList: newBrandList})
       console.log("handleSelectAll", this.state.newArray);
     }
+    else if (!e.target.checked) {
+      const newBrandList = this.state.brandList.map((b) => ({
+        ...b,is_checked:false
+      }))
+      this.setState({brandList: newBrandList})
+      console.log("elseUncheck", this.state.newArray);
+    }
   }
 
   handleSave () {
@@ -98,6 +105,8 @@ class ViewBrandList extends React.Component {
       'BRAND_LOGO_HIGH_RES',
       'ALCOHOL PERCENTAGE',
       'TEMPERATURE',
+      'PRESENTATION',
+      'BRAND DETAILS',
       'BRAND STATUS'
     ]
 
@@ -113,11 +122,24 @@ class ViewBrandList extends React.Component {
       { width: '130px' },
       { width: '90px' },
       { width: '60px' },
+      { width: '60px' },
+      { width: '60px' },
       { width: '100px' }
     ]
     return (
-
       <React.Fragment>
+        <RaisedButton
+          primary
+          label="Presentation"
+          onClick={this.handleSave}
+          style={{ marginTop: '10px', marginBottom: '10px' }}
+        />
+        <RaisedButton
+          primary
+          label="Brand Details"
+          onClick={this.handleSave}
+          style={{ marginTop: '10px', marginLeft: '10px' }}
+        />
         <Table
           wrapperStyle={{ height: 'auto' }}
           className="bordered--table"
@@ -172,7 +194,9 @@ class ViewBrandList extends React.Component {
                       </TableRowColumn>
                       <TableRowColumn style={styles[9]}>{item.alcohol_per}</TableRowColumn>
                       <TableRowColumn style={styles[10]}>{item.temperature}</TableRowColumn>
-                      <TableRowColumn style={styles[11]}>
+                      <TableRowColumn style={styles[11]}>{item.is_presentation_enabled === true ? "Enabled" : "Disabled" }</TableRowColumn>
+                      <TableRowColumn style={styles[12]}>{item.is_brand_details_enabled === true ? "Enabled" : "Disabled"}</TableRowColumn>
+                      <TableRowColumn style={styles[13]}>
                         <Switch toggled={item.is_active} onToggle={this.updateBrandStatus} value={item} />
                       </TableRowColumn>
                     </TableRow>
