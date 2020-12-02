@@ -135,6 +135,24 @@ export const updateSkuStateMap = action => (
   })
 ) 
 
+export const fetchBrandCollection = action => (
+  POST({
+    api: '/Api/catalog/brand-collection/list',
+    apiBase: 'catalog',
+    data: action.data,
+    handleError: true
+  })
+)
+
+export const updateBrandCollectionStatus = action => (
+  POST({
+    api: '/Api/catalog/brand-collection/activate',
+    apiBase: 'catalog',
+    data: action.data,
+    handleError: true
+  })
+)
+
 export const fetchBrands = action => (
   POST({
     api: '/Api/listBrandDetails',

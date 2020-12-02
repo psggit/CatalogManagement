@@ -48,6 +48,12 @@ class NavigationBar extends  React.Component {
         ]
       },   
       {
+        name: 'Brand Collection',
+        nestedItems: [
+          { name: 'Brand Collection List', path: '/admin/manage-brand-collection', id: 7 },
+        ]
+      },   
+      {
         name: 'Access Logs',
         path: '/admin/access-logs',
         id: 6,

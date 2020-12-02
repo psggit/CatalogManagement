@@ -16,7 +16,9 @@ const initialState = {
   loadingGenres: true,
   loadingAccessLogs: true,
   creatingBrandListingOrder: true,
+  loadingBrandCollections: true,
   originList: [],
+  brandCollections: [],
   brandTypeList: [],
   statesList: [],
   accessLogs: [],
@@ -35,7 +37,8 @@ const initialState = {
   totalBrandCount: 0,
   totalBrandListCount: 0,
   accessLogCount: 0,
-  genreCount: 0
+  genreCount: 0,
+  totalBrandCollectionCount: 0
 }
 
 const actionsMap = {
@@ -55,6 +58,22 @@ const actionsMap = {
       totalBrandCount: action.data.count
     })
   },
+
+  [ActionTypes.SUCCESS_FETCH_BRAND_COLLECTION_LIST]: (state, action) => {
+    return Object.assign({}, state, {
+      brandCollections: action.data.brand_collection_resp,
+      loadingBrandCollections: false,
+      totalBrandCollectionCount: action.data.count
+    })
+  },
+
+  // [ActionTypes.SUCCESS_FETCH_BRAND_COLLECTION_LIST]: (state, action) => {
+  //   return Object.assign({}, state, {
+  //     brandCollections: action.data.brand_collection_resp,
+  //     loadingBrandCollections: false,
+  //     totalBrandCollectionCount: action.data.count
+  //   })
+  // },
 
   [ActionTypes.SUCCESS_FETCH_BRAND_LIST]: (state, action) => {
     return Object.assign({}, state, {
