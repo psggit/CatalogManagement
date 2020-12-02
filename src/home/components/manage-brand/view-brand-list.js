@@ -63,23 +63,35 @@ class ViewBrandList extends React.Component {
   handleSelectAll(e) {
     if (e.target.checked) {
       const newBrandList = this.state.brandList.map((b) => ({
-        ...b,is_checked:true
+        ...b,
+        is_checked:true
       }))
       this.setState({brandList: newBrandList})
-      console.log("handleSelectAll", this.state.newArray);
+      console.log("handleSelectAll", this.state.brandList);
     }
     else if (!e.target.checked) {
       const newBrandList = this.state.brandList.map((b) => ({
-        ...b,is_checked:false
+        ...b,
+        is_checked:false
       }))
       this.setState({brandList: newBrandList})
-      console.log("elseUncheck", this.state.newArray);
+      console.log("elseUncheck", this.state.brandList);
     }
   }
 
-  handleSave () {
-    let newArray = this.state.brandList.filter((b) => b.is_checked).map(b => b.id)
-    console.log("handleSave",newArray);
+  handleSave (stateKey, status) {
+    let newArray = this.state.brandList.filter((b) => b.is_checked).map((b) => {
+      if(stateKey === "presentation"){
+        b.is_presentation_enabled = status;
+        return b;
+      }
+      if(stateKey === "brand"){
+        b.is_brand_details_enabled = status;
+        return b;
+      }
+    })
+    // const newBrandList = this.state.brandList
+    console.log("handleSave", newArray, stateKey, status);
   }
 
   editBrand(brandDetails) {
@@ -93,17 +105,17 @@ class ViewBrandList extends React.Component {
   render() {  
     const TableHeaderItems = [
       <Checkbox
-        label="Enabled"
+        label="Select"
         onCheck={(e) => this.handleSelectAll(e)}
       />,
-      '',
+      'EDIT',
       'ID',
       'BRAND NAME',
       'BRAND TYPE',
       'GENRE_ID',
       'COUNTRY OF ORIGIN',
       'TAGS',
-      'BRAND_LOGO_HIGH_RES',
+      'BRAND LOGO HIGH RES',
       'ALCOHOL PERCENTAGE',
       'TEMPERATURE',
       'PRESENTATION',
@@ -112,33 +124,52 @@ class ViewBrandList extends React.Component {
     ]
 
     const styles = [
-      { width: '20px' },
-      { width: '40px' },
+      { width: '50px', padding: '10px' },
+      { width: '60px', padding: '10px' },
       { width: '30px' },
       { width: '130px' },
-      { width: '100px' },
-      { width: '100px' },
-      { width: '100px' },
-      { width: '100px' },
-      { width: '130px' },
+      { width: '50px' },
+      { width: '40px' },
+      { width: '40px' },
+      { width: '100px', 'word-break': 'break-word' },
+      { width: '60px' },
       { width: '90px' },
       { width: '60px' },
       { width: '60px' },
       { width: '60px' },
       { width: '100px' }
     ]
+
+    const buttonStyles = {
+      width: "auto",
+      padding: 0,
+    }
     return (
       <React.Fragment>
+        <p>Presentation</p>
         <RaisedButton
           primary
-          label="Presentation"
-          onClick={this.handleSave}
+          label="ON"
+          onClick={() => this.handleSave("presentation", true)}
           style={{ marginTop: '10px', marginBottom: '10px' }}
         />
         <RaisedButton
           primary
-          label="Brand Details"
-          onClick={this.handleSave}
+          label="OFF"
+          onClick={() => this.handleSave("presentation", false)}
+          style={{ marginTop: '10px', marginBottom: '10px' }}
+        />
+        <p>Brand Details</p>
+        <RaisedButton
+          primary
+          label="ON"
+          onClick={() => this.handleSave("brand", true)}
+          style={{ marginTop: '10px', marginLeft: '10px' }}
+        />
+        <RaisedButton
+          primary
+          label="OFF"
+          onClick={() => this.handleSave("brand", false)}
           style={{ marginTop: '10px', marginLeft: '10px' }}
         />
         {/* <div style={{display:"flex"}}>
@@ -181,7 +212,7 @@ class ViewBrandList extends React.Component {
                         />
                       </TableRowColumn>
                       <TableRowColumn style={styles[1]}>
-                        <FlatButton primary label="Edit" onClick={() => this.editBrand(item)}/>
+                        <FlatButton primary label="Edit" onClick={() => this.editBrand(item)} style={buttonStyles}/>
                       </TableRowColumn>
                       <TableRowColumn style={styles[2]}>{item.id}</TableRowColumn>
                       <TableRowColumn style={styles[3]}>{item.brand_name}</TableRowColumn>
