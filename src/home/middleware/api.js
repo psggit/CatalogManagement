@@ -153,6 +153,15 @@ export const updateBrandCollectionStatus = action => (
   })
 )
 
+export const createBrandCollection = action => (
+  POST({
+    api: '/Api/catalog/brand-collection/create',
+    apiBase: 'catalog',
+    data: action.data,
+    handleError: true
+  })
+)
+
 export const fetchBrands = action => (
   POST({
     api: '/Api/listBrandDetails',

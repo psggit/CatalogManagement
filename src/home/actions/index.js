@@ -30,6 +30,12 @@ export const fetchBrandCollection = (data) => ({
   data
 })
 
+export const createBrandCollection = (data, CB) => ({
+  type: ActionTypes.REQUEST_CREATE_BRAND_COLLECTION,
+  data,
+  CB
+})
+
 export const fetchLiveOrders = (data) => ({
   type: ActionTypes.REQUEST_FETCH_LIVE_ORDERS,
   data
