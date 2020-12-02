@@ -15,6 +15,7 @@ import Switch from '@components/switch'
 import {overrideTableStyle} from '@utils'
 import Checkbox from "material-ui/Checkbox"
 import RaisedButton from 'material-ui/RaisedButton'
+import Toggle from 'material-ui/Toggle';
 
 class ViewBrandList extends React.Component {
   constructor() {
@@ -140,6 +141,16 @@ class ViewBrandList extends React.Component {
           onClick={this.handleSave}
           style={{ marginTop: '10px', marginLeft: '10px' }}
         />
+        {/* <div style={{display:"flex"}}>
+          <Toggle
+            label="Presentation"
+            style={{width:"15%", marginBottom:"10px"}}
+          />
+          <Toggle
+            label="Brand Details"
+            style={{width:"18%",marginLeft:"10px"}}
+          />
+         </div> */}
         <Table
           wrapperStyle={{ height: 'auto' }}
           className="bordered--table"
@@ -218,12 +229,12 @@ class ViewBrandList extends React.Component {
             }
           </TableBody>
         </Table>
-        <RaisedButton
+        {/* <RaisedButton
           primary
           label="Save"
           onClick={this.handleSave}
           style={{ marginTop: '40px' }}
-        />
+        /> */}
       </React.Fragment>
     )
   }
