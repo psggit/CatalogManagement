@@ -47,6 +47,42 @@ function* fetchBrands(action) {
   }
 }
 
+function* fetchBrandCollectionList(action) {
+  try {
+    const data = yield call(Api.fetchBrandCollection, action)
+    yield put({ type: ActionTypes.SUCCESS_FETCH_BRAND_COLLECTION_LIST, data })
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+function* updateBrandCollectionStatus(action) {
+  try {
+    const data = yield call(Api.updateBrandCollectionStatus, action)
+    Notify('Successfully updated brand collection status', 'success')
+    action.CB(data)
+    setTimeout(() => {
+      window.location.href = `/admin/manage-brand-collection`
+    }, 1000)
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+function* createBrandCollection(action) {
+  try {
+    const data = yield call(Api.createBrandCollection, action)
+    Notify('Successfully created brand collection', 'success')
+    action.CB(data)
+    setTimeout(() => {
+      window.location.href = `/admin/manage-brand-collection`
+    }, 1000)
+  } catch (err) {
+    console.log(err)
+    action.CB()
+  }
+}
+
 function* fetchBrandListingOrder(action) {
   //console.log("hello", action)
   //let data = action.action.data
@@ -303,6 +339,18 @@ function* watchRequestFetchBrands() {
   yield takeLatest(ActionTypes.REQUEST_FETCH_BRANDS, fetchBrands)
 }
 
+function* watchRequestFetchBrandCollectionList() {
+  yield takeLatest(ActionTypes.REQUEST_FETCH_BRAND_COLLECTION_LIST, fetchBrandCollectionList)
+}
+
+function* watchRequestUpdateBrandCollectionStatus() {
+  yield takeLatest(ActionTypes.REQUEST_UPDATE_BRAND_COLLECTION_STATUS, updateBrandCollectionStatus)
+}
+
+function* watchRequestCreateBrandCollection() {
+  yield takeLatest(ActionTypes.REQUEST_CREATE_BRAND_COLLECTION, createBrandCollection)
+}
+
 function* watchRequestFetchGenreBasedBrandList() {
   yield takeLatest(ActionTypes.REQUEST_GENRE_BASED_BRAND_LIST, fetchGenreBasedBrandList)
 }
@@ -416,6 +464,9 @@ export default function* rootSaga() {
     fork(watchRequestFetchGenreBasedBrandList),
     fork(watchRequestFetchBrandListingOrder),
     fork(watchRequestFetchAccessLogs),
-    fork(watchRequestCreateOrUpdateBrandListingOrder)
+    fork(watchRequestCreateOrUpdateBrandListingOrder),
+    fork(watchRequestFetchBrandCollectionList),
+    fork(watchRequestUpdateBrandCollectionStatus),
+    fork(watchRequestCreateBrandCollection)
   ])
 }
