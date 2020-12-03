@@ -15,6 +15,11 @@ export const fetchGenres = (data) => ({
   data
 })
 
+export const fetchCollection = (data) => ({
+  type: ActionTypes.REQUEST_FETCH_COLLECTION,
+  data
+})
+
 export const fetchGenreList = (data) => ({
   type: ActionTypes.REQUEST_FETCH_GENRE_LIST,
   data

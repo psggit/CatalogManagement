@@ -12,10 +12,12 @@ const initialState = {
   loadingBrandListingOrder: true,
   loadingStates: true,
   loadingGenreList: true,
+  loadingCollection: true,
   loadingGenreBasedBrandList: true,
   loadingGenres: true,
   loadingAccessLogs: true,
   creatingBrandListingOrder: true,
+  collection:[],
   originList: [],
   brandTypeList: [],
   statesList: [],
@@ -33,6 +35,7 @@ const initialState = {
   brandListingOrder: [],
   totalSkuCount: 0,
   totalBrandCount: 0,
+  totalCollectionCount: 0,
   totalBrandListCount: 0,
   accessLogCount: 0,
   genreCount: 0
@@ -53,6 +56,14 @@ const actionsMap = {
       brands: action.data.brand_details,
       loadingBrandDetails: false,
       totalBrandCount: action.data.count
+    })
+  },
+
+  [ActionTypes.SUCCESS_FETCH_COLLECTION]: (state, action) => {
+    return Object.assign({}, state, {
+      collection: action.data.collection_resp,
+      loadingCollection: false,
+      totalCollectionCount: action.data.count
     })
   },
 

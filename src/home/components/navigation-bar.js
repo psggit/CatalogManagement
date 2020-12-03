@@ -52,7 +52,13 @@ class NavigationBar extends  React.Component {
         path: '/admin/access-logs',
         id: 6,
         nestedItems: []
-      }
+      },
+       {
+        name: 'Collection',
+        path: '/admin/manage-collection',
+        id: 7,
+        nestedItems: []
+      },
     ]
     return (
       <Drawer

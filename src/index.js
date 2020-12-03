@@ -36,6 +36,7 @@ import AccessLogs from "./../src/home/container/access-logs"
 import { getBreadCrumbPath, getUriFromBreadCrumb } from '@utils/url-utils'
 import { Provider } from 'react-redux'
 import { createBrowserHistory as createHistory } from 'history'
+import ManageCollection from './../src/home/container/manage-collection'
 
 import configureStore from './home/store/configureStore'
 import rootSaga from './home/middleware/saga'
@@ -178,6 +179,8 @@ class App extends React.Component {
                         <Route exact path="/admin/manage-sku/edit/:brandName" component={EditSKU} />
 
                         <Route exact path="/admin/access-logs" component={AccessLogs} />
+
+                        <Route exact path="/admin/manage-collection/" component={ManageCollection} />
                       </Switch>
                     </DisplayScreen>
                   </div>

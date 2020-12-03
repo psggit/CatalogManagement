@@ -36,6 +36,15 @@ export const fetchSKUs = action => (
   })
 )
 
+export const fetchCollection = action => (
+  POST({
+    api: '/Api/catalog/collection/list',
+    apiBase: 'catalog',
+    data: action.data,
+    handleError: true
+  })
+)
+
 export const updateSKU = action => (
   POST({
     api: '/Api/updateSku',

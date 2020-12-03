@@ -190,6 +190,15 @@ function* fetchBrandTypes(action) {
   }
 }
 
+function* fetchCollection(action) {
+  try {
+    const data = yield call(Api.fetchCollection, action)
+    yield put({ type: ActionTypes.SUCCESS_FETCH_COLLECTION, data })
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 function* fetchAccessLogs(action) {
   try {
     const data = yield call(Api.fetchAccessLogs, action)
@@ -354,6 +363,10 @@ function* watchRequestFetchBrandTypes() {
   yield takeLatest(ActionTypes.REQUEST_FETCH_BRAND_TYPE_LIST, fetchBrandTypes)
 }
 
+function* watchRequestFetchCollection() {
+  yield takeLatest(ActionTypes.REQUEST_FETCH_COLLECTION, fetchCollection)
+}
+
 function* watchRequestCreateBrand() {
   yield takeLatest(ActionTypes.REQUEST_CREATE_BRAND, createBrand)
 }
@@ -391,6 +404,7 @@ export default function* rootSaga() {
     fork(watchRequestUpdateSkuStateMap),
     fork(watchRequestMapStateToSku),
     fork(watchRequestFetchBrandTypes),
+    fork(watchRequestFetchCollection),
     fork(watchRequestCreateBrand),
     fork(watchRequestUpdateBrand),
     fork(watchRequestUpdateBrandStatus),
