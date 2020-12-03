@@ -80,7 +80,7 @@ class ManageBrandCollection extends React.Component {
         offset: queryObj.offset ? parseInt(queryObj.offset) : 0,
         limit: this.pagesLimit,
         with_limits: true,
-        id: queryObj.value
+        id: parseInt(queryObj.value)
       })
     } else {
       this.props.actions.fetchBrandCollection({
@@ -124,7 +124,7 @@ class ManageBrandCollection extends React.Component {
       this.props.actions.fetchBrandCollection({
         offset: pageObj.offset,
         limit: this.pagesLimit,
-        id: filterObj.value,
+        id: parseInt(filterObj.value),
         with_limits: true
       })
 
@@ -199,6 +199,7 @@ class ManageBrandCollection extends React.Component {
 
   resetFilter() {
     this.setState({
+      activePage: 1,
       isFilterApplied: false,
       filterObj: {}
     })
@@ -274,7 +275,7 @@ class ManageBrandCollection extends React.Component {
           </ModalBox>
         }
         {
-          !loadingBrandCollections && brandCollections
+          !loadingBrandCollections && brandCollections.length > 0 
             ?
             <React.Fragment>
               <Pagination

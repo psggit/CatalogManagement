@@ -3,85 +3,41 @@ import TextField from 'material-ui/TextField'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 import PropTypes from "prop-types"
-import Checkbox from 'material-ui/Checkbox'
 import '@sass/components/_form.scss'
-import { POST } from '@utils/fetch'
-import { Api } from '@utils/config'
-import { getIcon } from '@utils/icon-utils'
-import AutoComplete from 'material-ui/AutoComplete'
-// import { validateNumType, checkCtrlA } from './../../../utils'
 import RaisedButton from 'material-ui/RaisedButton'
-import { validateNumType, checkCtrlA, checkCtrlV } from './../../../utils'
-import { validateTextField, validateEmail, validateNumberField } from './../../../utils/validators'
+import { validateTextField, validateNumberField } from './../../../utils/validators'
 
 class BrandCollectionForm extends React.Component {
   constructor(props) {
     super(props)
-    this.uploadedImageUrl = ''
     this.intitialState = {
-      volume: props.skuInfo ? props.skuInfo.volume : '',
-      skuId: props.skuInfo ? props.skuInfo.sku_id : '',
-      statusIdx: props.skuInfo ? props.skuInfo.is_active ? 1 : 2 : 1,
-      shouldTrim: true,
-      //brandIdx: 0,
-      brandName: props.brandName ? props.brandName : '',
       brandId: 0,
       genreId: 0,
       brandList: [],
-      tag: props.skuInfo ? props.skuInfo.tag : '',
-      high_res_image: props.skuInfo ? props.skuInfo.high_res_image : '',
-      low_res_image: props.skuInfo ? props.skuInfo.low_res_image : '',
-      barcode_image: props.skuInfo ? props.skuInfo.barcode_image : '',
-      gs1_barcode: props.skuInfo ? props.skuInfo.gs1_barcode : '',
-      high_res_image_err: false,
-      low_res_image_err: false,
-      volumeErr: {
-        value: '',
-        status: false
-      },
-
-      gs1BarcodeErr: {
-        value: '',
-        status: false
-      },
-
-      barcodeImageErr: {
-        value: '',
-        status: false
-      },
-
-      tagNameErr: {
-        value: '',
-        status: false
-      },
-
-      brandNameErr: {
+      collectionId: 0,
+      collectionList: [],
+      listingOrder: '',
+     
+      listingOrderErr: {
         value: '',
         status: false
       }
     }
 
     this.inputNameMap = {
-      'volume': 'Volume',
-      'gs1Barcode': 'Gs1 barcode',
-      'barcodeImage': 'Barcode image',
-      'tagName': 'Tag',
-      'brandName': 'Brand name'
+      'listingOrder': 'Listing order'
     }
 
     this.state = Object.assign({}, this.intitialState)
     this.handleTextFields = this.handleTextFields.bind(this)
-    this.handleStatusChange = this.handleStatusChange.bind(this)
     this.handleBrandChange = this.handleBrandChange.bind(this)
     this.handleGenreChange = this.handleGenreChange.bind(this)
-    this.handleCheckboxes = this.handleCheckboxes.bind(this)
-    this.handleSave = this.handleSave.bind(this)
     this.isFormValid = this.isFormValid.bind(this)
-    this.selectedBrandName = this.selectedBrandName.bind(this)
+    this.handleCollectionChange = this.handleCollectionChange.bind(this)
+    this.handleSave = this.handleSave.bind(this)
   }
 
-  componentWillReceiveProps(newProps) {
-    console.log("new", newProps, "old", this.props, newProps.brandList !== this.props.brandList)
+  componentWillReceiveProps (newProps) {
     if (newProps.brandList !== this.props.brandList && !newProps.loadingBrandList) {
       const brandList = newProps.brandList.map((item) => {
         return {
@@ -89,10 +45,8 @@ class BrandCollectionForm extends React.Component {
           value: item.id
         }
       })
-      console.log("inside if", newProps.brandList)
       this.setState({
         brandList,
-        brandName: newProps.brandList.length > 0 ? newProps.brandList[0].brand_name : "",
         brandId: newProps.brandList.length > 0 ? newProps.brandList[0].id : ""
       })
     }
@@ -100,42 +54,38 @@ class BrandCollectionForm extends React.Component {
       this.setState({ genreId: newProps.genres[0].id })
       this.props.fetchGenreBasedBrandList(newProps.genres[0].id)
     }
+    if(newProps.collectionList !== this.props.collectionList && !newProps.loadingCollectionList) {
+     
+      const collectionList = newProps.collectionList.map((item) => {
+        return {
+          text: item.display_name,
+          value: item.id
+        }
+      })
+      this.setState({
+        collectionList,
+        collectionId: newProps.collectionList.length > 0 ? newProps.collectionList[0].id : ""
+      })
+    }
   }
 
-  handleStatusChange(e, k) {
-    const statusIdx = k + 1
-    console.log(statusIdx)
-    this.setState({
-      statusIdx
-    })
-  }
-
-  handleGenreChange(e, k) {
+  handleGenreChange (e, k) {
     this.setState({
       genreId: this.props.genres[k].id
     })
     this.props.fetchGenreBasedBrandList(this.props.genres[k].id)
   }
 
-  handleBrandChange(e, k) {
-    //const brandIdx = k
+  handleBrandChange (e, k) {
     this.setState({
-      //brandIdx,
-      brandName: this.props.brandList[k].brand_name,
       brandId: this.props.brandList[k].id
     })
   }
 
-  handleChange(e) {
-    const errName = `${e.target.name}Err`
-    if (validateNumType(e.keyCode) || checkCtrlA(e) || checkCtrlV(e)) {
-      this.setState({
-        [e.target.name]: e.target.value,
-        [errName]: validateNumberField(this.inputNameMap[e.target.name], e.target.value)
-      })
-    } else {
-      e.preventDefault()
-    }
+  handleCollectionChange (e, k) {
+    this.setState({
+      collectionId: this.props.collectionList[k].id
+    })
   }
 
   handleTextFields(e) {
@@ -147,68 +97,30 @@ class BrandCollectionForm extends React.Component {
   }
 
   isFormValid() {
-    const volumeErr = validateNumberField(this.inputNameMap['volume'], this.state.volume)
-    this.setState({ volumeErr: validateNumberField(this.inputNameMap['volume'], this.state.volume) })
+    const listingOrderErr = validateNumberField(this.inputNameMap['listingOrder'], this.state.listingOrder)
+    this.setState({ listingOrderErr: validateNumberField(this.inputNameMap['listingOrder'], this.state.listingOrder) })
 
-    const brandNameErr = validateTextField(this.inputNameMap['brandName'], this.state.brandName)
-    this.setState({ brandNameErr: validateTextField(this.inputNameMap['brandName'], this.state.brandName) })
-
-    // const gs1BarcodeErr = validateTextField(this.inputNameMap['gs1Barcode'], this.state.gs1_barcode)
-    // this.setState({ gs1BarcodeErr: validateTextField(this.inputNameMap['gs1Barcode'], this.state.gs1_barcode) })
-
-    // const barcodeImageErr = validateTextField(this.inputNameMap['barcodeImage'], this.state.barcode_image)
-    // this.setState({ barcodeImageErr: validateTextField(this.inputNameMap['barcodeImage'], this.state.barcode_image) })
-
-    // const tagNameErr = validateTextField(this.inputNameMap['tagName'], this.state.tag)
-    // this.setState({ tagNameErr: validateTextField(this.inputNameMap['tagName'], this.state.tag) })
-
-    if (!volumeErr.status) {
-      return true;
-    } else if (!brandNameErr.status) {
+    if(!listingOrderErr.status) {
       return true
     }
     return false
   }
 
   handleSave() {
-    if (this.isFormValid()) {
+    if(this.isFormValid())
       this.props.submit()
-    }
   }
+
   getData() {
     return this.state
   }
 
-  handleCheckboxes(e) {
-    this.setState({ [e.target.name]: e.target.checked })
-  }
-
-  selectedBrandName(brand) {
-    //console.log("brand", brand, "index", index)
-    this.setState({
-      //brandIdx: index,
-      brandName: brand.brand_name,
-      brandId: brand.id
-    })
-  }
-
   render() {
-    //console.log("props", this.props)
-    const { volumeErr, brandNameErr, tagNameErr, gs1BarcodeErr, barcodeImageErr } = this.state
-    const dataSourceConfig = {
-      text: 'brand_name',
-      value: 'id',
-    };
+    const {listingOrderErr} = this.state
     return (
       <Fragment>
         <div className="form-group">
-          {
-            this.props.action === "create" &&
-            <label className="label">Genre name*</label>
-          }
-
-          {
-            this.props.action === "create" &&
+          <label className="label">Genre name*</label>
             <SelectField
               value={this.state.genreId}
               onChange={this.handleGenreChange}
@@ -227,177 +139,66 @@ class BrandCollectionForm extends React.Component {
                 })
               }
             </SelectField>
-          }
         </div>
         <div className="form-group">
           <label className="label">Brand name*</label><br />
-          {
-            this.props.action !== "edit" ?
-              <SelectField
-                value={this.state.brandId}
-                onChange={this.handleBrandChange}
-                iconStyle={{ fill: '#9b9b9b' }}
-                style={{ width: '100%' }}
-                autoComplete='off'
-              //floatingLabelText="Select brand"
-              //hintText="Hint text"
-              >
-                {/* <MenuItem disabled value="">
-                  <em>Select brand</em>
-                </MenuItem> */}
-                {
-                  !this.props.loadingBrandList &&
-                  this.props.brandList && this.props.brandList.map((item, i) => {
-                    return <MenuItem
-                      value={item.id}
-                      key={item.id}
-                      primaryText={item.brand_name}
-                    />
-                  })
-                }
-              </SelectField>
-
-              // <AutoComplete
-              //   floatingLabelText="Search for brand name"
-              //   filter={AutoComplete.caseInsensitiveFilter}
-              //   dataSource={this.props.brandList ? this.props.brandList : []}
-              //   dataSourceConfig={dataSourceConfig}
-              //   onNewRequest={this.selectedBrandName}
-              //   className="auto-complete"
-              //   style={{ width: '100%' }}
-              // />
-              :
-              <TextField
-                disabled={this.props.isDisabled}
-                onChange={this.handleTextFields}
-                name="brandName"
-                value={this.props.brandName}
-                style={{ width: '100%' }}
-              />
-          }
-          {
-            brandNameErr.status &&
-            <p className="error">* {brandNameErr.value}</p>
-          }
-        </div>
-
-        <div className="form-group">
-          <label className="label">Volume in ml*</label><br />
-          <TextField
-            //disabled={this.props.isDisabled}
-            defaultValue={this.props.skuInfo ? this.props.skuInfo.volume : ''}
-            name="volume"
-            autoComplete='off'
-            disabled={this.props.isDisabled}
-            style={{ width: '100%' }}
-            onKeyDown={(e) => { this.handleChange(e) }}
-            onKeyUp={(e) => { this.handleChange(e) }}
-          />
-          {
-            volumeErr.status &&
-            <p className="error">* {volumeErr.value}</p>
-          }
-        </div>
-
-        <div className="form-group">
-          <label className="label">Tag</label><br />
-          <TextField
-            //disabled={this.props.isDisabled}
-            defaultValue={this.props.skuInfo ? this.props.skuInfo.tag : ''}
-            name="tag"
-            autoComplete='off'
-            hintText="tag1, tag2, tag3"
-            //disabled={this.props.isDisabled}
-            style={{ width: '100%' }}
-            onChange={this.handleTextFields}
-          />
-          {
-            tagNameErr.status &&
-            <p className="error">* {tagNameErr.value}</p>
-          }
-        </div>
-
-
-        <div className="form-group">
-          <label className="label">Status</label><br />
           <SelectField
-            value={this.state.statusIdx}
-            onChange={this.handleStatusChange}
+            value={this.state.brandId}
+            onChange={this.handleBrandChange}
             iconStyle={{ fill: '#9b9b9b' }}
             style={{ width: '100%' }}
+            autoComplete='off'
           >
-            <MenuItem value={1} primaryText="Active" />
-            <MenuItem value={2} primaryText="Inactive" />
+            {
+              !this.props.loadingBrandList &&
+              this.props.brandList && this.props.brandList.map((item, i) => {
+                return <MenuItem
+                  value={item.id}
+                  key={item.id}
+                  primaryText={item.brand_name}
+                />
+              })
+            }
           </SelectField>
         </div>
 
         <div className="form-group">
-          <label className="label">High res image</label><br />
-          <TextField
-            onChange={this.handleTextFields}
-            name="high_res_image"
-            autoComplete='off'
-            hintText="https://cloudfront.ads.johnny_walker.jpg"
-            value={this.state.high_res_image}
+          <label className="label">Collection name*</label><br />
+          <SelectField
+            value={this.state.collectionId}
+            onChange={this.handleCollectionChange}
+            iconStyle={{ fill: '#9b9b9b' }}
             style={{ width: '100%' }}
-          />
-          {
-            this.state.high_res_image_err &&
-            <p style={{ color: '#ff3b34' }}> High res image url is required </p>
-          }
+            autoComplete='off'
+          >
+            {
+              !this.props.loadingCollectionList &&
+              this.props.collectionList && this.props.collectionList.map((item, i) => {
+                return <MenuItem
+                  value={item.id}
+                  key={item.id}
+                  primaryText={item.display_name}
+                />
+              })
+            }
+          </SelectField>
         </div>
-
         <div className="form-group">
-          <label className="label">Low res image</label><br />
+          <label className="label">Listing order*</label><br />
           <TextField
             onChange={this.handleTextFields}
-            name="low_res_image"
-            autoComplete='off'
-            hintText="https://cloudfront.ads.johnny_walker.jpg"
-            value={this.state.low_res_image}
+            name="listingOrder"
+            value={this.state.listingOrder}
             style={{ width: '100%' }}
           />
           {
-            this.state.low_res_image_err &&
-            <p style={{ color: '#ff3b34' }}> Low res image url is required </p>
+            listingOrderErr.status &&
+            <p className="error">* {listingOrderErr.value}</p>
           }
         </div>
-
-        <div className="form-group">
-          <label className="label">Gs1 barcode</label><br />
-          <TextField
-            onChange={this.handleTextFields}
-            name="gs1_barcode"
-            autoComplete='off'
-            //hintText="https://cloudfront.ads.johnny_walker.jpg"
-            value={this.state.gs1_barcode}
-            style={{ width: '100%' }}
-          />
-          {
-            gs1BarcodeErr.status &&
-            <p style={{ color: '#ff3b34' }}>* {gs1BarcodeErr.value}</p>
-          }
-        </div>
-
-        <div className="form-group">
-          <label className="label">Barcode image</label><br />
-          <TextField
-            onChange={this.handleTextFields}
-            name="barcode_image"
-            autoComplete='off'
-            //hintText="https://cloudfront.ads.johnny_walker.jpg"
-            value={this.state.barcode_image}
-            style={{ width: '100%' }}
-          />
-          {
-            barcodeImageErr.status &&
-            <p style={{ color: '#ff3b34' }}>* {barcodeImageErr.value}</p>
-          }
-        </div>
-
         <RaisedButton
           primary
-          disabled={volumeErr.status || this.props.disableSave || this.props.loadingBrandList}
+          disabled={this.props.disableSave || this.props.loadingBrandList || this.props.loadingCollectionList}
           label="Save"
           onClick={this.handleSave}
           style={{ marginTop: '40px' }}
@@ -411,7 +212,12 @@ BrandCollectionForm.propTypes = {
   fetchGenreBasedBrandList: PropTypes.func,
   genres: PropTypes.number,
   action: PropTypes.string,
-  loadingGenres: PropTypes.bool
+  loadingGenres: PropTypes.bool,
+  loadingBrandList: PropTypes.bool,
+  loadingCollectionList: PropTypes.bool,
+  collectionList: PropTypes.array,
+  submit: PropTypes.func,
+  brandList: PropTypes.array
 }
 
 export default BrandCollectionForm

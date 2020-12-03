@@ -83,6 +83,20 @@ function* createBrandCollection(action) {
   }
 }
 
+function* updateBrandCollection(action) {
+  try {
+    const data = yield call(Api.editBrandCollection, action)
+    Notify('Successfully updated brand collection', 'success')
+    action.CB(data)
+    setTimeout(() => {
+      window.location.href = `/admin/manage-brand-collection`
+    }, 1000)
+  } catch (err) {
+    console.log(err)
+    action.CB()
+  }
+}
+
 function* fetchBrandListingOrder(action) {
   //console.log("hello", action)
   //let data = action.action.data
@@ -427,6 +441,10 @@ function* watchRequestUpdateBrand() {
   yield takeLatest(ActionTypes.REQUEST_UPDATE_BRAND, updateBrand)
 }
 
+function* watchRequestUpdateBrandCollection() {
+  yield takeLatest(ActionTypes.REQUEST_EDIT_BRAND_COLLECTION, updateBrandCollection)
+}
+
 function* watchRequestUpdateBrandStatus() {
   yield takeLatest(ActionTypes.REQUEST_UPDATE_BRAND_STATUS, updateBrandStatus)
 }
@@ -467,6 +485,7 @@ export default function* rootSaga() {
     fork(watchRequestCreateOrUpdateBrandListingOrder),
     fork(watchRequestFetchBrandCollectionList),
     fork(watchRequestUpdateBrandCollectionStatus),
-    fork(watchRequestCreateBrandCollection)
+    fork(watchRequestCreateBrandCollection),
+    fork(watchRequestUpdateBrandCollection)
   ])
 }

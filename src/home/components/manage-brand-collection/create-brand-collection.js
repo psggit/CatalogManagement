@@ -3,15 +3,13 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import PropTypes from "prop-types"
 import * as Actions from './../../actions'
-import RaisedButton from 'material-ui/RaisedButton'
 import '@sass/components/_form.scss'
 import BrandCollectionForm from './brand-collection-form'
 import { Card } from 'material-ui/Card'
-import { getQueryObj } from '@utils/url-utils'
 
 class createBrandCollection extends React.Component {
 
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       isDisabled: false
@@ -21,9 +19,10 @@ class createBrandCollection extends React.Component {
     this.callbackUpdate = this.callbackUpdate.bind(this)
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.props.actions.setLoadingState()
     this.props.actions.fetchGenreList({})
+    this.props.actions.fetchCollection({})
   }
 
   fetchGenreBasedBrandList(genreId) {
@@ -42,14 +41,14 @@ class createBrandCollection extends React.Component {
     
     this.setState({ isDisabled: true })
     this.props.actions.createBrandCollection({
-      collection_id: parseInt(data.brandId),
-      brand_id: parseInt(data.volume),
-      listing_order: data.image_url
+      collection_id: parseInt(data.collectionId),
+      brand_id: parseInt(data.brandId),
+      listing_order: parseInt(data.listingOrder)
     }, this.callbackUpdate)
   }
 
   render() {
-    const { loadingGenreBasedBrandList, genreBasedBrandList, genres, loadingGenres } = this.props
+    const { loadingGenreBasedBrandList, genreBasedBrandList, genres, loadingGenres, loadingCollection, collection } = this.props
     return (
       <div style={{
         width: '400px',
@@ -66,10 +65,9 @@ class createBrandCollection extends React.Component {
               width: '100%'
             }}
           >
-            <h3 style={{ marginTop: 0, marginBottom: '40px' }}>Create new brand collection</h3>
+            <h3 style={{ marginTop: 0, marginBottom: '40px' }}>Create brand collection</h3>
             <BrandCollectionForm
               ref={(node) => { this.brandCollectionForm = node }}
-              isDisabled={false}
               disableSave={this.state.isDisabled}
               submit={this.submit}
               loadingBrandList={loadingGenreBasedBrandList}
@@ -77,6 +75,8 @@ class createBrandCollection extends React.Component {
               genres={genres}
               brandList={genreBasedBrandList}
               fetchGenreBasedBrandList={this.fetchGenreBasedBrandList}
+              loadingCollectionList={loadingCollection}
+              collectionList={collection}
               action="create"
             />
           </Card>
@@ -93,6 +93,8 @@ createBrandCollection.propTypes = {
   genres: PropTypes.array,
   genreBasedBrandList: PropTypes.array,
   actions: PropTypes.object.isRequired,
+  loadingCollection: PropTypes.bool,
+  collection: PropTypes.array
 }
 
 const mapStateToProps = state => state.main

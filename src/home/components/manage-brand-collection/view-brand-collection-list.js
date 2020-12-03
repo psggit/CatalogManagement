@@ -97,7 +97,7 @@ class ViewBrandCollection extends React.Component {
                 )
             }
             {
-              !this.props.loadingBrandCollectionList && !this.props.brandCollectionList &&
+              !this.props.loadingBrandCollectionList && this.props.brandCollectionList.length === 0 &&
               <tr>
                 <td style={{ textAlign: 'center' }} colSpan='10'>
                   <p style={{ fontWeight: '16px' }}>No brand collections found</p>
