@@ -14,9 +14,9 @@ class BrandCollectionForm extends React.Component {
       brandId: 0,
       genreId: 0,
       brandList: [],
-      collectionId: 0,
+      collectionId: props.brandCollectionInfo ? props.brandCollectionInfo.collection_id: 0,
       collectionList: [],
-      listingOrder: '',
+      listingOrder: props.brandCollectionInfo ? props.brandCollectionInfo.listing_order : 0,
      
       listingOrderErr: {
         value: '',
@@ -64,7 +64,7 @@ class BrandCollectionForm extends React.Component {
       })
       this.setState({
         collectionList,
-        collectionId: newProps.collectionList.length > 0 ? newProps.collectionList[0].id : ""
+        collectionId: this.state.collectionId ? this.state.collectionId : newProps.collectionList[0].id
       })
     }
   }
@@ -163,7 +163,7 @@ class BrandCollectionForm extends React.Component {
         </div>
 
         <div className="form-group">
-          <label className="label">Collection name*</label><br />
+          <label className="label">Collection name*{this.state.collectionId}</label><br />
           <SelectField
             value={this.state.collectionId}
             onChange={this.handleCollectionChange}
@@ -177,7 +177,7 @@ class BrandCollectionForm extends React.Component {
                 return <MenuItem
                   value={item.id}
                   key={item.id}
-                  primaryText={item.display_name}
+                  primaryText={item.name}
                 />
               })
             }

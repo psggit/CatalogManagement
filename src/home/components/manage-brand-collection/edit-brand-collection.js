@@ -68,6 +68,7 @@ class editBrandCollection extends React.Component {
             <h3 style={{ marginTop: 0, marginBottom: '40px' }}>Edit brand collection</h3>
             <BrandCollectionForm
               ref={(node) => { this.brandCollectionForm = node }}
+              brandCollectionInfo={this.props.history.location.state}
               disableSave={this.state.isDisabled}
               submit={this.submit}
               loadingBrandList={loadingGenreBasedBrandList}

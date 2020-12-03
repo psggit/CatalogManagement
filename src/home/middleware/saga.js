@@ -72,7 +72,7 @@ function* updateBrandCollectionStatus(action) {
 function* createBrandCollection(action) {
   try {
     const data = yield call(Api.createBrandCollection, action)
-    Notify('Successfully created brand collection', 'success')
+    Notify(data.message, 'success')
     action.CB(data)
     setTimeout(() => {
       window.location.href = `/admin/manage-brand-collection`
@@ -86,7 +86,7 @@ function* createBrandCollection(action) {
 function* updateBrandCollection(action) {
   try {
     const data = yield call(Api.editBrandCollection, action)
-    Notify('Successfully updated brand collection', 'success')
+    Notify(data.message, 'success')
     action.CB(data)
     setTimeout(() => {
       window.location.href = `/admin/manage-brand-collection`
