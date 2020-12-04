@@ -52,7 +52,10 @@ function* fetchBrandCollectionList(action) {
     const data = yield call(Api.fetchBrandCollection, action)
     yield put({ type: ActionTypes.SUCCESS_FETCH_BRAND_COLLECTION_LIST, data })
   } catch (err) {
-    Notify(err.message, 'warning')
+    err.response.json().then((json) => {
+      Notify(json.message, "warning")
+    })
+    //Notify(err.message, 'warning')
     console.log(err)
   }
 }
@@ -66,7 +69,9 @@ function* updateBrandCollectionStatus(action) {
       window.location.href = `/admin/manage-brand-collection`
     }, 1000)
   } catch (err) {
-    Notify(err.message, 'warning')
+    err.response.json().then((json) => {
+      Notify(json.message, "warning")
+    })
     console.log(err)
   }
 }
@@ -80,8 +85,9 @@ function* createBrandCollection(action) {
       window.location.href = `/admin/manage-brand-collection`
     }, 1000)
   } catch (err) {
-    console.log(err)
-    Notify(err.message, 'warning')
+    err.response.json().then((json) => {
+      Notify(json.message, "warning")
+    })
     action.CB()
   }
 }
@@ -95,8 +101,9 @@ function* updateBrandCollection(action) {
       window.location.href = `/admin/manage-brand-collection`
     }, 1000)
   } catch (err) {
-    console.log(err)
-    Notify(err.message, 'warning')
+    err.response.json().then((json) => {
+      Notify(json.message, "warning")
+    })
     action.CB()
   }
 }
