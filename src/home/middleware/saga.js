@@ -52,6 +52,7 @@ function* fetchBrandCollectionList(action) {
     const data = yield call(Api.fetchBrandCollection, action)
     yield put({ type: ActionTypes.SUCCESS_FETCH_BRAND_COLLECTION_LIST, data })
   } catch (err) {
+    Notify(err.message, 'warning')
     console.log(err)
   }
 }
@@ -59,12 +60,13 @@ function* fetchBrandCollectionList(action) {
 function* updateBrandCollectionStatus(action) {
   try {
     const data = yield call(Api.updateBrandCollectionStatus, action)
-    Notify('Successfully updated brand collection status', 'success')
+    Notify(data.message, 'success')
     action.CB(data)
     setTimeout(() => {
       window.location.href = `/admin/manage-brand-collection`
     }, 1000)
   } catch (err) {
+    Notify(err.message, 'warning')
     console.log(err)
   }
 }
@@ -79,6 +81,7 @@ function* createBrandCollection(action) {
     }, 1000)
   } catch (err) {
     console.log(err)
+    Notify(err.message, 'warning')
     action.CB()
   }
 }
@@ -93,6 +96,7 @@ function* updateBrandCollection(action) {
     }, 1000)
   } catch (err) {
     console.log(err)
+    Notify(err.message, 'warning')
     action.CB()
   }
 }
