@@ -173,6 +173,20 @@ function* updateGenreStatus(action) {
   }
 }
 
+function* updateCollectionStatus(action) {
+  try {
+    const data = yield call(Api.updateCollectionStatus, action)
+    yield put({ type: ActionTypes.SUCCESS_UPDATE_COLLECTION_STATUS, data })
+    Notify(data.message, 'success')
+    action.CB()
+  } catch (err) {
+    console.log(err)
+    err.response.json().then((json) => {
+      Notify(json.message, "warning")
+    })
+  }
+}
+
 function* fetchStates(action) {
   try {
     const data = yield call(Api.fetchStates, action)
@@ -276,6 +290,24 @@ function* createGenre(action) {
   }
 }
 
+function* createCollection(action) {
+  try {
+    const data = yield call(Api.createCollection, action)
+    yield put({ type: ActionTypes.SUCCESS_CREATE_COLLECTION, data })
+    Notify(data.message, 'success')
+    setTimeout(() => {
+      window.location.href = `/admin/manage-collection`
+    }, 1000)
+    action.CB(data)
+  } catch (err) {
+    console.log(err)
+    err.response.json().then((json) => {
+      Notify(json.message, "warning")
+    })
+    action.CB()
+  }
+}
+
 function* updateGenre(action) {
   try {
     const data = yield call(Api.updateGenre, action)
@@ -288,6 +320,24 @@ function* updateGenre(action) {
   } catch (err) {
     console.log(err)
     Notify('Something went wrong', 'warning')
+    action.CB()
+  }
+}
+
+function* updateCollection(action) {
+  try {
+    const data = yield call(Api.updateCollection, action)
+    yield put({ type: ActionTypes.SUCCESS_UPDATE_COLLECTION, data })
+    Notify(data.message, 'success')
+    setTimeout(() => {
+      window.location.href = `/admin/manage-collection`
+    }, 1000)
+    action.CB(data)
+  } catch (err) {
+    err.response.json().then((json) => {
+      Notify(json.message, "warning")
+    })
+    console.log(err)
     action.CB()
   }
 }
@@ -367,6 +417,10 @@ function* watchRequestUpdateGenreStatus() {
   yield takeLatest(ActionTypes.REQUEST_UPDATE_GENRE_STATUS, updateGenreStatus)
 }
 
+function* watchRequestUpdateCollectionStatus() {
+  yield takeLatest(ActionTypes.REQUEST_UPDATE_COLLECTION_STATUS, updateCollectionStatus)
+}
+
 function* watchRequestCreateSku() {
   yield takeLatest(ActionTypes.REQUEST_CREATE_SKU, createSku)
 }
@@ -378,6 +432,15 @@ function* watchRequestFetchBrandListingOrder() {
 function* watchRequestCreateGenre() {
   yield takeLatest(ActionTypes.REQUEST_CREATE_GENRE, createGenre)
 }
+
+function* watchRequestCreateCollection() {
+  yield takeLatest(ActionTypes.REQUEST_CREATE_COLLECTION, createCollection)
+}
+
+function* watchRequestUpdateCollection() {
+  yield takeLatest(ActionTypes.REQUEST_UPDATE_COLLECTION, updateCollection)
+}
+
 
 function* watchRequestUpdateGenre() {
   yield takeLatest(ActionTypes.REQUEST_UPDATE_GENRE, updateGenre)
@@ -458,7 +521,10 @@ export default function* rootSaga() {
     fork(watchRequestUpdateBrandStatus),
     fork(watchRequestFetchGenres),
     fork(watchRequestUpdateGenreStatus),
+    fork(watchRequestUpdateCollectionStatus),
     fork(watchRequestCreateGenre),
+    fork(watchRequestCreateCollection),
+    fork(watchRequestUpdateCollection),
     fork(watchRequestUpdateGenre),
     fork(watchRequestFetchGenreList),
     fork(watchRequestFetchGenreBasedBrandList),

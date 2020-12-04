@@ -18,6 +18,24 @@ export const createGenre = action => (
   })
 )
 
+export const createCollection = action => (
+  POST({
+    api: '/Api/catalog/collection/create',
+    apiBase: 'catalog',
+    data: action.data,
+    handleError: true
+  })
+)
+
+export const updateCollection = action => (
+  POST({
+    api: '/Api/catalog/collection/uppdate',
+    apiBase: 'catalog',
+    data: action.data,
+    handleError: true
+  })
+)
+
 export const updateGenre = action => (
   POST({
     api: '/Api/updateGenre',
@@ -111,6 +129,15 @@ export const fetchBrandListingOrder = action => (
 export const updateGenreStatus = action => (
   POST({
     api: '/Api/changeGenreStatus',
+    apiBase: 'catalog',
+    data: action.data,
+    handleError: true
+  })
+)
+
+export const updateCollectionStatus = action => (
+  POST({
+    api: '/Api/catalog/collection/activate',
     apiBase: 'catalog',
     data: action.data,
     handleError: true

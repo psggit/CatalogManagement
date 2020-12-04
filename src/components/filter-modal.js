@@ -54,6 +54,12 @@ class FilterModal extends React.Component {
         searchFieldIdx: this.props && this.props.filterObj.column && this.props.filterObj.column === "BrandName" ? 2 : 1,
         searchText: this.props && this.props.filterObj ? this.props.filterObj.value : ''
       })
+    } else if (this.props.filter === "collectionFilter") {
+      this.setState({
+        searchField: this.props && this.props.filterObj.column && this.props.filterObj.column.length ? this.props.filterObj.column : 'ID',
+        searchFieldIdx: this.props && this.props.filterObj.column && this.props.filterObj.column === "BrandName" ? 2 : 1,
+        searchText: this.props && this.props.filterObj ? this.props.filterObj.value : ''
+      }) 
     } else {
       this.setState({
         toDate: this.props && this.props.filterObj !== undefined 
@@ -176,6 +182,14 @@ class FilterModal extends React.Component {
         this.props.applyFilter(filter)
         this.unmountModal()
       break;
+      case 'collectionFilter':
+        filter = {
+          column: this.state.searchField,
+          value: parseInt(this.state.searchText)
+        }
+        this.props.applyFilter(filter)
+        this.unmountModal()
+        break;
       case 'accessLogsFilter':
         if(this.state.fromDate) {
           filter = {
@@ -273,6 +287,32 @@ class FilterModal extends React.Component {
                   style={{ width: '100%' }}
                 >
                   <MenuItem value={1} primaryText="Collection Id" />
+                </SelectField>
+              </div>
+              <div className="form-group">
+                <label>Search Text</label><br />
+                <TextField
+                  onChange={this.handleChange}
+                  name="searchText"
+                  value={this.state.searchText}
+                  style={{ width: '100%' }}
+                />
+              </div>
+            </div>
+          }
+          {
+            this.props.filter === "collectionFilter" &&
+            <div>
+              <div className="form-group">
+                <label>Field</label><br />
+                <SelectField
+                  value={this.state.searchFieldIdx}
+                  onChange={this.handleFieldChange}
+                  iconStyle={{ fill: '#9b9b9b' }}
+                  name="searchField"
+                  style={{ width: '100%' }}
+                >
+                  <MenuItem value={1} primaryText="Id" />
                 </SelectField>
               </div>
               <div className="form-group">
