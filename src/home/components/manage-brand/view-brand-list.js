@@ -22,8 +22,13 @@ class ViewBrandList extends React.Component {
     super()
 
     this.state = {
-      newArray: [],
+      modifiedArray: [],
+      mapArray: {},
       checked: false,
+      isModified: false,
+      presentationEnabled: false,
+      brandEnabled: false,
+      hideColumns: false,
       brandList: [],
     }
 
@@ -31,6 +36,8 @@ class ViewBrandList extends React.Component {
     this.handleCheckboxes = this.handleCheckboxes.bind(this)
     this.handleSelectAll = this.handleSelectAll.bind(this)
     this.handleSave = this.handleSave.bind(this)
+    this.handleSaveData = this.handleSaveData.bind(this)
+    this.fnHideColumn = this.fnHideColumn.bind(this)
   }
 
   componentDidMount() {
@@ -66,32 +73,76 @@ class ViewBrandList extends React.Component {
         ...b,
         is_checked:true
       }))
-      this.setState({brandList: newBrandList})
-      console.log("handleSelectAll", this.state.brandList);
+      this.setState({...this.state, brandList: newBrandList})
+      // console.log("handleSelectAll", this.state.brandList);
     }
     else if (!e.target.checked) {
       const newBrandList = this.state.brandList.map((b) => ({
         ...b,
         is_checked:false
       }))
-      this.setState({brandList: newBrandList})
-      console.log("elseUncheck", this.state.brandList);
+      this.setState({...this.state, brandList: newBrandList})
     }
   }
 
-  handleSave (stateKey, status) {
-    let newArray = this.state.brandList.filter((b) => b.is_checked).map((b) => {
+  fnHideColumn() {
+    this.setState({
+      ...this.state,
+      hideColumns: !this.state.hideColumns,
+    })
+  }
+
+  handleSave (stateKey) {
+    let tempArray = {};
+    const newArray = this.state.brandList.filter((b) => b.is_checked).map((b) => {
+     
       if(stateKey === "presentation"){
-        b.is_presentation_enabled = status;
+        b.is_presentation_enabled = !this.state.presentationEnabled;
+        tempArray[b.id] = {
+          ...this.state.mapArray[b.id],
+          is_presentation_enabled: b.is_presentation_enabled
+        }
         return b;
       }
       if(stateKey === "brand"){
-        b.is_brand_details_enabled = status;
+        b.is_brand_details_enabled = !this.state.brandEnabled;
+        tempArray[b.id] = {
+          ...this.state.mapArray[b.id],
+          is_brand_details_enabled: b.is_brand_details_enabled
+        }
         return b;
       }
     })
-    // const newBrandList = this.state.brandList
-    console.log("handleSave", newArray, stateKey, status);
+
+    if(stateKey === "presentation"){
+      this.setState({
+        ...this.state,
+        presentationEnabled: !this.state.presentationEnabled,
+        isModified: (newArray.length > 0 || this.state.modifiedArray.length > 0) ? true : false,
+        modifiedArray: newArray.length > 0 ? [...this.state.modifiedArray, ...newArray] : this.state.modifiedArray,
+        mapArray: newArray.length > 0 ? {...this.state.mapArray, ...tempArray} : this.state.mapArray,
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        brandEnabled: !this.state.brandEnabled,
+        isModified: (newArray.length > 0 || this.state.modifiedArray.length > 0) ? true : false,
+        modifiedArray: newArray.length > 0 ? [...this.state.modifiedArray, ...newArray] : this.state.modifiedArray,
+        mapArray: newArray.length > 0 ? {...this.state.mapArray, ...tempArray} : this.state.mapArray,
+      });
+    }
+  }
+
+  handleSaveData () {
+    this.setState({
+      ...this.state,
+      isModified: false,
+    });
+
+    let payload = {
+      brand_details: this.state.modifiedArray
+    }
+    // console.log("payload data needs to be recreated");
   }
 
   editBrand(brandDetails) {
@@ -105,14 +156,14 @@ class ViewBrandList extends React.Component {
   render() {  
     const TableHeaderItems = [
       <Checkbox
-        label="Select"
+        label=""
         onCheck={(e) => this.handleSelectAll(e)}
       />,
       'EDIT',
       'ID',
       'BRAND NAME',
       'BRAND TYPE',
-      'GENRE_ID',
+      'GENRE ID',
       'COUNTRY OF ORIGIN',
       'TAGS',
       'BRAND LOGO HIGH RES',
@@ -123,9 +174,24 @@ class ViewBrandList extends React.Component {
       'BRAND STATUS'
     ]
 
-    const styles = [
-      { width: '50px', padding: '10px' },
-      { width: '60px', padding: '10px' },
+    let styles = this.state.hideColumns ? ([
+      { width: '24px', padding: '10px' },
+      { width: '60px', padding: '0', textAlign: 'center' },
+      { width: '30px' },
+      { width: '130px' },
+      { width: '50px', display: 'none' },
+      { width: '40px', display: 'none' },
+      { width: '40px', display: 'none' },
+      { width: '100px', 'word-break': 'break-word', display: 'none' },
+      { width: '60px', display: 'none' },
+      { width: '60px', textAlign: 'center', display: 'none' },
+      { width: '60px', textAlign: 'center', display: 'none' },
+      { width: '60px', textAlign: 'center' },
+      { width: '60px', textAlign: 'center' },
+      { width: '100px' }
+    ]) : ([
+      { width: '24px', padding: '10px' },
+      { width: '60px', padding: '0', textAlign: 'center' },
       { width: '30px' },
       { width: '130px' },
       { width: '50px' },
@@ -133,57 +199,56 @@ class ViewBrandList extends React.Component {
       { width: '40px' },
       { width: '100px', 'word-break': 'break-word' },
       { width: '60px' },
-      { width: '90px' },
-      { width: '60px' },
-      { width: '60px' },
-      { width: '60px' },
+      { width: '60px', textAlign: 'center' },
+      { width: '60px', textAlign: 'center' },
+      { width: '60px', textAlign: 'center' },
+      { width: '60px', textAlign: 'center' },
       { width: '100px' }
-    ]
+    ])
 
     const buttonStyles = {
       width: "auto",
       padding: 0,
+      minWidth: 0,
     }
+
+    const checkboxStyles = {
+      marginRight: 0,
+    }
+
     return (
       <React.Fragment>
-        <p>Presentation</p>
-        <RaisedButton
-          primary
-          label="ON"
-          onClick={() => this.handleSave("presentation", true)}
-          style={{ marginTop: '10px', marginBottom: '10px' }}
-        />
-        <RaisedButton
-          primary
-          label="OFF"
-          onClick={() => this.handleSave("presentation", false)}
-          style={{ marginTop: '10px', marginBottom: '10px' }}
-        />
-        <p>Brand Details</p>
-        <RaisedButton
-          primary
-          label="ON"
-          onClick={() => this.handleSave("brand", true)}
-          style={{ marginTop: '10px', marginLeft: '10px' }}
-        />
-        <RaisedButton
-          primary
-          label="OFF"
-          onClick={() => this.handleSave("brand", false)}
-          style={{ marginTop: '10px', marginLeft: '10px' }}
-        />
-        {/* <div style={{display:"flex"}}>
+        <div>
+          <div style={{width: "60%", float: "left"}}>
           <Toggle
             label="Presentation"
-            style={{width:"15%", marginBottom:"10px"}}
+            style={{width:"15%", marginRight:"10px", float: "left"}}
+            onToggle={() => this.handleSave("presentation")}
           />
           <Toggle
-            label="Brand Details"
-            style={{width:"18%",marginLeft:"10px"}}
+            label="Brands"
+            style={{width:"15%", marginBottom:"10px"}}
+            onToggle={() => this.handleSave("brand")}
           />
-         </div> */}
+          </div>
+          <div style={{width:"20%", float:"right"}}>
+          <Toggle
+            label="Hide Columns"
+            onToggle={() => this.fnHideColumn()}
+          />
+          </div>
+          <div style={{clear: "left", textAlign: "right"}}>
+            <RaisedButton
+              primary
+              label="Save"
+              onClick={this.handleSaveData}
+              style={{ marginBottom: '20px' }}
+              disabled={this.state.isModified === false}
+            />
+          </div>
+        </div>
         <Table
-          wrapperStyle={{ height: 'auto' }}
+          wrapperStyle={{ height: 'auto', clear: 'left' }}
           className="bordered--table"
           selectable={false}
           fixedHeader
@@ -208,7 +273,8 @@ class ViewBrandList extends React.Component {
                         <Checkbox
                           onCheck={(e) => this.handleCheckboxes(e, item.id)}
                           checked={item.is_checked}
-                          name="isModified"
+                          name="isChanged"
+                          iconStyle={checkboxStyles}
                         />
                       </TableRowColumn>
                       <TableRowColumn style={styles[1]}>
@@ -237,7 +303,7 @@ class ViewBrandList extends React.Component {
                       <TableRowColumn style={styles[9]}>{item.alcohol_per}</TableRowColumn>
                       <TableRowColumn style={styles[10]}>{item.temperature}</TableRowColumn>
                       <TableRowColumn style={styles[11]}>{item.is_presentation_enabled === true ? "Enabled" : "Disabled" }</TableRowColumn>
-                      <TableRowColumn style={styles[12]}>{item.is_brand_details_enabled === true ? "Enabled" : "Disabled"}</TableRowColumn>
+                       <TableRowColumn style={styles[12]}>{item.is_brand_details_enabled === true ? "Enabled" : "Disabled" }</TableRowColumn>
                       <TableRowColumn style={styles[13]}>
                         <Switch toggled={item.is_active} onToggle={this.updateBrandStatus} value={item} />
                       </TableRowColumn>
@@ -260,12 +326,6 @@ class ViewBrandList extends React.Component {
             }
           </TableBody>
         </Table>
-        {/* <RaisedButton
-          primary
-          label="Save"
-          onClick={this.handleSave}
-          style={{ marginTop: '40px' }}
-        /> */}
       </React.Fragment>
     )
   }
