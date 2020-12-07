@@ -15,6 +15,11 @@ export const fetchGenres = (data) => ({
   data
 })
 
+export const fetchCollection = (data) => ({
+  type: ActionTypes.REQUEST_FETCH_COLLECTION,
+  data
+})
+
 export const fetchGenreList = (data) => ({
   type: ActionTypes.REQUEST_FETCH_GENRE_LIST,
   data
@@ -23,6 +28,28 @@ export const fetchGenreList = (data) => ({
 export const fetchBrandList = (data) => ({
   type: ActionTypes.REQUEST_FETCH_BRAND_LIST,
   data
+})
+
+export const fetchBrandCollection = (data) => ({
+  type: ActionTypes.REQUEST_FETCH_BRAND_COLLECTION_LIST,
+  data
+})
+
+// export const fetchCollectionList = (data) => ({
+//   type: ActionTypes.REQUEST_FETCH_COLLECTION_LIST,
+//   data
+// })
+
+export const createBrandCollection = (data, CB) => ({
+  type: ActionTypes.REQUEST_CREATE_BRAND_COLLECTION,
+  data,
+  CB
+})
+
+export const editBrandCollection = (data, CB) => ({
+  type: ActionTypes.REQUEST_EDIT_BRAND_COLLECTION,
+  data,
+  CB
 })
 
 export const fetchLiveOrders = (data) => ({
@@ -44,6 +71,12 @@ export const createGenre = (data, CB) => ({
 
 export const updateGenre = (data, CB) => ({
   type: ActionTypes.REQUEST_UPDATE_GENRE,
+  data,
+  CB
+})
+
+export const updateBrandCollectionStatus = (data, CB) => ({
+  type: ActionTypes.REQUEST_UPDATE_BRAND_COLLECTION_STATUS,
   data,
   CB
 })

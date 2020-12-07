@@ -36,6 +36,15 @@ export const fetchSKUs = action => (
   })
 )
 
+export const fetchCollection = action => (
+  POST({
+    api: '/Api/catalog/collection/list',
+    apiBase: 'catalog',
+    data: action.data,
+    handleError: true
+  })
+)
+
 export const updateSKU = action => (
   POST({
     api: '/Api/updateSku',
@@ -134,6 +143,51 @@ export const updateSkuStateMap = action => (
     handleError: true
   })
 ) 
+
+// export const fetchCollectionList = action => (
+//   POST({
+//     api: '/Api/catalog/collection/list',
+//     apiBase: 'catalog',
+//     data: action.data,
+//     handleError: true
+//   })
+// )
+
+export const fetchBrandCollection = action => (
+  POST({
+    api: '/Api/catalog/brand-collection/list',
+    apiBase: 'catalog',
+    data: action.data,
+    handleError: true
+  })
+)
+
+export const updateBrandCollectionStatus = action => (
+  POST({
+    api: '/Api/catalog/brand-collection/activate',
+    apiBase: 'catalog',
+    data: action.data,
+    handleError: true
+  })
+)
+
+export const createBrandCollection = action => (
+  POST({
+    api: '/Api/catalog/brand-collection/create',
+    apiBase: 'catalog',
+    data: action.data,
+    handleError: true
+  })
+) 
+
+export const editBrandCollection = action => (
+  POST({
+    api: '/Api/catalog/brand-collection/update',
+    apiBase: 'catalog',
+    data: action.data,
+    handleError: true
+  })
+)
 
 export const fetchBrands = action => (
   POST({
