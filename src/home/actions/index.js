@@ -35,8 +35,19 @@ export const fetchBrandCollection = (data) => ({
   data
 })
 
+// export const fetchCollectionList = (data) => ({
+//   type: ActionTypes.REQUEST_FETCH_COLLECTION_LIST,
+//   data
+// })
+
 export const createBrandCollection = (data, CB) => ({
   type: ActionTypes.REQUEST_CREATE_BRAND_COLLECTION,
+  data,
+  CB
+})
+
+export const editBrandCollection = (data, CB) => ({
+  type: ActionTypes.REQUEST_EDIT_BRAND_COLLECTION,
   data,
   CB
 })

@@ -15,6 +15,7 @@ import Login from './login'
 import ManageBrand from './../src/home/container/manage-brand'
 import ManageBrandCollection from './../src/home/container/manage-brand-collection'
 import CreateBrandCollection from './../src/home/components/manage-brand-collection/create-brand-collection'
+import EditBrandCollection from './../src/home/components/manage-brand-collection/edit-brand-collection'
 import ManageGenre from './../src/home/container/manage-genre'
 import CreateGenre from './../src/home/components/manage-genre/create-genre'
 import EditGenre from './../src/home/components/manage-genre/edit-genre'
@@ -184,7 +185,7 @@ class App extends React.Component {
 
                         <Route exact path="/admin/manage-brand-collection" component={ManageBrandCollection} />
                         <Route exact path="/admin/manage-brand-collection/create" component={CreateBrandCollection} />
-                        {/* <Route exact path="/admin/manage-sku/edit/:brandName" component={EditSKU} /> */}
+                        <Route exact path="/admin/manage-brand-collection/edit/:brandCollectionId" component={EditBrandCollection} />
 
                         <Route exact path="/admin/access-logs" component={AccessLogs} />
 

@@ -9,6 +9,7 @@ const initialState = {
   loadingBrandDetails: true,
   loadingOriginList: true,
   loadingBrandTypeList: true,
+  //loadingCollectionList: true,
   loadingBrandListingOrder: true,
   loadingStates: true,
   loadingGenreList: true,
@@ -29,6 +30,7 @@ const initialState = {
   brandList: [],
   genreList: [],
   genres: [],
+  //collectionList: [],
   genreBasedBrandList: [],
   liveOrdersData: [],
   mappedStatesToSkuData: [],
@@ -77,6 +79,13 @@ const actionsMap = {
       totalBrandCollectionCount: action.data.count
     })
   },
+
+  // [ActionTypes.SUCCESS_FETCH_COLLECTION_LIST]: (state, action) => {
+  //   return Object.assign({}, state, {
+  //     collectionList: action.data.collection_resp,
+  //     loadingCollectionList: false
+  //   })
+  // },
 
   // [ActionTypes.SUCCESS_FETCH_BRAND_COLLECTION_LIST]: (state, action) => {
   //   return Object.assign({}, state, {

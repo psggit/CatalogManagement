@@ -171,6 +171,15 @@ export const updateSkuStateMap = action => (
   })
 ) 
 
+// export const fetchCollectionList = action => (
+//   POST({
+//     api: '/Api/catalog/collection/list',
+//     apiBase: 'catalog',
+//     data: action.data,
+//     handleError: true
+//   })
+// )
+
 export const fetchBrandCollection = action => (
   POST({
     api: '/Api/catalog/brand-collection/list',
@@ -192,6 +201,15 @@ export const updateBrandCollectionStatus = action => (
 export const createBrandCollection = action => (
   POST({
     api: '/Api/catalog/brand-collection/create',
+    apiBase: 'catalog',
+    data: action.data,
+    handleError: true
+  })
+) 
+
+export const editBrandCollection = action => (
+  POST({
+    api: '/Api/catalog/brand-collection/update',
     apiBase: 'catalog',
     data: action.data,
     handleError: true

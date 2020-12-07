@@ -52,6 +52,10 @@ function* fetchBrandCollectionList(action) {
     const data = yield call(Api.fetchBrandCollection, action)
     yield put({ type: ActionTypes.SUCCESS_FETCH_BRAND_COLLECTION_LIST, data })
   } catch (err) {
+    err.response.json().then((json) => {
+      Notify(json.message, "warning")
+    })
+    //Notify(err.message, 'warning')
     console.log(err)
   }
 }
@@ -59,12 +63,15 @@ function* fetchBrandCollectionList(action) {
 function* updateBrandCollectionStatus(action) {
   try {
     const data = yield call(Api.updateBrandCollectionStatus, action)
-    Notify('Successfully updated brand collection status', 'success')
+    Notify(data.message, 'success')
     action.CB(data)
     setTimeout(() => {
       window.location.href = `/admin/manage-brand-collection`
     }, 1000)
   } catch (err) {
+    err.response.json().then((json) => {
+      Notify(json.message, "warning")
+    })
     console.log(err)
   }
 }
@@ -72,13 +79,31 @@ function* updateBrandCollectionStatus(action) {
 function* createBrandCollection(action) {
   try {
     const data = yield call(Api.createBrandCollection, action)
-    Notify('Successfully created brand collection', 'success')
+    Notify(data.message, 'success')
     action.CB(data)
     setTimeout(() => {
       window.location.href = `/admin/manage-brand-collection`
     }, 1000)
   } catch (err) {
-    console.log(err)
+    err.response.json().then((json) => {
+      Notify(json.message, "warning")
+    })
+    action.CB()
+  }
+}
+
+function* updateBrandCollection(action) {
+  try {
+    const data = yield call(Api.editBrandCollection, action)
+    Notify(data.message, 'success')
+    action.CB(data)
+    setTimeout(() => {
+      window.location.href = `/admin/manage-brand-collection`
+    }, 1000)
+  } catch (err) {
+    err.response.json().then((json) => {
+      Notify(json.message, "warning")
+    })
     action.CB()
   }
 }
@@ -490,6 +515,10 @@ function* watchRequestUpdateBrand() {
   yield takeLatest(ActionTypes.REQUEST_UPDATE_BRAND, updateBrand)
 }
 
+function* watchRequestUpdateBrandCollection() {
+  yield takeLatest(ActionTypes.REQUEST_EDIT_BRAND_COLLECTION, updateBrandCollection)
+}
+
 function* watchRequestUpdateBrandStatus() {
   yield takeLatest(ActionTypes.REQUEST_UPDATE_BRAND_STATUS, updateBrandStatus)
 }
@@ -533,6 +562,7 @@ export default function* rootSaga() {
     fork(watchRequestCreateOrUpdateBrandListingOrder),
     fork(watchRequestFetchBrandCollectionList),
     fork(watchRequestUpdateBrandCollectionStatus),
-    fork(watchRequestCreateBrandCollection)
+    fork(watchRequestCreateBrandCollection),
+    fork(watchRequestUpdateBrandCollection)
   ])
 }

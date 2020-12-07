@@ -17,8 +17,9 @@ import { overrideTableStyle } from '@utils'
 const TableHeaderItems = [
   '',
   'ID',
-  'COLLECTION__ID',
+  'COLLECTION_ID',
   'BRAND_ID',
+  'LISTING_ORDER',
   'STATUS'
 ]
 
@@ -26,6 +27,7 @@ const styles = [
   { width: '60px' },
   { width: '30px' },
   { width: '130px' },
+  { width: '100px' },
   { width: '100px' },
   { width: '100px' }
 ]
@@ -84,7 +86,8 @@ class ViewBrandCollection extends React.Component {
                       <TableRowColumn style={styles[1]}>{item.id}</TableRowColumn>
                       <TableRowColumn style={styles[2]}>{item.collection_id}</TableRowColumn>
                       <TableRowColumn style={styles[3]}>{item.brand_id}</TableRowColumn>
-                      <TableRowColumn style={styles[4]}>
+                      <TableRowColumn style={styles[4]}>{item.listing_order}</TableRowColumn>
+                      <TableRowColumn style={styles[5]}>
                         <Switch toggled={item.is_active} onToggle={this.updateBrandCollectionStatus} value={item} />
                       </TableRowColumn>
                     </TableRow>
@@ -97,7 +100,7 @@ class ViewBrandCollection extends React.Component {
                 )
             }
             {
-              !this.props.loadingBrandCollectionList && !this.props.brandCollectionList &&
+              !this.props.loadingBrandCollectionList && this.props.brandCollectionList.length === 0 &&
               <tr>
                 <td style={{ textAlign: 'center' }} colSpan='10'>
                   <p style={{ fontWeight: '16px' }}>No brand collections found</p>
