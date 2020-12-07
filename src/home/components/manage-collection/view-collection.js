@@ -35,7 +35,7 @@ const styles = [
 class ViewCollection extends React.Component {
   constructor() {
     super()
-    this.updateGenreStatus = this.updateGenreStatus.bind(this)
+    this.updateCollectionStatus = this.updateCollectionStatus.bind(this)
   }
 
   componentDidMount() {
@@ -46,12 +46,12 @@ class ViewCollection extends React.Component {
     overrideTableStyle()
   }
 
-  editGenre(genreDetails) {
-    this.props.history.push(`/admin/manage-genre/edit/${genreDetails.genre_name}`, genreDetails)
+  editCollection(collectionDetails) {
+    this.props.history.push(`/admin/manage-collection/edit/${collectionDetails.id}`, collectionDetails)
   }
 
-  updateGenreStatus(item, isInputClicked) {
-    this.props.showDialog({ newStatus: isInputClicked, genreName: item.genre_name, genreId: item.id })
+  updateCollectionStatus(item, isInputClicked) {
+    this.props.showDialog({ newStatus: isInputClicked, collectionName: item.name, id: item.id })
   }
 
   render() {
@@ -80,14 +80,14 @@ class ViewCollection extends React.Component {
                   this.props.collection && this.props.collection.map(item => (
                     <TableRow key={item.id}>
                       <TableRowColumn style={styles[0]}>
-                        <FlatButton primary label="Edit" onClick={() => this.editGenre(item)} />
+                        <FlatButton primary label="Edit" onClick={() => this.editCollection(item)} />
                       </TableRowColumn>
                       <TableRowColumn style={styles[1]}>{item.id}</TableRowColumn>
                       <TableRowColumn style={styles[2]}>{item.name}</TableRowColumn>
                       <TableRowColumn style={styles[3]}>{item.display_name}</TableRowColumn>
                       <TableRowColumn style={styles[4]}>{item.short_name}</TableRowColumn>
                       <TableRowColumn style={styles[5]}>
-                        <Switch toggled={item.is_active} onToggle={this.updateGenreStatus} value={item} />
+                        <Switch toggled={item.is_active} onToggle={this.updateCollectionStatus} value={item} />
                       </TableRowColumn>
                     </TableRow>
                   ))

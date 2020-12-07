@@ -69,6 +69,24 @@ export const createGenre = (data, CB) => ({
   CB
 })
 
+export const createCollection = (data, CB) => ({
+  type: ActionTypes.REQUEST_CREATE_COLLECTION,
+  data,
+  CB
+})
+
+export const updateCollection = (data, CB) => ({
+  type: ActionTypes.REQUEST_UPDATE_COLLECTION,
+  data,
+  CB
+})
+
+export const updateCollectionStatus = (data, CB) => ({
+  type: ActionTypes.REQUEST_UPDATE_COLLECTION_STATUS,
+  data,
+  CB
+})
+
 export const updateGenre = (data, CB) => ({
   type: ActionTypes.REQUEST_UPDATE_GENRE,
   data,

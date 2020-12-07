@@ -14,22 +14,38 @@ import ModalHeader from '@components/ModalBox/ModalHeader'
 import ModalBody from '@components/ModalBox/ModalBody'
 import ModalBox from '@components/ModalBox'
 import ModalFooter from '@components/ModalBox/ModalFooter';
+import FilterModal from '@components/filter-modal'
+import { getIcon } from '@utils/icon-utils'
 
 class ManageCollection extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      shouldMountFilterDialog: false,
       activePage: 1,
       pageOffset: 0,
       collectionStatus: '',
       collectionName: '',
       collectionId: '',
+      filterObj: {
+        column: '',
+        value: ''
+      },
+      isFilterApplied: false
+    }
+    this.filter = {
+      column: '',
+      value: ''
     }
 
     this.pagesLimit = 5
     this.handlePageChange = this.handlePageChange.bind(this)
     this.showDialog = this.showDialog.bind(this)
-    this.updateGenreStatus = this.updateGenreStatus.bind(this)
+    this.updateCollectionStatus = this.updateCollectionStatus.bind(this)
+    this.applyFilter = this.applyFilter.bind(this)
+    this.resetFilter = this.resetFilter.bind(this)
+    this.mountFilterDialog = this.mountFilterDialog.bind(this)
+    this.unmountFilterModal = this.unmountFilterModal.bind(this)
     this.setDialogState = this.setDialogState.bind(this)
     this.fetchCollection = this.fetchCollection.bind(this)
     this.callbackUpdate = this.callbackUpdate.bind(this)
@@ -86,18 +102,26 @@ class ManageCollection extends React.Component {
     history.pushState(queryParamsObj, "collection listing", `/admin/manage-collection?${getQueryUri(queryParamsObj)}`)
   }
 
-  showDialog(genreObj) {
+  mountFilterDialog() {
+    this.setState({ shouldMountFilterDialog: true })
+  }
+
+  unmountFilterModal() {
+    this.setState({ shouldMountFilterDialog: false })
+  }
+
+  showDialog(collection) {
     this.setState({
-      collectionStatus: !genreObj.newStatus,
+      collectionStatus: !collection.newStatus,
       mountDialog: true,
-      collectionName: genreObj.collectionName,
-      collectionId: genreObj.collectionId
+      collectionName: collection.collectionName,
+      collectionId: collection.id
     })
   }
 
-  updateGenreStatus() {
+  updateCollectionStatus() {
     this.setState({ mountDialog: false })
-    this.props.actions.updateGenreStatus({
+    this.props.actions.updateCollectionStatus({
       id: parseInt(this.state.collectionId),
       is_active: !this.state.collectionStatus
     }, this.callbackUpdate)
@@ -112,6 +136,39 @@ class ManageCollection extends React.Component {
     unMountModal()
   }
 
+  applyFilter(filterObj) {
+    const queryObj = {
+      column: filterObj.column,
+      value: filterObj.value,
+      offset: 0,
+      activePage: 1,
+    }
+
+    this.filter = {
+      column: filterObj.column,
+      value: filterObj.value,
+    }
+
+    this.setState({ filterObj: this.filter, isFilterApplied: true, activePage: 1 })
+
+    history.pushState(queryObj, "collection listing", `/admin/manage-collection?${getQueryUri(queryObj)}`)
+
+    this.props.actions.fetchCollection({
+      limit: this.pagesLimit,
+      offset: 0,
+      id: filterObj.value,
+    })
+  }
+
+  resetFilter() {
+    this.setState({
+      isFilterApplied: false,
+      filterObj: {}
+    })
+    this.props.history.push(`/admin/manage-collection`)
+    this.fetchCollection()
+  }
+
   render() {
     const { loadingCollection, collection, totalCollectionCount } = this.props
     const { activePage } = this.state
@@ -124,12 +181,25 @@ class ManageCollection extends React.Component {
             justifyContent: 'space-between'
           }}
         >
-          <NavLink to={`/admin/manage-genre/create`}>
+          <NavLink to={`/admin/manage-collection/create`}>
             <RaisedButton
               label="CREATE COLLECTION"
               primary
             />
           </NavLink>
+          <div>
+            <RaisedButton
+              onClick={this.mountFilterDialog}
+              label="Filter"
+              icon={getIcon('filter')}
+              style={{ marginRight: '10px' }}
+            />
+            <RaisedButton
+              onClick={this.resetFilter}
+              label="Reset Filter"
+              disabled={!this.state.isFilterApplied}
+            />
+          </div>
         </div>
         <br />
 
@@ -146,19 +216,19 @@ class ManageCollection extends React.Component {
           <ModalBox>
             <ModalHeader>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <div style={{ fontSize: '18px' }}>{this.state.collectionStatus === true ? 'Deactivate' : 'Activate'} GENRE</div>
+                <div style={{ fontSize: '18px' }}>{this.state.collectionStatus === true ? 'Deactivate' : 'Activate'} COLLECTION</div>
               </div>
             </ModalHeader>
             <ModalBody height='60px'>
               <table className='table--hovered'>
                 <tbody>
-                  Are you sure you want to {this.state.collectionStatus === true ? 'Deactivate' : 'Activate'} this genre - {this.state.collectionName} ({this.state.collectionId})
+                  Are you sure you want to {this.state.collectionStatus === true ? 'Deactivate' : 'Activate'} this collection - {this.state.collectionName} ({this.state.collectionId})
                     </tbody>
               </table>
             </ModalBody>
             <ModalFooter>
               <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', fontWeight: '600' }}>
-                <button className='btn btn-primary' onClick={() => this.updateGenreStatus()}> OK </button>
+                <button className='btn btn-primary' onClick={() => this.updateCollectionStatus()}> OK </button>
                 <button className='btn btn-secondary' onClick={() => this.setDialogState()}> Cancel </button>
               </div>
             </ModalFooter>
@@ -176,6 +246,19 @@ class ManageCollection extends React.Component {
                 setPage={this.handlePageChange}
               />
             </React.Fragment>
+            : ''
+        }
+        {
+          this.state.shouldMountFilterDialog
+            ? (
+              <FilterModal
+                applyFilter={this.applyFilter}
+                title="Filter Collection"
+                unmountFilterModal={this.unmountFilterModal}
+                filter="collectionFilter"
+                filterObj={this.state.filterObj}
+              ></FilterModal>
+            )
             : ''
         }
       </div>

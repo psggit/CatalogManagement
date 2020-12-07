@@ -40,6 +40,8 @@ import { getBreadCrumbPath, getUriFromBreadCrumb } from '@utils/url-utils'
 import { Provider } from 'react-redux'
 import { createBrowserHistory as createHistory } from 'history'
 import ManageCollection from './../src/home/container/manage-collection'
+import CreateCollection from './../src/home/components/manage-collection/create-collection'
+import EditCollection from './../src/home/components/manage-collection/edit-collection'
 
 import configureStore from './home/store/configureStore'
 import rootSaga from './home/middleware/saga'
@@ -188,6 +190,8 @@ class App extends React.Component {
                         <Route exact path="/admin/access-logs" component={AccessLogs} />
 
                         <Route exact path="/admin/manage-collection/" component={ManageCollection} />
+                        <Route exact path="/admin/manage-collection/create" component={CreateCollection} />
+                        <Route exact path="/admin/manage-collection/edit/:collectionName" component={EditCollection} />                        
                       </Switch>
                     </DisplayScreen>
                   </div>
