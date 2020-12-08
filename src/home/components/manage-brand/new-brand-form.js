@@ -8,6 +8,7 @@ import { Api } from '@utils/config'
 import {getIcon} from '@utils/icon-utils'
 import { validateTextField } from './../../../utils/validators'
 import RaisedButton from 'material-ui/RaisedButton'
+import Checkbox from "material-ui/Checkbox"
 
 class BrandForm extends React.Component {
   constructor(props) {
@@ -17,6 +18,8 @@ class BrandForm extends React.Component {
       shouldTrim: true,
       brandName: props.brandInfo ? props.brandInfo.brand_name : '',
       alcoholPercentage: props.brandInfo ? this.props.brandInfo.alcohol_per : '',
+      isBrandDetailsEnabled: props.brandInfo ? this.props.brandInfo.is_brand_details_enabled: '',
+      isPresentationEnabled: props.brandInfo ? this.props.brandInfo.is_presentation_enabled: '',
       temperature: props.brandInfo ? this.props.brandInfo.temperature : '',
       caloriesPercentage: props.brandInfo ? this.props.brandInfo.cal_per : '',
       caloriesTotal: props.brandInfo ? props.brandInfo.cal_total : '',
@@ -69,6 +72,7 @@ class BrandForm extends React.Component {
     this.handleSave = this.handleSave.bind(this)
     this.isFormValid = this.isFormValid.bind(this)
     this.handleGenreChange = this.handleGenreChange.bind(this)
+    this.handleCheckboxes = this.handleCheckboxes.bind(this)
   }
  
   componentDidUpdate (prevProps) {
@@ -124,6 +128,10 @@ class BrandForm extends React.Component {
         [e.target.name]: e.target.value,
         [errName]: validateTextField(this.inputNameMap[e.target.name], e.target.value),
     }, () => {console.log("name", errName)})
+  }
+
+  handleCheckboxes(e) {
+    this.setState({ [e.target.name]: e.target.checked })
   }
 
   handleChange(e) {
@@ -370,6 +378,26 @@ class BrandForm extends React.Component {
             lowResBrandLogoErr.status && 
             <p style={{ color: '#ff3b34'}}>* {lowResBrandLogoErr.value}</p>
           }
+        </div>
+
+        <div className="form-group">
+          <Checkbox
+            checked={this.state.isBrandDetailsEnabled}
+            onCheck={(e) => this.handleCheckboxes(e)}
+            value="isBrandDetailsEnabled"
+            name="isBrandDetailsEnabled"
+            label="Brand Details Enabled"
+          />
+        </div>
+
+        <div className="form-group">
+          <Checkbox
+            checked={this.state.isPresentationEnabled}
+            onCheck={(e) => this.handleCheckboxes(e)}
+            value="isPresentationEnabled"
+            name="isPresentationEnabled"
+            label="Presentation Enabled"
+          />
         </div>
 
         <div className="form-group">

@@ -226,6 +226,3 @@ export const updateBrandStatus = (data, CB) => ({
   CB
 })
 
-
-
-

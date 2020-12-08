@@ -14,34 +14,6 @@ import '@sass/components/_table.scss'
 import Switch from '@components/switch'
 import {overrideTableStyle} from '@utils'
 
-const TableHeaderItems = [
-  '',
-  'ID',
-  'BRAND NAME',
-  'BRAND TYPE',
-  'GENRE_ID',
-  'COUNTRY OF ORIGIN',
-  'TAGS',
-  'BRAND_LOGO_HIGH_RES',
-  'ALCOHOL PERCENTAGE',
-  'TEMPERATURE',
-  'BRAND STATUS'
-]
-
-const styles = [
-  { width: '60px' },
-  { width: '30px' },
-  { width: '130px' },
-  { width: '100px' },
-  { width: '100px' },
-  { width: '100px' }, 
-  { width: '100px' }, 
-  { width: '130px' }, 
-  { width: '90px' },
-  { width: '60px' },
-  { width: '100px' }
-]
-
 class ViewBrandList extends React.Component {
   constructor() {
     super()
@@ -65,6 +37,48 @@ class ViewBrandList extends React.Component {
   }
 
   render() {  
+    const TableHeaderItems = [
+      'EDIT',
+      'ID',
+      'BRAND NAME',
+      'BRAND TYPE',
+      'GENRE ID',
+      'COUNTRY OF ORIGIN',
+      'TAGS',
+      'BRAND LOGO HIGH RES',
+      'ALCOHOL PERCENTAGE',
+      'TEMPERATURE',
+      'PRESENTATION',
+      'BRAND DETAILS',
+      'BRAND STATUS'
+    ]
+
+    const styles = [
+      { width: '60px', textAlign: 'center' },
+      { width: '30px' },
+      { width: '130px' },
+      { width: '100px' },
+      { width: '100px' },
+      { width: '100px' },
+      { width: '100px', 'word-break': 'break-word' },
+      { width: '60px' },
+      { width: '60px', textAlign: 'center' },
+      { width: '130px', textAlign: 'center' },
+      { width: '90px', textAlign: 'center' },
+      { width: '60px', textAlign: 'center' },
+      { width: '100px' }
+    ];
+
+    const buttonStyles = {
+      width: "auto",
+      padding: 0,
+      minWidth: 0,
+    }
+
+    const checkboxStyles = {
+      marginRight: 0,
+    }
+
     return (
       <React.Fragment>
         <Table
@@ -89,8 +103,16 @@ class ViewBrandList extends React.Component {
                 ? (
                   this.props.brandList && this.props.brandList.map(item => (
                     <TableRow key={item.id}>
+                      {/* <TableRowColumn style={styles[0]}>
+                        <Checkbox
+                          onCheck={(e) => this.handleCheckboxes(e, item.id)}
+                          checked={item.is_checked}
+                          name="isChanged"
+                          iconStyle={checkboxStyles}
+                        />
+                      </TableRowColumn> */}
                       <TableRowColumn style={styles[0]}>
-                        <FlatButton primary label="Edit" onClick={() => this.editBrand(item)}/>
+                        <FlatButton primary label="Edit" onClick={() => this.editBrand(item)} style={buttonStyles}/>
                       </TableRowColumn>
                       <TableRowColumn style={styles[1]}>{item.id}</TableRowColumn>
                       <TableRowColumn style={styles[2]}>{item.brand_name}</TableRowColumn>
@@ -114,7 +136,9 @@ class ViewBrandList extends React.Component {
                       </TableRowColumn>
                       <TableRowColumn style={styles[8]}>{item.alcohol_per}</TableRowColumn>
                       <TableRowColumn style={styles[9]}>{item.temperature}</TableRowColumn>
-                      <TableRowColumn style={styles[10]}>
+                      <TableRowColumn style={styles[10]}>{item.is_presentation_enabled === true ? "Enabled" : "Disabled" }</TableRowColumn>
+                       <TableRowColumn style={styles[11]}>{item.is_brand_details_enabled === true ? "Enabled" : "Disabled" }</TableRowColumn>
+                      <TableRowColumn style={styles[12]}>
                         <Switch toggled={item.is_active} onToggle={this.updateBrandStatus} value={item} />
                       </TableRowColumn>
                     </TableRow>
