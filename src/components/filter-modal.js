@@ -48,6 +48,18 @@ class FilterModal extends React.Component {
         searchOperatorIdx: this.props && this.props.filterObj.operator && this.props.filterObj.operator ? this.getOperatorIdx() : 1,
         searchText: this.props && this.props.filterObj ? this.props.filterObj.value : ''
       })
+    } else if (this.props.filter === "brandCollectionFilter") {
+      this.setState({
+        searchField: this.props && this.props.filterObj.column && this.props.filterObj.column.length ? this.props.filterObj.column : 'ID',
+        searchFieldIdx: this.props && this.props.filterObj.column && this.props.filterObj.column === "BrandName" ? 2 : 1,
+        searchText: this.props && this.props.filterObj ? this.props.filterObj.value : ''
+      })
+    } else if (this.props.filter === "collectionFilter") {
+      this.setState({
+        searchField: this.props && this.props.filterObj.column && this.props.filterObj.column.length ? this.props.filterObj.column : 'ID',
+        searchFieldIdx: this.props && this.props.filterObj.column && this.props.filterObj.column === "BrandName" ? 2 : 1,
+        searchText: this.props && this.props.filterObj ? this.props.filterObj.value : ''
+      }) 
     } else {
       this.setState({
         toDate: this.props && this.props.filterObj !== undefined 
@@ -151,9 +163,10 @@ class FilterModal extends React.Component {
   }
 
   handleClick(e) {
+    let filter = {};
     switch(this.props.filter) {
       case 'brandFilter':
-        const filter = {
+        filter = {
           column: this.state.searchField,
           operator: this.state.searchOperator,
           value: this.state.searchText
@@ -161,21 +174,36 @@ class FilterModal extends React.Component {
         this.props.applyFilter(filter)
         this.unmountModal()
       break;
+      case 'brandCollectionFilter':
+        filter = {
+          column: this.state.searchField,
+          value: parseInt(this.state.searchText)
+        }
+        this.props.applyFilter(filter)
+        this.unmountModal()
+      break;
+      case 'collectionFilter':
+        filter = {
+          column: this.state.searchField,
+          value: parseInt(this.state.searchText)
+        }
+        this.props.applyFilter(filter)
+        this.unmountModal()
+        break;
       case 'accessLogsFilter':
-        let filterObj = {}
         if(this.state.fromDate) {
-          filterObj = {
+          filter = {
             from_date: new Date(this.state.fromDate).toISOString(),
             to_date: (this.state.toDate) 
                       ?  new Date(new Date(this.state.toDate).setHours(23, 59, 0)).toISOString() 
                       : new Date().toISOString()
           }
         } else {
-          filterObj = {
+          filter = {
             to_date: new Date(new Date(this.state.toDate).setHours(23, 59, 0)).toISOString()
           }
         }
-        this.props.applyFilter(filterObj)
+        this.props.applyFilter(filter)
         this.unmountModal()
       break;
     }
@@ -233,6 +261,58 @@ class FilterModal extends React.Component {
                   <MenuItem value={1} primaryText="EQUAL" />
                   <MenuItem value={2} primaryText="LIKE" disabled={this.state.searchFieldIdx === 1 ? true : false}/>
                   <MenuItem value={3} primaryText="CASE IGNORE" disabled={this.state.searchFieldIdx === 1 ? true : false} />
+                </SelectField>
+              </div>
+              <div className="form-group">
+                <label>Search Text</label><br />
+                <TextField
+                  onChange={this.handleChange}
+                  name="searchText"
+                  value={this.state.searchText}
+                  style={{ width: '100%' }}
+                />
+              </div>
+            </div>
+          }
+          {
+            this.props.filter === "brandCollectionFilter" &&
+            <div>
+              <div className="form-group">
+                <label>Field</label><br />
+                <SelectField
+                  value={this.state.searchFieldIdx}
+                  onChange={this.handleFieldChange}
+                  iconStyle={{ fill: '#9b9b9b' }}
+                  name="searchField"
+                  style={{ width: '100%' }}
+                >
+                  <MenuItem value={1} primaryText="Collection Id" />
+                </SelectField>
+              </div>
+              <div className="form-group">
+                <label>Search Text</label><br />
+                <TextField
+                  onChange={this.handleChange}
+                  name="searchText"
+                  value={this.state.searchText}
+                  style={{ width: '100%' }}
+                />
+              </div>
+            </div>
+          }
+          {
+            this.props.filter === "collectionFilter" &&
+            <div>
+              <div className="form-group">
+                <label>Field</label><br />
+                <SelectField
+                  value={this.state.searchFieldIdx}
+                  onChange={this.handleFieldChange}
+                  iconStyle={{ fill: '#9b9b9b' }}
+                  name="searchField"
+                  style={{ width: '100%' }}
+                >
+                  <MenuItem value={1} primaryText="Id" />
                 </SelectField>
               </div>
               <div className="form-group">

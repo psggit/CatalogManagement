@@ -9,14 +9,19 @@ const initialState = {
   loadingBrandDetails: true,
   loadingOriginList: true,
   loadingBrandTypeList: true,
+  //loadingCollectionList: true,
   loadingBrandListingOrder: true,
   loadingStates: true,
   loadingGenreList: true,
+  loadingCollection: true,
   loadingGenreBasedBrandList: true,
   loadingGenres: true,
   loadingAccessLogs: true,
   creatingBrandListingOrder: true,
+  collection:[],
+  loadingBrandCollections: true,
   originList: [],
+  brandCollections: [],
   brandTypeList: [],
   statesList: [],
   accessLogs: [],
@@ -25,6 +30,7 @@ const initialState = {
   brandList: [],
   genreList: [],
   genres: [],
+  //collectionList: [],
   genreBasedBrandList: [],
   liveOrdersData: [],
   mappedStatesToSkuData: [],
@@ -33,9 +39,11 @@ const initialState = {
   brandListingOrder: [],
   totalSkuCount: 0,
   totalBrandCount: 0,
+  totalCollectionCount: 0,
   totalBrandListCount: 0,
   accessLogCount: 0,
-  genreCount: 0
+  genreCount: 0,
+  totalBrandCollectionCount: 0
 }
 
 const actionsMap = {
@@ -55,6 +63,37 @@ const actionsMap = {
       totalBrandCount: action.data.count
     })
   },
+
+  [ActionTypes.SUCCESS_FETCH_COLLECTION]: (state, action) => {
+    return Object.assign({}, state, {
+      collection: action.data.collection_resp,
+      loadingCollection: false,
+      totalCollectionCount: action.data.count
+    })
+  },
+
+  [ActionTypes.SUCCESS_FETCH_BRAND_COLLECTION_LIST]: (state, action) => {
+    return Object.assign({}, state, {
+      brandCollections: action.data.brand_collection_resp,
+      loadingBrandCollections: false,
+      totalBrandCollectionCount: action.data.count
+    })
+  },
+
+  // [ActionTypes.SUCCESS_FETCH_COLLECTION_LIST]: (state, action) => {
+  //   return Object.assign({}, state, {
+  //     collectionList: action.data.collection_resp,
+  //     loadingCollectionList: false
+  //   })
+  // },
+
+  // [ActionTypes.SUCCESS_FETCH_BRAND_COLLECTION_LIST]: (state, action) => {
+  //   return Object.assign({}, state, {
+  //     brandCollections: action.data.brand_collection_resp,
+  //     loadingBrandCollections: false,
+  //     totalBrandCollectionCount: action.data.count
+  //   })
+  // },
 
   [ActionTypes.SUCCESS_FETCH_BRAND_LIST]: (state, action) => {
     return Object.assign({}, state, {
