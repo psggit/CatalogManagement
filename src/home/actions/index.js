@@ -226,10 +226,3 @@ export const updateBrandStatus = (data, CB) => ({
   CB
 })
 
-export const updateBrandPresentationStatus = (data, CB) => ({
-  type: ActionTypes.REQUEST_UPDATE_BRAND_PRESENTATION_STATUS,
-  data,
-  CB
-})
-
-

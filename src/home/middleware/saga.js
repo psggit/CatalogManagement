@@ -395,17 +395,6 @@ function* updateBrandStatus(action) {
   }
 }
 
-function* updateBrandPresentationStatus(action) {
-  try {
-    const data = yield call(Api.updateBrandPresentationStatus, action)
-    yield put({ type: ActionTypes.SUCCESS_UPDATE_BRAND_PRESENTATION_STATUS, data})
-    Notify('Successfully update the brand and presentation status', 'success')
-    action.CB()
-  } catch (err) {
-    console.log(err)
-  }
-}
-
 function* setLoadingState(action) {
   try {
     yield put({ type: ActionTypes.SUCCESS_SET_LOADING_STATE, data: action.data })
@@ -534,10 +523,6 @@ function* watchRequestUpdateBrandStatus() {
   yield takeLatest(ActionTypes.REQUEST_UPDATE_BRAND_STATUS, updateBrandStatus)
 }
 
-function* watchRequestUpdateBrandPresentationStatus() {
-  yield takeLatest(ActionTypes.REQUEST_UPDATE_BRAND_PRESENTATION_STATUS, updateBrandPresentationStatus)
-}
-
 function* watchRequestUpdateSKUStatus() {
   yield takeLatest(ActionTypes.REQUEST_UPDATE_SKU_STATUS, updateSKUStatus)
 }
@@ -563,7 +548,6 @@ export default function* rootSaga() {
     fork(watchRequestCreateBrand),
     fork(watchRequestUpdateBrand),
     fork(watchRequestUpdateBrandStatus),
-    fork(watchRequestUpdateBrandPresentationStatus),
     fork(watchRequestFetchGenres),
     fork(watchRequestUpdateGenreStatus),
     fork(watchRequestUpdateCollectionStatus),

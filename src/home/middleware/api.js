@@ -283,12 +283,3 @@ export const fetchBrandTypes = action => (
     handleError: true
   })
 ) 
-
-export const updateBrandPresentationStatus = action => (
-  POST({
-    api: '/Api/updateBrandDetails',
-    apiBase: 'catalog',
-    data: action.data,
-    handleError: true
-  })
-)
