@@ -29,7 +29,7 @@ class editCollection extends React.Component {
       id: this.props.match.params.collectionName,
       name: data.collectionName,
       display_name: data.displayName,
-      short_name: data.shortName,
+      // short_name: data.shortName,
     }, this.callbackUpdate)
   }
 

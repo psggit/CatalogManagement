@@ -29,7 +29,7 @@ class CreateCollection extends React.Component {
       this.props.actions.createCollection({
         name: data.collectionName,
         display_name: data.displayName,
-        short_name: data.shortName,
+        // short_name: data.shortName,
       }, this.callbackUpdate)
     }
   }

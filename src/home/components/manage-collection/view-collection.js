@@ -19,14 +19,12 @@ const TableHeaderItems = [
   'ID',
   'NAME',
   'DISPLAY NAME',
-  'SHORT NAME',
   'STATUS',
 ]
 
 const styles = [
   { width: '60px' },
   { width: '30px' },
-  { width: '80px' },
   { width: '80px' },
   { width: '80px' },
   { width: '80px' },
@@ -85,8 +83,8 @@ class ViewCollection extends React.Component {
                       <TableRowColumn style={styles[1]}>{item.id}</TableRowColumn>
                       <TableRowColumn style={styles[2]}>{item.name}</TableRowColumn>
                       <TableRowColumn style={styles[3]}>{item.display_name}</TableRowColumn>
-                      <TableRowColumn style={styles[4]}>{item.short_name}</TableRowColumn>
-                      <TableRowColumn style={styles[5]}>
+                      {/* <TableRowColumn style={styles[4]}>{item.short_name}</TableRowColumn> */}
+                      <TableRowColumn style={styles[4]}>
                         <Switch toggled={item.is_active} onToggle={this.updateCollectionStatus} value={item} />
                       </TableRowColumn>
                     </TableRow>
@@ -99,7 +97,7 @@ class ViewCollection extends React.Component {
                 )
             }
             {
-              !this.props.loadingCollection && !this.props.collection &&
+              !this.props.loadingCollection && this.props.collection.length === 0 &&
               <tr>
                 <td style={{ textAlign: 'center' }} colSpan='6'>
                   <p style={{ fontWeight: '16px' }}>No Collection Found</p>
