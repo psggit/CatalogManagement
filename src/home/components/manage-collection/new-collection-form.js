@@ -10,15 +10,15 @@ class CollectionForm extends React.Component {
     this.state = {
       collectionName: props.collection ? props.collection.name : "",
       displayName: props.collection ? props.collection.display_name : "",
-      shortName: props.collection ? props.collection.short_name : "",
+      // shortName: props.collection ? props.collection.short_name : "",
       collectionNameErr: {
         value: "",
         status: false
       },
-      shortNameErr: {
-        value: "",
-        status: false
-      },
+      // shortNameErr: {
+      //   value: "",
+      //   status: false
+      // },
       displayNameErr: {
         value: "",
         status: false
@@ -28,7 +28,7 @@ class CollectionForm extends React.Component {
     this.inputNameMap = {
       'collectionName': 'Collection name',
       'displayName': 'Display name',
-      'shortName': 'Short name',
+      // 'shortName': 'Short name',
     }
 
     this.handleSave = this.handleSave.bind(this)
@@ -54,12 +54,12 @@ class CollectionForm extends React.Component {
     const displayNameErr = validateTextField(this.inputNameMap['displayName'], this.state.displayName)
     this.setState({ displayNameErr: validateTextField(this.inputNameMap['displayName'], this.state.displayName) })
 
-    const shortNameErr = validateTextField(this.inputNameMap['shortName'], this.state.shortName)
-    this.setState({ shortNameErr: validateTextField(this.inputNameMap['shortName'], this.state.shortName) })
+    // const shortNameErr = validateTextField(this.inputNameMap['shortName'], this.state.shortName)
+    // this.setState({ shortNameErr: validateTextField(this.inputNameMap['shortName'], this.state.shortName) })
 
     if (!displayNameErr.status &&
-      !collectionNameErr.status &&
-      !shortNameErr.status
+      !collectionNameErr.status 
+      // !shortNameErr.status
     ) {
       return true;
     }
@@ -76,7 +76,7 @@ class CollectionForm extends React.Component {
 
   render() {
     console.log("props", this.props)
-    const { collectionNameErr, displayNameErr, shortNameErr } = this.state
+    const { collectionNameErr, displayNameErr } = this.state
     return (
       <React.Fragment>
         <div className="form-group">
@@ -93,7 +93,7 @@ class CollectionForm extends React.Component {
             <p className="error">* {collectionNameErr.value}</p>
           }
         </div>
-        <div className="form-group">
+        {/* <div className="form-group">
           <label className="label">Short name*</label><br />
           <TextField
             onChange={this.handleTextFields}
@@ -105,7 +105,7 @@ class CollectionForm extends React.Component {
             shortNameErr.status &&
             <p className="error">* {shortNameErr.value}</p>
           }
-        </div>
+        </div> */}
         <div className="form-group">
           <label className="label">Display name*</label><br />
           <TextField
