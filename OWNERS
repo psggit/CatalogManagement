@@ -3,6 +3,8 @@ filters:
     approvers:
       - hl05
       - AparnaRada
+      - PurvaSawant16123
+      - NishankP
     lables:
       - approved
       - lgtm
